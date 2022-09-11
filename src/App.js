@@ -22,6 +22,3 @@ function App() {
 }
 
 export default App;
-
-console.log('222');
-console.log('333');
