@@ -1,0 +1,148 @@
+body {
+  background-color: #e5e5e5;
+  /* color: var(--main-black-text-color); */
+}
+
+section {
+  position: relative;
+}
+
+.box {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 0.3125rem;
+  border: 0.0625rem dashed var(--main-boxborder-color);
+}
+
+.box__input {
+  position: relative;
+  height: 22.5rem;
+  width: 22rem;
+  left: 0rem;
+  top: 18rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 3rem;
+}
+
+.box__input::before {
+  content: 'Input';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.box__searchbar {
+  height: 12rem;
+  width: 22rem;
+  left: 28rem;
+  top: 18rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.box__searchbar::before {
+  content: 'Searchbar';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.box__checkbox {
+  height: 4rem;
+  width: 6.5rem;
+  left: 28rem;
+  top: 36rem;
+}
+
+.box__checkbox::before {
+  content: 'Checkbox';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.box__radio {
+  height: 4rem;
+  width: 6.5rem;
+  left: 37.5rem;
+  top: 36rem;
+}
+
+.box__radio::before {
+  content: 'Radio';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.box__button {
+  height: 23.5rem;
+  width: 36rem;
+  left: 0rem;
+  top: 49rem;
+}
+
+.box__button::before {
+  content: 'Button';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.button:nth-child(12),
+.button:nth-child(14) {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
+.box__dropdowns {
+  height: 32rem;
+  width: 42rem;
+  left: 42rem;
+  top: 49rem;
+}
+
+.dropdown_single {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
+.box__dropdowns::before {
+  content: 'Dropdowns';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}
+
+.box__pageheader {
+  height: 13rem;
+  width: 49.125rem;
+  left: 0rem;
+  top: 93rem;
+}
+
+.box__pageheader::before {
+  content: 'Pageheader';
+  position: absolute;
+  top: -1rem;
+  left: 0;
+  color: var(--main-boxborder-color);
+  letter-spacing: 0px;
+}

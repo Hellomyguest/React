@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+:root {
+  --main-boxborder-color: #8055ff;
+  --main-border-color: #459df5;
+  --main-black-text-color: #000000;
+  --day-lightblue-color: #bad8f5;
+  --error-color: #f53152;
+  --blue-color: #459df5;
+  --day-white-color: #ffffff;
+  --main-focus-outline-color: #367dc4;
+  --postponed-icon-color: #ff8c56;
+  --violet-color: #8055ff;
+  --green-color: #0fb864;
+  --night-theme-color: #2b2d33;
+  --night-theme-colo-dark: #171b1f;
+}
+
+body {
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  color: var(--main-black-text-color);
+}

@@ -1,0 +1,89 @@
+.box__dropdowns {
+  display: grid;
+  padding: 3rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-rows: minmax(0rem, auto);
+  grid-row-gap: 6rem;
+  grid-column-gap: 3rem;
+}
+
+.dropdown {
+  width: 10rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: var(--day-white-color);
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  box-shadow: 0rem 0.5rem 1.5rem rgba(0, 0, 0, 0.1),
+    0rem 0.25rem 0.5rem rgba(0, 0, 0, 0.1),
+    0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.1);
+}
+
+.dropdown__name {
+  display: block;
+  width: 100%;
+  height: 1rem;
+}
+
+.dropdown_go-to-page {
+  height: 5.5rem;
+  padding: 1rem;
+}
+
+.dropdown_delete {
+  height: 7rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdown_switcher {
+  height: 7rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dropdown__item > .checkbox > label {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.dropdown_multiple > .dropdown__item > .checkbox > label > .checkbox__icon {
+  left: 1rem;
+  top: 0.5rem;
+}
+.dropdown__item > .checkbox > .checkbox__area:checked ~ label {
+  color: var(--blue-color);
+}
+
+.dropdown__item
+  > .checkbox
+  > label
+  > .checkbox__area:checked
+  ~ .checkbox__text {
+  color: var(--blue-color);
+}
+
+.dropdown_single > .dropdown__item > .checkbox > label > .checkbox__area {
+  display: none;
+}
+
+.dropdown_single
+  > .dropdown__item
+  > .checkbox
+  > label
+  > .checkbox__area:checked
+  ~ .checkbox__icon {
+  display: none;
+}
+
+.dropdown_single > .dropdown__item > .checkbox > label {
+  cursor: pointer;
+}

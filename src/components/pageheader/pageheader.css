@@ -1,0 +1,28 @@
+.box__pageheader {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  height: 2rem;
+}
+
+.header > h1 {
+  margin: 0;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.header > .dropdown_switcher {
+  position: absolute;
+  top: 2.125rem;
+  right: 0;
+}
