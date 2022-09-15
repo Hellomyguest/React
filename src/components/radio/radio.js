@@ -5,11 +5,17 @@ const Radio = function Radio() {
   return (
     <>
       <div className="radio">
-        <input className="radio__area" name="radio" type="radio" />
+        <input className="radio__area" name="radio" type="radio" readOnly />
         <RadioDotIcon className="radio__dot" />
       </div>
       <div className="radio">
-        <input className="radio__area" name="radio" type="radio" checked />
+        <input
+          className="radio__area"
+          name="radio"
+          type="radio"
+          defaultChecked
+          readOnly
+        />
         <RadioDotIcon className="radio__dot" />
       </div>
     </>

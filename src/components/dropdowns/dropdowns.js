@@ -40,7 +40,7 @@ const Dropdowns = function Dropdowns() {
               <input
                 className="checkbox__area"
                 id="confirmed"
-                checked
+                defaultChecked
                 type="checkbox"
               />
               <CheckmarkIcon className="checkbox__icon" />
@@ -89,6 +89,7 @@ const Dropdowns = function Dropdowns() {
                 name="single"
                 id="single_new"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Новый</span>
@@ -103,6 +104,7 @@ const Dropdowns = function Dropdowns() {
                 name="single"
                 id="single_calculation"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Рассчет</span>
@@ -114,10 +116,11 @@ const Dropdowns = function Dropdowns() {
             <label htmlFor="single_confirmed">
               <input
                 className="checkbox__area"
-                checked
+                defaultChecked
                 name="single"
                 id="single_confirmed"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Подтвержден</span>
@@ -132,6 +135,7 @@ const Dropdowns = function Dropdowns() {
                 name="single"
                 id="single_deferred"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Отложен</span>
@@ -146,6 +150,7 @@ const Dropdowns = function Dropdowns() {
                 name="single"
                 id="single_completed"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Выполнен</span>
@@ -160,6 +165,7 @@ const Dropdowns = function Dropdowns() {
                 name="single"
                 id="single_canseled"
                 type="radio"
+                readOnly
               />
               <CheckmarkIcon className="checkbox__icon" />
               <span className="checkbox__text">Отменен</span>

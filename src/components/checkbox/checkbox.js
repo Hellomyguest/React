@@ -13,7 +13,7 @@ const Checkboxes = function Checkboxes() {
       </div>
       <div className="checkbox">
         <label>
-          <input className="checkbox__area" checked type="checkbox" />
+          <input className="checkbox__area" defaultChecked type="checkbox" />
           <CheckmarkIcon className="checkbox__icon" />
         </label>
       </div>
