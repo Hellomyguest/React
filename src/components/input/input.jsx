@@ -32,7 +32,7 @@ const Input = function Input() {
             pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
             type="text"
             placeholder="Введите"
-            value="06.12.2021"
+            defaultValue="06.12.2021"
           />
           <button className="input__button input__button_x-medium">
             <DeleteIcon className="input__icon" />
@@ -51,7 +51,7 @@ const Input = function Input() {
             type="text"
             disabled
             placeholder="Введите"
-            value="06.12.2021"
+            defaultValue="06.12.2021"
           />
           <button className="input__button">
             <LockedIcon className="input__icon" />

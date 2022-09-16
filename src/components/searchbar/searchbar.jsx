@@ -10,7 +10,7 @@ const Searchbar = function Searchbar() {
         <input
           className="searchbar__area"
           type="search"
-          value=""
+          defaultValue=""
           placeholder="Номер заказа или ФИО"
           name=""
           id=""
@@ -26,7 +26,7 @@ const Searchbar = function Searchbar() {
           type="search"
           placeholder="Номер заказа или ФИО"
           pattern=""
-          value="50726"
+          defaultValue="50726"
           name=""
           id=""
         />
