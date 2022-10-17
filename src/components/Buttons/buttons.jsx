@@ -1,62 +1,36 @@
 /* eslint-disable react/button-has-type */
-import './button.css';
-import { ReactComponent as ButtonIcon } from '../icons/abort.svg';
+import classnames from 'classnames';
+import styles from './button.module.css';
+import { Icon } from '../icons';
 
-const Buttons = function Buttons() {
+const buttonTypes = {
+  buttonSizeMedium: 'medium',
+  buttonSizeSmall: 'small',
+  buttonIconOnly: 'button_icononly',
+  buttonColorBlue: 'blue',
+  buttonColorReverseBlue: 'reverse-blue',
+  buttonColorReverseBlack: 'reverse-black',
+  buttonColorDanger: 'danger',
+};
+
+const Buttons = function Buttons({ theme, size, title, iconType, ...props }) {
+  const blockClass = classnames(styles.button, {
+    [styles.button_size_small]: size === buttonTypes.buttonSizeSmall,
+    [styles.buttonColorDanger]: theme === buttonTypes.buttonColorDanger,
+    [styles.button_icononly]: theme === buttonTypes.buttonIconOnly,
+    [styles.button_color_blue]: theme === buttonTypes.buttonColorBlue,
+    [styles.buttonColorReverseBlue]:
+      theme === buttonTypes.buttonColorReverseBlue,
+    [styles.buttonColorReverseBlack]:
+      theme === buttonTypes.buttonColorReverseBlack,
+    [styles.button_size_medium]: size === buttonTypes.buttonSizeMedium,
+  });
+  //        console.log(iconType);
   return (
-    <div className="container">
-      <button className="button button_size_medium button_color_blue">
-        <ButtonIcon className="button__icon" />
-        <span className="button__text">Text here</span>
-      </button>
-      <button className="button button_size_medium button_color_reverse-blue">
-        <ButtonIcon className="button__icon" />
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_medium button_color_reverse-black">
-        <ButtonIcon className="button__icon" />
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_medium button_color_blue">
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_medium button_color_reverse-blue">
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_medium button_color_reverse-black">
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_icononly button_size_medium button_color_blue">
-        <ButtonIcon className="button__icon" />
-      </button>
-      <button className="button button_icononly button_size_medium button_color_reverse-blue">
-        <ButtonIcon className="button__icon" />
-      </button>
-      <button className="button button_icononly button_size_medium button_color_reverse-black">
-        <ButtonIcon className="button__icon" />
-      </button>
-      <div className="container__gap" />
-      <button className="button button_size_small button_color_blue">
-        <ButtonIcon className="button__icon" />
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_small button_color_reverse-blue">
-        <ButtonIcon className="button__icon" />
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_small button_color_blue">
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_size_small button_color_reverse-blue">
-        <span className="button__text">Text Here</span>
-      </button>
-      <button className="button button_icononly button_size_small button_color_blue">
-        <ButtonIcon className="button__icon" />
-      </button>
-      <button className="button button_icononly button_size_small button_color_reverse-blue">
-        <ButtonIcon className="button__icon" />
-      </button>
-    </div>
+    <button className={blockClass} {...props}>
+      <Icon iconType={iconType} />
+      <span className={styles.button__text}>{title}</span>
+    </button>
   );
 };
 
