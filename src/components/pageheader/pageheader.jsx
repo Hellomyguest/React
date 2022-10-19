@@ -1,27 +1,40 @@
 /* eslint-disable react/button-has-type */
-import './pageheader.css';
 
-import { ReactComponent as ButtonIconMoon } from '../icons/moon.svg';
-import { ReactComponent as ButtonIconSun } from '../icons/sun.svg';
+import { useState, useEffect, useRef } from 'react';
+import styles from './pageheader.module.css';
+import { Button } from '../Button/button';
+import { Dropdown } from '../dropdowns/dropdown';
 
-const Pageheader = function Pageheader() {
+const Pageheader = function Pageheader({ title }) {
+  const [isOpen, setOpen] = useState(false);
+  const themeRef = useRef();
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!themeRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+    };
+  });
+
   return (
-    <div className="header">
-      <h1>Список заказов</h1>
-      <button className="button button_size_medium button_color_reverse-blue">
-        <ButtonIconSun className="button__icon" />
-        <span className="button__text">Светлая тема</span>
-      </button>
-      <div className="dropdown dropdown_switcher">
-        <span className="dropdown__name">Выберете тему</span>
-        <button className="button button_size_max-width button_size_small button_color_reverse-blue">
-          <ButtonIconSun className="button__icon" />
-          <span className="button__text">Светлая</span>
-        </button>
-        <button className="button button_size_max-width button_size_small button_color_blue">
-          <ButtonIconMoon className="button__icon" />
-          <span className="button__text">Темная</span>
-        </button>
+    <div className={styles.header}>
+      <h1>{title}</h1>
+      <div ref={themeRef}>
+        <Button
+          size="medium"
+          color="reverse-blue"
+          title="Светлая тема"
+          iconType="Sun"
+          onClick={() => setOpen(!isOpen)}
+        />
+        <Dropdown isOpen={isOpen} />
       </div>
     </div>
   );

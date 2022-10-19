@@ -2,7 +2,7 @@
   --label-color: #ebf0f5;
 }
 
-body {
+.body {
   padding: 2rem 3rem 0 3rem;
   display: flex;
   flex-direction: column;
@@ -70,6 +70,10 @@ body {
   padding: 1rem;
   background: var(--label-color);
   border-radius: 0.5rem;
+}
+
+.filter__area_hidden {
+  display: none;
 }
 
 .input__wrapper {

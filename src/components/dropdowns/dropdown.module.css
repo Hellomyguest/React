@@ -22,6 +22,10 @@
     0rem 0.125rem 0.125rem rgba(0, 0, 0, 0.1);
 }
 
+.dropdown_switcher.dropdown_hidden {
+  display: none;
+}
+
 .dropdown__name {
   display: block;
   width: 100%;
@@ -47,6 +51,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  position: absolute;
+  top: 2.125rem;
+  right: 0;
 }
 
 .dropdown__item > .checkbox > label {

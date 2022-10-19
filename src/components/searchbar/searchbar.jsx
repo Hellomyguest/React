@@ -1,25 +1,37 @@
 /* eslint-disable react/button-has-type */
-import './searchbar.css';
-import { ReactComponent as FindIcon } from '../icons/search.svg';
-import { ReactComponent as DeleteIcon } from '../icons/x-medium.svg';
+import { useState } from 'react';
+import styles from './searchbar.module.css';
+import { Icon } from '../icons';
 
-const Searchbar = function Searchbar() {
+export function Searchbar({ placeholder, ...props }) {
+  const [searchValue, setSearchValue] = useState('');
+
+  const changeHandler = (e) => {
+    setSearchValue(e.target.value);
+    console.log(searchValue);
+  };
+
   return (
-    <div className="searchbar searchbar_empty">
+    <div className={`${styles.searchbar} ${styles.searchbar_empty}`}>
       <input
-        className="searchbar__area"
+        className={styles.searchbar__area}
+        placeholder={placeholder}
+        onChange={changeHandler}
         type="search"
         defaultValue=""
-        placeholder="Номер заказа или ФИО"
         name=""
         id=""
+        value={searchValue}
+        {...props}
       />
-      <FindIcon className="searchbar__icon-find" />
-      <button className="searchbar__button-delete">
-        <DeleteIcon className="serachbar__icon-delete" />
+      <Icon iconType="Search" className={styles['searchbar__icon-find']} />
+      <button
+        className={`${styles['searchbar__button-delete']} ${
+          searchValue === '' && styles['searchbar__button-delete_hidden']
+        } `}
+        onClick={() => setSearchValue('')}>
+        <Icon iconType="Xmedium" className={styles['searchbar__icon-delete']} />
       </button>
     </div>
   );
-};
-
-export default Searchbar;
+}

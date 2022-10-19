@@ -13,37 +13,36 @@ import { ReactComponent as IconVarrow } from './v_arrow.svg';
 import { ReactComponent as IconXlarge } from './x-large.svg';
 import { ReactComponent as IconXmedium } from './x-medium.svg';
 
-export function Icon({ iconType }) {
-  console.log(iconType);
+export function Icon({ iconType, ...props }) {
   switch (iconType) {
     case 'Abort':
-      return <IconAbort />;
+      return <IconAbort {...props} />;
     case 'Bin':
-      return <IconBin />;
+      return <IconBin {...props} />;
     case 'Checkmark':
-      return <IconCheckmark />;
+      return <IconCheckmark {...props} />;
     case 'Dot':
       return <IconDot />;
     case 'Filter':
-      return <IconFilter />;
+      return <IconFilter {...props} />;
     case 'Locked':
-      return <IconLocked />;
+      return <IconLocked {...props} />;
     case 'Moon':
-      return <IconMoon />;
+      return <IconMoon {...props} />;
     case 'Pencil':
-      return <IconPencil />;
+      return <IconPencil {...props} />;
     case 'Refresh':
-      return <IconRefresh />;
+      return <IconRefresh {...props} />;
     case 'Search':
-      return <IconSearch />;
+      return <IconSearch {...props} />;
     case 'Sun':
-      return <IconSun />;
+      return <IconSun {...props} />;
     case 'Varrow':
-      return <IconVarrow />;
+      return <IconVarrow {...props} />;
     case 'Xlarge':
-      return <IconXlarge />;
+      return <IconXlarge {...props} />;
     case 'Xmedium':
-      return <IconXmedium />;
+      return <IconXmedium {...props} />;
     default:
       return false;
   }

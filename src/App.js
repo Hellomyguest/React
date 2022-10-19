@@ -1,57 +1,64 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
+import { useState } from 'react';
 import './components/css/settings.css';
-import './components/css/uikit.css';
-import './components/css/admpanel.css';
+// import './components/css/uikit.css';
+import styles from './components/css/admpanel.module.css';
 
-import { ReactComponent as LoadIcon } from './components/icons/refresh.svg';
-
-import Buttons from './components/Buttons/buttons';
+import { Button } from './components/Button/button';
 // import Checkboxes from './components/checkbox/checkbox';
-import Input from './components/input/input';
-import Searchbar from './components/searchbar/searchbar';
+import { Input } from './components/input/input';
+import { Searchbar } from './components/searchbar/searchbar';
 // import Radio from './components/radio/radio';
 // import Dropdowns from './components/dropdowns/dropdowns';
 import Pageheader from './components/pageheader/pageheader';
+import { Icon } from './components/icons';
 
 function App() {
+  const [isOpen, setOpen] = useState(true);
   return (
-    <>
-      <Pageheader />
-      <div className="filter">
-        <div className="filter__search-area">
-          <div className="filter__search">
-            <Searchbar />
-            <Buttons
-              theme="blue"
+    <div className={styles.body}>
+      <Pageheader title="Список заказов" />
+      <div className={styles.filter}>
+        <div className={styles['filter__search-area']}>
+          <div className={styles.filter__search}>
+            <Searchbar placeholder="Номер заказа или ФИО" />
+            <Button
+              color="blue"
               size="medium"
               title="Фильтры"
               iconType="Filter"
+              onClick={() => setOpen(!isOpen)}
             />
-            <Buttons />
+            <Button
+              color="reverse-blue"
+              size="medium"
+              title="Сбросить фильтры"
+            />
           </div>
-          <div className="load">
-            <LoadIcon className="load__icon" />
-            <span className="load__text">Загрузка</span>
+          <div className={styles.load}>
+            <Icon iconType="Refresh" className={styles.load__icon} />
+            <span className={styles.load__text}>Загрузка</span>
           </div>
         </div>
-        <div className="filter__area">
-          <div className="filter__date">
+        <div
+          className={isOpen ? styles.filter__area : styles.filter__area_hidden}>
+          <div className={styles.filter__date}>
             <Input />
           </div>
-          <div className="filter__status">
+          <div className={styles.filter__status}>
             <Input />
           </div>
-          <div className="filter__price">
+          <div className={styles.filter__price}>
             <Input />
           </div>
-          <div className="filter__button">
-            <Buttons />
+          <div className={styles.filter__button}>
+            <Button color="reverse-blue" size="medium" title="Применить" />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
