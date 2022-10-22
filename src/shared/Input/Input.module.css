@@ -13,6 +13,14 @@ input::-webkit-input-placeholder {
   position: relative;
 }
 
+.input__mask {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
 .input__label {
   display: block;
   width: 100%;
@@ -38,6 +46,10 @@ input::-webkit-input-placeholder {
   color: var(--main-black-text-color);
 }
 
+.input__text-field_prefix {
+  padding: 0.25rem 2rem 0.25rem 1.75rem;
+}
+
 .input__icon {
   width: 1rem;
   height: 1rem;
@@ -58,8 +70,11 @@ input::-webkit-input-placeholder {
   font: inherit;
   color: inherit;
   background-color: transparent;
-  /* display: none; */
   cursor: pointer;
+}
+
+.input__button_hidden {
+  display: none;
 }
 
 .input_disabled .input__icon {
@@ -77,6 +92,10 @@ input::-webkit-input-placeholder {
 }
 
 .input_invalid .input__text-field {
+  border-color: var(--error-color);
+}
+
+input:invalid {
   border-color: var(--error-color);
 }
 

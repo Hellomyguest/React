@@ -1,0 +1,16 @@
+._ {
+  margin: 0 0;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--day-white-color);
+  border: 0.0625rem solid var(--day-lightblue-color);
+  box-sizing: border-box;
+  border-radius: 0.0625rem;
+}
+
+._:checked {
+  background-image: url('../Icons/checkmark.svg');
+  background-color: var(--main-border-color);
+  border-color: var(--main-border-color);
+}

@@ -89,20 +89,8 @@
   padding: 0.25rem 2rem 0.25rem 1.75rem;
 }
 
-.input__text-field_to + .input__button {
-  display: none;
-}
-
 .input__area {
   width: 100%;
-}
-
-.input__area > .input__mask {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  left: 0.5rem;
-  top: 0.5rem;
 }
 
 .input__button_v {
@@ -123,6 +111,9 @@
 
 .filter__date {
   width: 19%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .filter__status {
@@ -132,6 +123,9 @@
 
 .filter__price {
   width: 17%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .filter__status > .input > .input__wrapper > .input__area > .dropdown_multiple {
