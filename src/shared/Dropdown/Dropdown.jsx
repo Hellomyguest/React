@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import styles from './Dropdown.module.css';
 
 export function Dropdown({ trigger, overlay, className }) {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(true);
   const containerRef = useRef();
 
   useEffect(() => {

@@ -8,41 +8,39 @@ import { Icon } from '../Icons';
 export function Input({
   type,
   placeholder,
-  value,
   pattern,
-  label,
   prefix,
-  ...props
+  postfix,
+  disabled,
+  withReset,
 }) {
   const [inputValue, setInputValue] = useState('');
-
   const changeHandler = (e) => {
     setInputValue(e.target.value);
   };
-
   return (
-    <div className={styles.input}>
-      {label && <label className={styles.input__label}>{label}</label>}
-      <div className={styles.input__area}>
-        {prefix && <span className={styles.input__mask}>{prefix}</span>}
-        <input
-          className={`${styles['input__text-field']} ${
-            prefix && styles['input__text-field_prefix']
-          }`}
-          onChange={changeHandler}
-          type={type}
-          placeholder={placeholder}
-          value={inputValue}
-          pattern={pattern}
-          {...props}
-        />
+    <div className={styles.input__area}>
+      {prefix && <span className={styles.input__mask}>{prefix}</span>}
+      <input
+        className={`${styles['input__text-field']} ${
+          prefix && styles['input__text-field_prefix']
+        } ${disabled && styles.input_disabled}`}
+        onChange={changeHandler}
+        type={type}
+        placeholder={placeholder}
+        value={inputValue}
+        pattern={pattern}
+        disabled={disabled}
+      />
+      {withReset && inputValue && (
         <button
           className={styles.input__button}
           onClick={() => setInputValue('')}
         >
           <Icon iconType="Xmedium" className={styles.input__icon} />
         </button>
-      </div>
+      )}
+      {postfix}
     </div>
   );
 }

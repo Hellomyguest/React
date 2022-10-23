@@ -6,14 +6,11 @@ import { Icon } from '../Icons';
 const buttonTypes = {
   sizeMedium: 'medium',
   sizeSmall: 'small',
-  iconOnly: 'button_icononly',
   colorPrimary: 'primary',
   colorReversePrimary: 'reversePrimary',
   colorReverseSecondary: 'reverseSecondary',
   colorDanger: 'danger',
 };
-
-const noop = () => {};
 
 export function Button({
   color,
@@ -21,9 +18,8 @@ export function Button({
   maxWidth,
   title,
   type = 'button',
-  iconOnly,
   iconType,
-  onClick = noop,
+  onClick,
   className,
   ...props
 }) {
@@ -31,7 +27,6 @@ export function Button({
     styles._,
     {
       [styles.color_danger]: color === buttonTypes.colorDanger,
-      [styles.icononly]: color === buttonTypes.iconOnly,
       [styles.color_primary]: color === buttonTypes.colorPrimary,
       [styles.color_reversePrimary]: color === buttonTypes.colorReversePrimary,
       [styles.color_reverseSecondary]:
@@ -39,13 +34,14 @@ export function Button({
       [styles.size_medium]: size === buttonTypes.sizeMedium,
       [styles.size_small]: size === buttonTypes.sizeSmall,
       [styles.size_maxWidth]: maxWidth,
+      [styles.icononly]: !!title,
     },
     className
   );
   return (
     <button className={blockClass} type={type} onClick={onClick} {...props}>
       <Icon iconType={iconType} className={styles.icon} />
-      {!iconOnly && <span className={styles.text}>{title}</span>}
+      {title && <span className={styles.text}>{title}</span>}
     </button>
   );
 }

@@ -32,34 +32,49 @@ export function Filter() {
       {isOpen && (
         <div className={styles.filter__area}>
           <div className={styles.filter__date}>
-            <span className={styles.input__label}>Дата оформления</span>
-            <div className={styles.input__wrapper}>
-              <Input
-                placeholder="dd.mm.yyyy"
-                prefix="с"
-                pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-              />
-              <Input
-                placeholder="dd.mm.yyyy"
-                prefix="по"
-                pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-              />
-            </div>
+            <ControlWithLabel
+              labelBefore
+              label="Дата оформления"
+              control={
+                <>
+                  <Input
+                    placeholder="dd.mm.yyyy"
+                    prefix="с"
+                    pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+                    withReset
+                  />
+                  <Input
+                    placeholder="dd.mm.yyyy"
+                    prefix="по"
+                    pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+                    withReset
+                  />
+                </>
+              }
+              className={styles.date}
+            />
           </div>
           <div className={styles.filter__status}>
             <Dropdown
-              trigger={<Input label="Статус заказа" value="Любой" checkbox />}
+              trigger={
+                <ControlWithLabel
+                  labelBefore
+                  label="Статус заказа"
+                  className={styles.date}
+                  control={<Input value="Любой" />}
+                />
+              }
               overlay={
                 <>
-                  <ControlWithLabel control={<Checkbox />} title="Новый" />
-                  <ControlWithLabel control={<Checkbox />} title="Рассчет" />
+                  <ControlWithLabel control={<Checkbox />} label="Новый" />
+                  <ControlWithLabel control={<Checkbox />} label="Рассчет" />
                   <ControlWithLabel
                     control={<Checkbox />}
-                    title="Подтвержден"
+                    label="Подтвержден"
                   />
-                  <ControlWithLabel control={<Checkbox />} title="Отложен" />
-                  <ControlWithLabel control={<Checkbox />} title="Выполнен" />
-                  <ControlWithLabel control={<Checkbox />} title="Отменен" />
+                  <ControlWithLabel control={<Checkbox />} label="Отложен" />
+                  <ControlWithLabel control={<Checkbox />} label="Выполнен" />
+                  <ControlWithLabel control={<Checkbox />} label="Отменен" />
                 </>
               }
               className={styles.overlay_checkbox}
