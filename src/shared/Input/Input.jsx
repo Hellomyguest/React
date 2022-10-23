@@ -1,46 +1,61 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { useState } from 'react';
+import classNames from 'classnames';
 import styles from './Input.module.css';
 import { Icon } from '../Icons';
 
 export function Input({
   type,
+  value,
   placeholder,
   pattern,
   prefix,
-  postfix,
   disabled,
-  withReset,
+  onReset,
+  className,
+  dropdown,
+  onChange,
 }) {
-  const [inputValue, setInputValue] = useState('');
+  /*
+ const [inputValue, setInputValue] = useState('');
   const changeHandler = (e) => {
     setInputValue(e.target.value);
   };
+  */
   return (
-    <div className={styles.input__area}>
-      {prefix && <span className={styles.input__mask}>{prefix}</span>}
+    <div
+      className={classNames(
+        styles._,
+        { [styles.disabled]: disabled },
+        className
+      )}
+    >
+      {prefix && <span className={styles.prefix}>{prefix}</span>}
       <input
-        className={`${styles['input__text-field']} ${
-          prefix && styles['input__text-field_prefix']
-        } ${disabled && styles.input_disabled}`}
-        onChange={changeHandler}
+        className={classNames(styles.textField, {
+          [styles.textFieldPrefix]: prefix,
+          [styles.disabled]: disabled,
+        })}
+        onChange={onChange}
         type={type}
         placeholder={placeholder}
-        value={inputValue}
+        value={value}
         pattern={pattern}
         disabled={disabled}
       />
-      {withReset && inputValue && (
-        <button
-          className={styles.input__button}
-          onClick={() => setInputValue('')}
-        >
-          <Icon iconType="Xmedium" className={styles.input__icon} />
+      {onReset && value && (
+        <button type="button" className={styles.button} onClick={onReset}>
+          <Icon iconType="Xmedium" className={styles.icon} />
         </button>
       )}
-      {postfix}
+      {disabled && (
+        <button type="button" className={styles.button}>
+          <Icon iconType="Locked" className={styles.icon_disabled} />
+        </button>
+      )}
+      {dropdown && (
+        <button type="button" className={styles.button}>
+          <Icon iconType="Varrow" className={styles.icon} />
+        </button>
+      )}
     </div>
   );
 }

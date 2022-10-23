@@ -1,36 +1,33 @@
-/* eslint-disable react/button-has-type */
-import { useState } from 'react';
 import styles from './Searchbar.module.css';
 import { Icon } from '../Icons';
 
-export function Searchbar({ placeholder, ...props }) {
+export function Searchbar({ placeholder, value, onChange, onReset, ...props }) {
+  /*
   const [searchValue, setSearchValue] = useState('');
-
+  
   const changeHandler = (e) => {
     setSearchValue(e.target.value);
   };
+  */
 
   return (
-    <div className={`${styles.searchbar} ${styles.searchbar_empty}`}>
+    <div className={styles._}>
       <input
-        className={styles.searchbar__area}
+        className={styles.area}
         placeholder={placeholder}
-        onChange={changeHandler}
+        value={value}
+        onChange={onChange}
         type="search"
         name=""
         id=""
-        value={searchValue}
         {...props}
       />
-      <Icon iconType="Search" className={styles['searchbar__icon-find']} />
-      <button
-        className={`${styles['searchbar__button-delete']} ${
-          searchValue === '' && styles['searchbar__button-delete_hidden']
-        } `}
-        onClick={() => setSearchValue('')}
-      >
-        <Icon iconType="Xmedium" className={styles['searchbar__icon-delete']} />
-      </button>
+      <Icon iconType="Search" className={styles.iconFind} />
+      {value && (
+        <button type="button" className={styles.buttonDelete} onClick={onReset}>
+          <Icon iconType="Xmedium" className={styles.iconDelete} />
+        </button>
+      )}
     </div>
   );
 }

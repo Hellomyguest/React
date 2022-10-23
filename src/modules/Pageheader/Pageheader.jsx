@@ -4,43 +4,33 @@ import { Button } from '../../shared/Button/Button';
 
 export function Pageheader({ title }) {
   return (
-    <div className={styles.header}>
-      <h1>{title}</h1>
+    <div className={styles._}>
+      <h1 className={styles.title}>{title}</h1>
       <div>
         <Dropdown
           trigger={
-            <Button
-              size="medium"
-              color="reversePrimary"
-              title="Светлая тема"
-              iconType="Sun"
-            />
+            <Button size="medium" color="reversePrimary" iconType="Sun">
+              {' '}
+              Светлая тема{' '}
+            </Button>
           }
           overlay={
             <>
-              <span className={styles.dropdown__name}>Выберите тему</span>
-              <Button
-                color="primary"
-                size="small"
-                maxWidth
-                title="Светлая"
-                iconType="Sun"
-              />
+              <span>Выберите тему</span>
+              <Button color="primary" size="small" maxWidth iconType="Sun">
+                Светлая
+              </Button>
               <Button
                 color="reversePrimary"
                 size="small"
                 maxWidth
-                title="Темная"
                 iconType="Moon"
-              />
+              >
+                Темная
+              </Button>
             </>
           }
         />
-
-        {/* <ButtonDropdown size="medium"
-          color="reversePrimary"
-          title="Светлая тема"
-  iconType="Sun"  overlayType="switch"/> */}
       </div>
     </div>
   );

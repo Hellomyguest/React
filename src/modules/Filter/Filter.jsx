@@ -2,67 +2,65 @@ import { useState } from 'react';
 import { Button, Input, Searchbar, Icon, Checkbox } from '../../shared';
 import { ControlWithLabel } from '../../shared/ControlWithLabel/ControlWithLabel';
 import { Dropdown } from '../../shared/Dropdown/Dropdown';
+import { InputWithLabel } from '../../shared/InputWithLabel/InputWithLabel';
 import styles from './Filter.module.css';
 
 export function Filter() {
   const [isOpen, setOpen] = useState(true);
   return (
-    <div className={styles.filter}>
-      <div className={styles['filter__search-area']}>
-        <div className={styles.filter__search}>
+    <div className={styles._}>
+      <div className={styles.searchArea}>
+        <div className={styles.search}>
           <Searchbar placeholder="Номер заказа или ФИО" />
           <Button
             color={isOpen ? 'primary' : 'reversePrimary'}
             size="medium"
-            title="Фильтры"
             iconType="Filter"
             onClick={() => setOpen(!isOpen)}
-          />
-          <Button
-            color="reversePrimary"
-            size="medium"
-            title="Сбросить фильтры"
-          />
+          >
+            Фильтры
+          </Button>
+          <Button color="reversePrimary" size="medium">
+            Сбросить фильтры
+          </Button>
         </div>
         <div className={styles.load}>
-          <Icon iconType="Refresh" className={styles.load__icon} />
-          <span className={styles.load__text}>Загрузка</span>
+          <Icon iconType="Refresh" className={styles.loadIcon} />
+          <span className={styles.loadText}>Загрузка</span>
         </div>
       </div>
       {isOpen && (
-        <div className={styles.filter__area}>
-          <div className={styles.filter__date}>
-            <ControlWithLabel
-              labelBefore
+        <div className={styles.area}>
+          <div className={styles.date}>
+            <InputWithLabel
               label="Дата оформления"
-              control={
-                <>
-                  <Input
-                    placeholder="dd.mm.yyyy"
-                    prefix="с"
-                    pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-                    withReset
-                  />
-                  <Input
-                    placeholder="dd.mm.yyyy"
-                    prefix="по"
-                    pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-                    withReset
-                  />
-                </>
+              input={
+                <Input
+                  placeholder="dd.mm.yyyy"
+                  prefix="с"
+                  pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+                  withReset
+                />
               }
-              className={styles.date}
+            />
+            <Input
+              placeholder="dd.mm.yyyy"
+              prefix="по"
+              pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+              withReset
             />
           </div>
-          <div className={styles.filter__status}>
+          <div className={styles.status}>
             <Dropdown
               trigger={
-                <ControlWithLabel
-                  labelBefore
-                  label="Статус заказа"
-                  className={styles.date}
-                  control={<Input value="Любой" />}
-                />
+                <div>
+                  <InputWithLabel
+                    input={
+                      <Input value="Любой" label="Статус заказа" dropdown />
+                    }
+                    label="Статус заказа"
+                  />
+                </div>
               }
               overlay={
                 <>
@@ -77,18 +75,29 @@ export function Filter() {
                   <ControlWithLabel control={<Checkbox />} label="Отменен" />
                 </>
               }
-              className={styles.overlay_checkbox}
+              className={styles.statusOverlay}
             />
           </div>
-          <div className={styles.filter__price}>
-            <span className={styles.input__label}>Дата оформления</span>
-            <div className={styles.input__wrapper}>
-              <Input placeholder="₽" value="5000" prefix="от" />
-              <Input placeholder="₽" prefix="до" />
-            </div>
+          <div className={styles.price}>
+            <InputWithLabel
+              input={
+                <Input
+                  placeholder="₽"
+                  value="5000"
+                  prefix="от"
+                  label="Сумма заказа"
+                  withReset
+                  pattern="\d*"
+                />
+              }
+              label="Сумма заказ"
+            />
+            <Input placeholder="₽" prefix="до" withReset pattern="\d*" />
           </div>
-          <div className={styles.filter__button}>
-            <Button color="reversePrimary" size="medium" title="Применить" />
+          <div className={styles.button}>
+            <Button color="reversePrimary" size="medium">
+              Применить
+            </Button>
           </div>
         </div>
       )}
