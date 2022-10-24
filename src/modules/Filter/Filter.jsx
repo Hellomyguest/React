@@ -56,7 +56,16 @@ export function Filter() {
                 <div>
                   <InputWithLabel
                     input={
-                      <Input value="Любой" label="Статус заказа" dropdown />
+                      <Input
+                        value="Любой"
+                        label="Статус заказа"
+                        postfix={
+                          <Icon
+                            iconType="Varrow"
+                            className={styles.statusIcon}
+                          />
+                        }
+                      />
                     }
                     label="Статус заказа"
                   />

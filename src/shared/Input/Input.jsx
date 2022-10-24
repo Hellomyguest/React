@@ -8,10 +8,10 @@ export function Input({
   placeholder,
   pattern,
   prefix,
+  postfix,
   disabled,
   onReset,
   className,
-  dropdown,
   onChange,
 }) {
   /*
@@ -33,6 +33,9 @@ export function Input({
         className={classNames(styles.textField, {
           [styles.textFieldPrefix]: prefix,
           [styles.disabled]: disabled,
+          [styles.textFieldWithButton]: disabled || !!onReset || postfix,
+          [styles.textFieldWithPrefixAndButton]:
+            (disabled || !!onReset) && postfix,
         })}
         onChange={onChange}
         type={type}
@@ -41,20 +44,26 @@ export function Input({
         pattern={pattern}
         disabled={disabled}
       />
-      {onReset && value && (
-        <button type="button" className={styles.button} onClick={onReset}>
-          <Icon iconType="Xmedium" className={styles.icon} />
-        </button>
+      {postfix && (
+        <div
+          className={classNames(styles.postfix, {
+            [styles.postfixWithButton]: disabled || !!onReset,
+          })}
+        >
+          {postfix}
+        </div>
       )}
-      {disabled && (
+      {disabled ? (
         <button type="button" className={styles.button}>
-          <Icon iconType="Locked" className={styles.icon_disabled} />
+          <Icon iconType="Locked" className={styles.iconDisabled} />
         </button>
-      )}
-      {dropdown && (
-        <button type="button" className={styles.button}>
-          <Icon iconType="Varrow" className={styles.icon} />
-        </button>
+      ) : (
+        !!onReset &&
+        value && (
+          <button type="button" className={styles.button} onClick={onReset}>
+            <Icon iconType="Xmedium" className={styles.icon} />
+          </button>
+        )
       )}
     </div>
   );

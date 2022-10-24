@@ -24,7 +24,7 @@ input:invalid {
   height: 2rem;
   border: 0.0625rem solid var(--main-border-color);
   border-radius: 0.25rem;
-  padding: 0.25rem 2rem 0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
   box-sizing: border-box;
   letter-spacing: 0px;
   text-align: left;
@@ -37,12 +37,20 @@ input:invalid {
   color: var(--main-black-text-color);
 }
 
+.textFieldWithButton {
+  padding-right: 1.75rem;
+}
+
+.textFieldWithPostfixAndButton {
+  padding-right: 3rem;
+}
+
 .textField:focus {
   outline-color: var(--main-focus-outline-color);
 }
 
 .textFieldPrefix {
-  padding: 0.25rem 2rem 0.25rem 1.75rem;
+  padding-left: 1.75rem;
 }
 
 .icon {
@@ -68,7 +76,29 @@ input:invalid {
   cursor: pointer;
 }
 
-.disabled {
+.postfix {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  width: 1rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+.postfixWithButton {
+  right: 1.75rem;
+}
+
+.postfixWithButton svg {
+  fill: var(--blue-color);
+  stroke: var(--blue-color);
+}
+
+.iconDisabled {
   fill: var(--main-black-text-color);
 }
 
