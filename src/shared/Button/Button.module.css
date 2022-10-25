@@ -37,19 +37,19 @@
 }
 
 .color_primary {
-  background-color: var(--blue-color);
+  background-color: var(--primary-color);
 }
 
 .color_reversePrimary {
-  color: var(--blue-color);
+  color: var(--primary-color);
 }
 
 .color_danger {
-  background-color: var(--error-color);
+  background-color: var(--danger-color);
 }
 
 .color_reverseSecondary {
-  color: var(--main-black-text-color);
+  color: var(--primary-text-color);
 }
 
 .text {
@@ -60,29 +60,29 @@
 }
 
 .color_primary > .text {
-  color: var(--day-white-color);
+  color: var(--primary-background-color);
 }
 
 .color_reverseSecondary > .text {
-  color: var(--main-black-text-color);
+  color: var(--primary-text-color);
 }
 
 .color_reversePrimary > .text {
-  color: var(--blue-color);
+  color: var(--primary-color);
 }
 
 .icon {
   width: 1rem;
   height: 1rem;
-  stroke: var(--day-white-color);
-  fill: var(--day-white-color);
+  stroke: var(--primary-background-color);
+  fill: var(--primary-background-color);
 }
 
 .color_reversePrimary > .icon {
-  stroke: var(--blue-color);
-  fill: var(--blue-color);
+  stroke: var(--primary-color);
+  fill: var(--primary-color);
 }
 
 .color_reverseSecondary > .icon {
-  stroke: var(--main-black-text-color);
+  stroke: var(--primary-text-color);
 }

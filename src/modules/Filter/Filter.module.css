@@ -28,7 +28,7 @@
 .loadIcon {
   width: 1rem;
   height: 1rem;
-  stroke: var(--blue-color);
+  stroke: var(--primary-color);
 }
 
 /* @keyframes rotate {
@@ -45,14 +45,14 @@
   } */
 
 .loadText {
-  color: var(--blue-color);
+  color: var(--primary-color);
 }
 
 .area {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: var(--label-color);
+  background: var(--primary-filters-area-color);
   border-radius: 0.5rem;
 }
 
@@ -71,8 +71,8 @@
 .statusIcon {
   width: 1rem;
   height: 1rem;
-  fill: var(--day-lightblue-color);
-  stroke: var(--day-lightblue-color);
+  fill: var(--secondary-color);
+  stroke: var(--secondary-color);
 }
 
 .statusOverlay {

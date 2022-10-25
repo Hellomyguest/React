@@ -1,4 +1,3 @@
-import '../shared/css/settings.css';
 import styles from './OrdersPage.module.css';
 
 import { Pageheader } from '../modules/Pageheader/Pageheader';

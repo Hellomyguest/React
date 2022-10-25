@@ -3,14 +3,14 @@
   appearance: none;
   width: 1rem;
   height: 1rem;
-  background-color: var(--day-white-color);
-  border: 0.0625rem solid var(--day-lightblue-color);
+  background-color: var(--primary-background-color);
+  border: 0.0625rem solid var(--secondary-color);
   box-sizing: border-box;
   border-radius: 0.0625rem;
 }
 
 ._:checked {
   background-image: url('../Icons/checkmark.svg');
-  background-color: var(--blue-color);
-  border-color: var(--blue-color);
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
 }

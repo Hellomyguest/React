@@ -5,5 +5,5 @@
 }
 
 input:checked + .checkbox__text {
-  color: var(--main-border-color);
+  color: var(--primary-border-color);
 }

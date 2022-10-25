@@ -1,3 +1,4 @@
+import './App.css';
 import { OrdersPage } from './Pages/OrdersPage';
 
 function App() {

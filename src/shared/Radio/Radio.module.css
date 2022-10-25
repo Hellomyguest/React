@@ -1,7 +1,7 @@
 .radio:checked {
   background-image: url('../Icons/dot.svg');
-  background-color: var(--main-border-color);
-  border-color: var(--main-border-color);
+  background-color: var(--primary-border-color);
+  border-color: var(--primary-border-color);
 }
 
 .radio {
@@ -9,8 +9,8 @@
   appearance: none;
   width: 1rem;
   height: 1rem;
-  background-color: var(--day-white-color);
-  border: 0.0625rem solid var(--day-lightblue-color);
+  background-color: var(--primary-background-color);
+  border: 0.0625rem solid var(--secondary-color);
   box-sizing: border-box;
   border-radius: 0.0625rem;
 }

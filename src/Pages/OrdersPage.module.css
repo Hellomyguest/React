@@ -1,13 +1,9 @@
-:root {
-  --label-color: #ebf0f5;
-}
-
 .body {
   padding: 2rem 3rem 0 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  background-color: var(--day-white-color);
+  background-color: var(--primary-background-color);
 }
 
 .dropdown_switcher.dropdown_hidden {
@@ -44,7 +40,7 @@
 .load__icon {
   width: 1rem;
   height: 1rem;
-  stroke: var(--blue-color);
+  stroke: var(--primary-color);
 }
 
 /* @keyframes rotate {
@@ -61,14 +57,14 @@
 } */
 
 .load__text {
-  color: var(--blue-color);
+  color: var(--primary-color);
 }
 
 .filter__area {
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: var(--label-color);
+  background: var(--primary-filters-area-color);
   border-radius: 0.5rem;
 }
 
@@ -106,7 +102,7 @@
 }
 
 .input__icon_v {
-  fill: var(--day-lightblue-color);
+  fill: var(--secondary-color);
 }
 
 .filter__date {
@@ -165,7 +161,7 @@
 .table__header {
   display: flex;
   padding: 0 0.5rem;
-  background-color: var(--blue-color);
+  background-color: var(--primary-color);
 }
 
 .table__cell {
@@ -180,7 +176,7 @@
 }
 
 .table__cell_heading:hover > .table__text_heading {
-  color: var(--day-white-color);
+  color: var(--primary-background-color);
 }
 
 .table__cell_canseled {
@@ -188,17 +184,17 @@
 }
 
 .table__text_heading {
-  color: var(--label-color);
+  color: var(--primary-filters-area-color);
 }
 
 .table__text_completed {
-  color: var(--green-color);
+  color: var(--calculation-icon-color);
 }
 
 .table__icon {
   width: 1rem;
   height: 1rem;
-  fill: var(--label-color);
+  fill: var(--primary-filters-area-color);
 }
 
 .table__icon_postponed {
@@ -206,27 +202,27 @@
 }
 
 .table__icon_calculation {
-  fill: var(--blue-color);
+  fill: var(--primary-color);
 }
 
 .table__icon_canceled {
-  fill: var(--main-black-text-color);
-  stroke: var(--violet-color);
+  fill: var(--primary-text-color);
+  stroke: var(--declined-icon-color);
 }
 
 .table__icon_completed {
-  fill: var(--green-color);
+  fill: var(--calculation-icon-color);
 }
 
 .table__row {
   display: flex;
   height: 2.5rem;
   padding: 0 0.5rem;
-  border-bottom: 0.125rem solid var(--label-color);
+  border-bottom: 0.125rem solid var(--primary-filters-area-color);
 }
 
 .table__row:hover {
-  background-color: var(--day-lightblue-color);
+  background-color: var(--secondary-color);
 }
 
 .table__row:last-child {
@@ -234,7 +230,7 @@
 }
 
 .table__body {
-  background-color: var(--day-white-color);
+  background-color: var(--primary-background-color);
   overflow-x: auto;
 }
 
@@ -287,7 +283,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.5rem 1rem;
-  background-color: var(--label-color);
+  background-color: var(--primary-filters-area-color);
 }
 
 .footer__area {
@@ -297,7 +293,7 @@
 }
 
 .footer__bunch {
-  color: var(--blue-color);
+  color: var(--primary-color);
 }
 
 .button-wrapper {

@@ -7,6 +7,7 @@ import styles from './Filter.module.css';
 
 export function Filter() {
   const [isOpen, setOpen] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   return (
     <div className={styles._}>
       <div className={styles.searchArea}>
