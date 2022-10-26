@@ -1,0 +1,17 @@
+._ {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.area {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--primary-filters-area-color);
+  border-radius: 0.5rem;
+}
+
+.button {
+  align-self: flex-end;
+}

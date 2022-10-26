@@ -1,91 +1,99 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 
 export const FilterContext = React.createContext(null);
 
-/* const selects = {
-  new: false,
-  calculation: false,
-  confirmed: false,
-  postponed: false,
-  completed: false,
-  declined: false,
-};
-*/
-
-/* { name: 'Новый', checked: false },
-{ name: 'Рассчет', checked: false },
-{ name: 'Подтвержден', checked: false },
-{ name: 'Отложен', checked: false },
-{ name: 'Выполнен', checked: false },
-{ name: 'Отменен', checked: false }, */
-
-const STATUS_MAP = {
-  any: 'Любой',
-  new: 'Новый',
-  calculation: 'Рассчет',
-  confirmed: 'Подтверждён',
-  postponed: 'Отложен',
-  completed: 'Выполнен',
-  declined: 'Отменен',
-};
-
 export function FilterContextProvider({ children }) {
+  // isFilters open context
+  const [isFiltersOpen, setFiltersOpen] = useState('');
+
+  const handleClickFiltersOpen = () => {
+    setFiltersOpen(!isFiltersOpen);
+  };
+
+  // Search context
   const [searchValue, setSearchValue] = useState('');
-  const [statusValues, setStatusValues] = useState({
-    new: false,
-    calculation: false,
-    confirmed: false,
-    postponed: false,
-    completed: false,
-    declined: false,
-  });
 
-  const handleChangeStatus = (e) => {
-    setStatusValues({ ...statusValues, [e]: !statusValues[e] });
-  };
-
-  const checkedStatuses = useMemo(() => {
-    const statuses = Object.keys(statusValues)
-      .filter((el) => statusValues[el])
-      .map((status) => STATUS_MAP[status]);
-    return statuses.length ? statuses.join(', ') : STATUS_MAP.any;
-  }, [statusValues]);
-
-  // const [dateFromValue, setDateFromValue] = useState('');
-  // const [dateToValue, setdateToValue] = useState('');
-
-  /* const handleChange = (func) => {
-    const stateFunc = func;
-    return (e) => stateFunc(e.target.value);
-  };
-
-  const handleReset = (func) => {
-    const stateFunc = func;
-    return () => f('');
-  }; */
-
-  const handleChange = (e) => {
+  const handleChangeSearchValue = (e) => {
     setSearchValue(e.target.value);
   };
 
-  const handleReset = () => setSearchValue('');
+  const handleResetSearchValue = () => setSearchValue('');
 
+  // Date filter context
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+
+  const handleChangeDateFrom = (e) => {
+    setDateFrom(e.target.value);
+  };
+
+  const handleChangeDateTo = (e) => {
+    setDateTo(e.target.value);
+  };
+
+  // Status filter context
+  const [selectedStatuses, setSelectedStatuses] = useState([]);
+
+  const handleChangeSelectedStatuses = (e) => {
+    setSelectedStatuses(
+      selectedStatuses.includes(e.target.name)
+        ? selectedStatuses.filter((item) => item !== e.target.name)
+        : [...selectedStatuses, e.target.name]
+    );
+  };
+
+  // Price filter context
+  const [priceFrom, setPriceFrom] = useState('');
+  const [priceTo, setPriceTo] = useState('');
+
+  const handleChangePriceFrom = (e) => {
+    setPriceFrom(e.target.value);
+  };
+
+  const handleChangePriceTo = (e) => {
+    setPriceTo(e.target.value);
+  };
+
+  // Reset all filters
+  const handleResetFilters = () => {
+    setSearchValue('');
+    setDateFrom('');
+    setDateTo('');
+    setSelectedStatuses([]);
+    setPriceFrom('');
+    setPriceTo('');
+  };
+
+  // Getting the context value
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const filterStore = {
+    filtersOpen: {
+      value: isFiltersOpen,
+      onClick: handleClickFiltersOpen,
+    },
     search: {
       value: searchValue,
-      onChange: handleChange,
-      onReset: handleReset,
+      onChange: handleChangeSearchValue,
+      onReset: handleResetSearchValue,
+    },
+    date: {
+      valueFrom: dateFrom,
+      valueTo: dateTo,
+      onChangeFrom: handleChangeDateFrom,
+      onChangeTo: handleChangeDateTo,
     },
     status: {
-      value: statusValues,
-      checkedStatuses,
-      STATUS_MAP,
-      onChange: handleChangeStatus,
+      value: selectedStatuses,
+      onChange: handleChangeSelectedStatuses,
     },
-    // dateFrom: [dateFromValue, handleChange( "", setDateFromValue), handleReset(setDateFromValue)]
+    price: {
+      valueFrom: priceFrom,
+      valueTo: priceTo,
+      onChangeFrom: handleChangePriceFrom,
+      onChangeTo: handleChangePriceTo,
+    },
+    reset: { onClick: handleResetFilters },
   };
-  // const store = { searchValue, onChange: handleChange, onReset: handleReset };
 
   return (
     <FilterContext.Provider value={filterStore}>

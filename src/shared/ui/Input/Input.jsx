@@ -13,6 +13,7 @@ export function Input({
   onReset,
   className,
   onChange,
+  readOnly,
 }) {
   /*
  const [inputValue, setInputValue] = useState('');
@@ -40,9 +41,10 @@ export function Input({
         onChange={onChange}
         type={type}
         placeholder={placeholder}
-        defaultValue={value}
+        value={value}
         pattern={pattern}
         disabled={disabled}
+        readOnly={readOnly}
       />
       {postfix && (
         <div
