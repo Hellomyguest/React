@@ -1,18 +1,30 @@
-import { useState } from 'react';
-import { Button, Input, Searchbar, Icon, Checkbox } from '../../shared';
-import { ControlWithLabel } from '../../shared/ControlWithLabel/ControlWithLabel';
-import { Dropdown } from '../../shared/Dropdown/Dropdown';
-import { InputWithLabel } from '../../shared/InputWithLabel/InputWithLabel';
+import { useState, useContext } from 'react';
+import {
+  Button,
+  Input,
+  Searchbar,
+  Icon,
+  Checkbox,
+  ControlWithLabel,
+  Dropdown,
+  InputWithLabel,
+} from '../../../../shared/ui';
+import { FilterContext } from '../../../../store/filterContext';
 import styles from './Filter.module.css';
 
 export function Filter() {
+  const { search, status } = useContext(FilterContext);
   const [isOpen, setOpen] = useState(true);
-  // eslint-disable-next-line no-unused-vars
   return (
     <div className={styles._}>
       <div className={styles.searchArea}>
         <div className={styles.search}>
-          <Searchbar placeholder="Номер заказа или ФИО" />
+          <Searchbar
+            placeholder="Номер заказа или ФИО"
+            value={search.value}
+            onChange={search.onChange}
+            onReset={search.onReset}
+          />
           <Button
             color={isOpen ? 'primary' : 'reversePrimary'}
             size="medium"
@@ -21,9 +33,11 @@ export function Filter() {
           >
             Фильтры
           </Button>
-          <Button color="reversePrimary" size="medium">
-            Сбросить фильтры
-          </Button>
+          {isOpen && (
+            <Button color="reversePrimary" size="medium">
+              Сбросить фильтры
+            </Button>
+          )}
         </div>
         <div className={styles.load}>
           <Icon iconType="Refresh" className={styles.loadIcon} />
@@ -58,7 +72,7 @@ export function Filter() {
                   <InputWithLabel
                     input={
                       <Input
-                        value="Любой"
+                        value={status.checkedStatuses}
                         label="Статус заказа"
                         postfix={
                           <Icon
@@ -74,15 +88,17 @@ export function Filter() {
               }
               overlay={
                 <>
-                  <ControlWithLabel control={<Checkbox />} label="Новый" />
-                  <ControlWithLabel control={<Checkbox />} label="Рассчет" />
-                  <ControlWithLabel
-                    control={<Checkbox />}
-                    label="Подтвержден"
-                  />
-                  <ControlWithLabel control={<Checkbox />} label="Отложен" />
-                  <ControlWithLabel control={<Checkbox />} label="Выполнен" />
-                  <ControlWithLabel control={<Checkbox />} label="Отменен" />
+                  {Object.keys(status.value).map((item) => (
+                    <ControlWithLabel
+                      key={item}
+                      control={
+                        <Checkbox
+                          onChange={status.onChange(status.value[item])}
+                        />
+                      }
+                      label={status.STATUS_MAP[item]}
+                    />
+                  ))}
                 </>
               }
               className={styles.statusOverlay}

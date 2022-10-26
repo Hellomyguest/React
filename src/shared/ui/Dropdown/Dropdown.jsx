@@ -7,15 +7,15 @@ export function Dropdown({ trigger, overlay, className }) {
   const containerRef = useRef();
 
   useEffect(() => {
-    const handlerClick = (e) => {
+    const handleClick = (e) => {
       if (!containerRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
-    document.addEventListener('mousedown', handlerClick);
+    document.addEventListener('mousedown', handleClick);
 
     return () => {
-      document.removeEventListener('mousedown', handlerClick);
+      document.removeEventListener('mousedown', handleClick);
     };
   });
 

@@ -1,7 +1,6 @@
 import styles from './Pageheader.module.css';
-import { Dropdown } from '../../shared/Dropdown/Dropdown';
-import { Button } from '../../shared/Button/Button';
-import { useTheme } from '../../shared/useTheme/useTheme';
+import { Dropdown, Button } from '../../../../shared/ui';
+import { useTheme } from '../../../../shared/utils/useTheme';
 
 export function Pageheader({ title }) {
   const { isLight, toggleTheme } = useTheme();

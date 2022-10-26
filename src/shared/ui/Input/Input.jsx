@@ -40,7 +40,7 @@ export function Input({
         onChange={onChange}
         type={type}
         placeholder={placeholder}
-        value={value}
+        defaultValue={value}
         pattern={pattern}
         disabled={disabled}
       />
