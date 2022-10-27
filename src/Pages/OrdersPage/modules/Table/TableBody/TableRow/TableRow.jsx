@@ -44,8 +44,6 @@ const ORDER_MAP = {
 
 export function TableRow({ value }) {
   const status = ORDER_MAP[value.status];
-  console.log(styles);
-  console.log(status.iconClassName);
   return (
     <div className={styles._}>
       <TableCell className={classNames(styles.cell, styles.cell_filtering)}>

@@ -5,7 +5,7 @@ import { Table } from './modules/Table/Table';
 
 export function OrdersPage() {
   return (
-    <div className={styles.body}>
+    <div className={styles._}>
       <Pageheader title="Список заказов" />
       <Filters />
       <Table />

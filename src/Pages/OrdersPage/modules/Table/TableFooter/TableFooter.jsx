@@ -3,14 +3,14 @@ import styles from './TableFooter.module.css';
 
 export function TableFooter() {
   return (
-    <div className={styles.table__footer}>
-      <div className={styles.footer__area}>
-        <span className={styles.footer__bunch}>Выбрано записей: 5</span>
+    <div className={styles._}>
+      <div className={styles.buttons}>
+        <span className={styles.bunch}>Выбрано записей: 5</span>
         <Button color="primary" size="small" iconType="Pencil">
           Изменить статус
         </Button>
 
-        <div className={styles['button-wrapper']}>
+        <div className={styles.dropdown}>
           <Dropdown
             trigger={
               <Button color="danger" size="small" iconType="Bin">
@@ -24,11 +24,16 @@ export function TableFooter() {
                   color="reversePrimary"
                   size="small"
                   maxWidth
-                  title="Удалить"
+                  className={styles.overlayButton}
                 >
                   Удалить
                 </Button>
-                <Button color="primary" size="small" maxWidth>
+                <Button
+                  color="reversePrimary"
+                  size="small"
+                  maxWidth
+                  className={styles.overlayButton}
+                >
                   Отмена
                 </Button>
               </>
@@ -37,45 +42,27 @@ export function TableFooter() {
           />
         </div>
       </div>
-      <div className="footer__area footer__area_mgap">
-        <div className="footer__pagination">
-          <button
-            type="button"
-            className="button button_size_small button_color_blue"
-          >
-            <span className="button__text">1</span>
-          </button>
-          <button
-            type="button"
-            className="button button_size_small button_color_reverse-blue"
-          >
-            <span className="button__text">2</span>
-          </button>
-          <button
-            type="button"
-            className="button button_size_small button_color_reverse-blue"
-          >
-            <span className="button__text">3</span>
-          </button>
-          <button
-            type="button"
-            className="button button_size_small button_color_reverse-blue"
-          >
-            <span className="button__text">...</span>
-          </button>
-          <button
-            type="button"
-            className="button button_size_small button_color_reverse-blue"
-          >
-            <span className="button__text">18</span>
-          </button>
+      <div className={styles.pages}>
+        <div className={styles.footer__pagination}>
+          <Button size="small" color="primary">
+            1
+          </Button>
+          <Button size="small" color="reversePrimary">
+            2
+          </Button>
+          <Button size="small" color="reversePrimary">
+            3
+          </Button>
+          <Button size="small" color="reversePrimary">
+            ...
+          </Button>
+          <Button size="small" color="reversePrimary">
+            18
+          </Button>
         </div>
-        <button
-          type="button"
-          className="button button_size_small button_color_reverse-blue"
-        >
-          <span className="button__text">#</span>
-        </button>
+        <Button size="small" color="reversePrimary">
+          #
+        </Button>
       </div>
     </div>
   );

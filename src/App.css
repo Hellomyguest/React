@@ -15,12 +15,3 @@
   --secondary-night-theme-color: #171b1f; /* --night-theme-colo-dark */
   --primary-filters-area-color: #ebf0f5; /* --label-color */
 }
-
-body {
-  font-family: 'Ubuntu';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 0.8125rem;
-  line-height: 1rem;
-  color: var(--main-black-text-color);
-}

@@ -59,15 +59,15 @@
   white-space: nowrap;
 }
 
-.color_primary > .text {
+.color_primary .text {
   color: var(--primary-background-color);
 }
 
-.color_reverseSecondary > .text {
+.color_reverseSecondary .text {
   color: var(--primary-text-color);
 }
 
-.color_reversePrimary > .text {
+.color_reversePrimary .text {
   color: var(--primary-color);
 }
 

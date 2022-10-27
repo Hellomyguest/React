@@ -1,7 +1,6 @@
 ._ {
   background-color: var(--primary-background-color);
   overflow-y: auto;
-  padding: 0 0.5rem;
 }
 
 ::-webkit-scrollbar {

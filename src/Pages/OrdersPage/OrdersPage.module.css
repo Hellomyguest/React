@@ -1,10 +1,16 @@
-.body {
+._ {
   padding: 2rem 3rem 0 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   background-color: var(--primary-background-color);
   overflow: hidden;
+  font-family: 'Ubuntu';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 0.8125rem;
+  line-height: 1rem;
+  color: var(--primary-text-color);
 }
 
 .dropdown_switcher.dropdown_hidden {
