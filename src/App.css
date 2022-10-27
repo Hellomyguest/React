@@ -10,10 +10,10 @@
   --primary-focus-outline-color: #367dc4; /* --main-focus-outline-color*/
   --postponed-icon-color: #ff8c56; /*  */
   --declined-icon-color: #8055ff; /* --violet-color */
-  --calculation-icon-color: #0fb864; /* --green-color */
+  --completed-icon-color: #0fb864; /* --green-color */
   --primary-night-theme-color: #2b2d33; /* --night-theme-color */
   --secondary-night-theme-color: #171b1f; /* --night-theme-colo-dark */
-  --primary-filters-area-color: #ebf0f5;
+  --primary-filters-area-color: #ebf0f5; /* --label-color */
 }
 
 body {

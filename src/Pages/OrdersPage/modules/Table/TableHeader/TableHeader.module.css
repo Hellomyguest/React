@@ -1,0 +1,47 @@
+._ {
+  display: flex;
+  padding: 0 0.5rem;
+  background-color: var(--primary-color);
+}
+
+.cell_filtering {
+  padding: 0;
+}
+
+.cellCheckbox {
+  padding: 0.75rem 0.5rem;
+}
+
+.text {
+  color: var(--primary-filters-area-color);
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--primary-filters-area-color);
+}
+
+.cell:nth-child(2) {
+  min-width: 7.2%;
+}
+
+.cell:nth-child(3) {
+  min-width: 11.7%;
+}
+
+.cell:nth-child(4) {
+  min-width: 11.7%;
+}
+
+.cell:nth-child(5) {
+  min-width: 6.4%;
+}
+
+.cell:nth-child(6) {
+  min-width: 8.5%;
+}
+
+.cell:nth-child(7) {
+  min-width: 52.4%;
+}

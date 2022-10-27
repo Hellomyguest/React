@@ -13,6 +13,7 @@ import styles from './FilterStatus.module.css';
 const STATUS_FILTERS = {
   new: 'Новый',
   calculation: 'Рассчет',
+  confirmed: 'Подтвержден',
   postponed: 'Отложен',
   completed: 'Выполнен',
   declined: 'Отменен',
@@ -22,7 +23,7 @@ export function FilterStatus() {
   const { status } = useContext(FilterContext);
 
   const inputValue =
-    !status.value.length || status.value.length === 5
+    !status.value.length || status.value.length === 6
       ? 'Любой'
       : status.value.map((e) => STATUS_FILTERS[e]).join(', ');
 

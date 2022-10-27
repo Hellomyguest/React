@@ -42,7 +42,7 @@ export function Button({
   );
   return (
     <button className={blockClass} type="button" onClick={onClick} {...props}>
-      <Icon iconType={iconType} className={styles.icon} />
+      {iconType && <Icon iconType={iconType} className={styles.icon} />}
       {children && <span className={styles.text}>{children}</span>}
     </button>
   );

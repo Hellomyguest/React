@@ -3,6 +3,16 @@ import React, { useState } from 'react';
 export const FilterContext = React.createContext(null);
 
 export function FilterContextProvider({ children }) {
+  // Data
+  const Data = {
+    orderNumber: '555',
+    date: '21.10.2021 18:56',
+    status: 'declined',
+    amount: '5',
+    sum: '10000',
+    customer: 'Илларионов А.Н.',
+  };
+
   // isFilters open context
   const [isFiltersOpen, setFiltersOpen] = useState('');
 
@@ -93,6 +103,7 @@ export function FilterContextProvider({ children }) {
       onChangeTo: handleChangePriceTo,
     },
     reset: { onClick: handleResetFilters },
+    data: Data,
   };
 
   return (

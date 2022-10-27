@@ -1,0 +1,107 @@
+._ {
+  display: flex;
+  width: 100%;
+  height: 2.5rem;
+  border-bottom: 0.125rem solid var(--primary-filters-area-color);
+  background-color: var(--primary-background-color);
+  overflow-x: auto;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  gap: 0.5rem;
+}
+
+.cell_filtering {
+  padding: 0;
+}
+
+.cellCheckbox {
+  padding: 0.75rem 0.5rem;
+}
+
+.cellCheckbox {
+  padding: 0.75rem 0.5rem;
+}
+
+.cell_canseled {
+  opacity: 0.5;
+}
+
+.text_completed {
+  color: var(--completed-icon-color);
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  fill: var(--primary-filters-area-color);
+}
+
+.icon_postponed {
+  fill: var(--postponed-icon-color);
+}
+
+.icon_calculation {
+  fill: var(--primary-color);
+}
+
+.icon_canceled {
+  fill: var(--primary-text-color);
+  stroke: var(--primary-text-color);
+}
+
+.icon_completed {
+  fill: var(--completed-icon-color);
+}
+
+._:hover {
+  background-color: var(--secondary-color);
+}
+
+._:last-child {
+  border-bottom: none;
+}
+
+.cell:nth-child(2) {
+  width: 7.2%;
+}
+
+.cell:nth-child(3) {
+  width: 11.7%;
+}
+
+.cell:nth-child(4) {
+  width: 11.7%;
+}
+
+.cell:nth-child(5) {
+  width: 6.4%;
+}
+
+.cell:nth-child(6) {
+  width: 8.5%;
+}
+
+.cell:nth-child(7) {
+  width: 52.4%;
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+  margin: 0.25rem 0;
+  width: 0.25rem;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 0.25rem;
+  background: rgba(0, 0, 0, 0.34);
+  border-radius: 0.5rem;
+}
