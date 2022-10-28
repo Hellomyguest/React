@@ -22,7 +22,7 @@ export function Icon({ iconType, ...props }) {
     case 'Checkmark':
       return <IconCheckmark {...props} />;
     case 'Dot':
-      return <IconDot />;
+      return <IconDot {...props} />;
     case 'Filter':
       return <IconFilter {...props} />;
     case 'Locked':

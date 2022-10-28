@@ -7,27 +7,9 @@ export function TableBody() {
   const { data } = useContext(FilterContext);
   return (
     <div className={styles._}>
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
-      <TableRow value={data} />
+      {data.map((item, index) => (
+        <TableRow key={item.orderNumber} value={data[index]} />
+      ))}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 ._ {
+  display: flex;
+  flex-direction: column;
   background-color: var(--primary-background-color);
-  overflow-y: auto;
+  overflow: auto;
 }
 
 ::-webkit-scrollbar {
@@ -10,12 +12,12 @@
 ::-webkit-scrollbar-track {
   margin: 0.25rem 0;
   width: 0.25rem;
-  background: rgba(0, 0, 0, 0.1);
   border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
   width: 0.25rem;
-  background: rgba(0, 0, 0, 0.34);
   border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.34);
 }

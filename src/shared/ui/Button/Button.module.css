@@ -4,11 +4,11 @@
   align-items: flex-start;
   width: fit-content;
   box-sizing: border-box;
-  border-radius: 0.25rem;
-  background-color: transparent;
   border: none;
-  font: inherit;
+  border-radius: 0.25rem;
   color: inherit;
+  background-color: transparent;
+  font: inherit;
   cursor: pointer;
 }
 
@@ -17,15 +17,15 @@
 }
 
 .size_medium {
-  padding: 0.5rem 1rem;
   gap: 0.5rem;
   height: 2rem;
+  padding: 0.5rem 1rem;
 }
 
 .size_small {
+  gap: 0.25rem;
   height: 1.5rem;
   padding: 0.25rem 0.5rem;
-  gap: 0.25rem;
 }
 
 .icononly.size_medium {

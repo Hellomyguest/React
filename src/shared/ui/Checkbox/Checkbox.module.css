@@ -1,16 +1,16 @@
 ._ {
-  margin: 0 0;
-  appearance: none;
   width: 1rem;
   height: 1rem;
-  background-color: var(--primary-background-color);
+  margin: 0 0;
   border: 0.0625rem solid var(--secondary-color);
   box-sizing: border-box;
   border-radius: 0.0625rem;
+  appearance: none;
+  background-color: var(--primary-background-color);
 }
 
 ._:checked {
+  border-color: var(--primary-color);
   background-image: url('../Icons/checkmark.svg');
   background-color: var(--primary-color);
-  border-color: var(--primary-color);
 }

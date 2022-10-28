@@ -8,8 +8,8 @@
   display: flex;
   gap: 1rem;
   padding: 1rem;
-  background: var(--primary-filters-area-color);
   border-radius: 0.5rem;
+  background: var(--primary-filters-area-color);
 }
 
 .button {
