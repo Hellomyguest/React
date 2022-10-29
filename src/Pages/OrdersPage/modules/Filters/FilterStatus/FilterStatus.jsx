@@ -17,11 +17,11 @@ const STATUS_FILTERS = {
   declined: 'Отменен',
 };
 
-export function FilterStatus({ filter }) {
+export function FilterStatus({ filter: { value, onChange } }) {
   const inputValue =
-    !filter.value.length || filter.value.length === 6
+    !value.length || value.length === 6
       ? 'Любой'
-      : filter.value.map((e) => STATUS_FILTERS[e]).join(', ');
+      : value.map((e) => STATUS_FILTERS[e]).join(', ');
 
   return (
     <div className={styles._}>
@@ -49,8 +49,8 @@ export function FilterStatus({ filter }) {
                 control={
                   <Checkbox
                     name={key}
-                    checked={filter.value.includes(key)}
-                    onChange={filter.onChange}
+                    checked={value.includes(key)}
+                    onChange={onChange}
                   />
                 }
                 label={STATUS_FILTERS[key]}

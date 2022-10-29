@@ -2,14 +2,6 @@ import styles from './Searchbar.module.css';
 import { Icon } from '../Icons';
 
 export function Searchbar({ placeholder, value, onChange, onReset, ...props }) {
-  /*
-  const [searchValue, setSearchValue] = useState('');
-  
-  const changeHandler = (e) => {
-    setSearchValue(e.target.value);
-  };
-  */
-
   return (
     <div className={styles._}>
       <input
@@ -17,7 +9,7 @@ export function Searchbar({ placeholder, value, onChange, onReset, ...props }) {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        type="search"
+        type="text"
         name=""
         id=""
         {...props}

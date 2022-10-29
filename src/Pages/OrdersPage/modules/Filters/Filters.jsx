@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
 import { FilterStatus } from './FilterStatus/FilterStatus';
@@ -5,8 +6,10 @@ import { FilterPrice } from './FilterPrice/FilterPrice';
 import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
+import { FilterContext } from '../../../../store/FilterContext';
 
-export function Filters({ filters }) {
+export function Filters() {
+  const { filters } = useContext(FilterContext);
   return (
     <div className={styles._}>
       <FiltersHeader filters={filters} />

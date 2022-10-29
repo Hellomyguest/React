@@ -2,11 +2,6 @@
   position: relative;
 }
 
-input[type='search']::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
 .area {
   height: 2rem;
   width: 16rem;

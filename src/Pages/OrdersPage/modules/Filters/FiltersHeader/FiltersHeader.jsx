@@ -10,7 +10,6 @@ export function FiltersHeader({
     price.valueFrom ||
     price.valueTo ||
     !!status.value.length;
-
   return (
     <div className={styles._}>
       <div className={styles.search}>

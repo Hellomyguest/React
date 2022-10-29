@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { FilterContext } from '../../../../store/filterContext';
+import { FilterContext } from '../../../../store/FilterContext';
 import { Table } from './Table';
 import styles from './TableBody/TableBody.module.css';
 

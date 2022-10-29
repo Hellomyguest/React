@@ -1,29 +1,38 @@
 import { InputWithLabel, Input } from '../../../../../shared/ui';
 import styles from './FilterPrice.module.css';
 
-export function FilterPrice({ filter }) {
+export function FilterPrice({
+  filter: {
+    valueFrom,
+    onChangeFrom,
+    onResetFrom,
+    valueTo,
+    onChangeTo,
+    onResetTo,
+  },
+}) {
   return (
     <div className={styles._}>
       <InputWithLabel
         input={
           <Input
             placeholder="₽"
-            value={filter.valueFrom}
-            onChange={filter.onChangeFrom}
+            value={valueFrom}
+            onChange={onChangeFrom}
             prefix="от"
             label="Сумма заказа"
-            onReset={filter.onResetFrom}
+            onReset={onResetFrom}
             pattern="\d*"
           />
         }
         label="Сумма заказ"
       />
       <Input
-        value={filter.valueTo}
-        onChange={filter.onChangeTo}
+        value={valueTo}
+        onChange={onChangeTo}
         placeholder="₽"
         prefix="до"
-        onReset={filter.onResetTo}
+        onReset={onResetTo}
         pattern="\d*"
       />
     </div>

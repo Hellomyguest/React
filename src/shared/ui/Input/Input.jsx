@@ -56,9 +56,10 @@ export function Input({
         </div>
       )}
       {disabled ? (
-        <button type="button" className={styles.button}>
-          <Icon iconType="Locked" className={styles.iconDisabled} />
-        </button>
+        <Icon
+          iconType="Locked"
+          className={classNames(styles.button, styles.iconDisabled)}
+        />
       ) : (
         !!onReset &&
         value && (
