@@ -61,7 +61,6 @@ export function FilterContextProvider({ children }) {
 
   // Reset all filters
   const handleResetFilters = () => {
-    setSearchValue('');
     setDateFrom('');
     setDateTo('');
     setSelectedStatuses([]);

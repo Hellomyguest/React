@@ -1,7 +1,16 @@
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
 
-export function FiltersHeader({ filters: { search, filtersOpen, reset } }) {
+export function FiltersHeader({
+  filters: { search, filtersOpen, reset, date, status, price },
+}) {
+  const filtersFilled =
+    date.valueFrom ||
+    date.valueTo ||
+    price.valueFrom ||
+    price.valueTo ||
+    !!status.value.length;
+
   return (
     <div className={styles._}>
       <div className={styles.search}>
@@ -19,7 +28,7 @@ export function FiltersHeader({ filters: { search, filtersOpen, reset } }) {
         >
           Фильтры
         </Button>
-        {filtersOpen.value && (
+        {filtersOpen.value && filtersFilled && (
           <Button color="reversePrimary" size="medium" onClick={reset.onClick}>
             Сбросить фильтры
           </Button>
