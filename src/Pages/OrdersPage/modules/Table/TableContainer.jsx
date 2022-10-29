@@ -3,7 +3,7 @@ import { FilterContext } from '../../../../store/filterContext';
 import { Table } from './Table';
 import styles from './TableBody/TableBody.module.css';
 
-const ORDER_MAP = {
+const STATUS_MAP = {
   new: {
     name: 'Новый',
     iconType: 'Dot',
@@ -44,11 +44,11 @@ export function TableContainer() {
   const ordersExtended = orders.map((item) => {
     // eslint-disable-next-line no-param-reassign
     item.statusExtended = {
-      name: ORDER_MAP[item.status].name,
-      iconType: ORDER_MAP[item.status].iconType,
-      iconClassName: ORDER_MAP[item.status].iconClassName,
-      declined: ORDER_MAP[item.status].declined,
-      textClassName: ORDER_MAP[item.status].textClassName,
+      name: STATUS_MAP[item.status].name,
+      iconType: STATUS_MAP[item.status].iconType,
+      iconClassName: STATUS_MAP[item.status].iconClassName,
+      declined: STATUS_MAP[item.status].declined,
+      textClassName: STATUS_MAP[item.status].textClassName,
     };
     return item;
   });
