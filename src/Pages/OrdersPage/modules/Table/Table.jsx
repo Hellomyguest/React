@@ -3,11 +3,11 @@ import { TableBody } from './TableBody/TableBody';
 import { TableFooter } from './TableFooter/TableFooter';
 import { TableHeader } from './TableHeader/TableHeader';
 
-export function Table() {
+export function Table({ orders }) {
   return (
     <div className={styles._}>
       <TableHeader />
-      <TableBody />
+      <TableBody orders={orders} />
       <TableFooter />
     </div>
   );
