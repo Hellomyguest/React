@@ -46,6 +46,7 @@ export function TableContainer() {
       iconType: ORDER_MAP[item.status].iconType,
       iconClassName: ORDER_MAP[item.status].iconClassName,
       declined: ORDER_MAP[item.status].declined,
+      textClassName: ORDER_MAP[item.status].textClassName,
     };
     return item;
   });
