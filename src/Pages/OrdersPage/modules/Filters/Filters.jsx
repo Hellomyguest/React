@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { Button } from '../../../../shared/ui';
-import { FilterContext } from '../../../../store/filterContext';
 import { FilterDate } from './FilterDate/FilterDate';
 import { FilterStatus } from './FilterStatus/FilterStatus';
 import { FilterPrice } from './FilterPrice/FilterPrice';
@@ -8,16 +6,15 @@ import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
 
-export function Filters() {
-  const { filtersOpen } = useContext(FilterContext);
+export function Filters({ filters }) {
   return (
     <div className={styles._}>
-      <FiltersHeader />
-      {filtersOpen.value && (
+      <FiltersHeader filters={filters} />
+      {filters.filtersOpen.value && (
         <div className={styles.area}>
-          <FilterDate />
-          <FilterStatus />
-          <FilterPrice />
+          <FilterDate filter={filters.date} />
+          <FilterStatus filter={filters.status} />
+          <FilterPrice filter={filters.price} />
           <Button
             color="reversePrimary"
             size="medium"

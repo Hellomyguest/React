@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   Dropdown,
   InputWithLabel,
@@ -7,7 +6,6 @@ import {
   ControlWithLabel,
   Checkbox,
 } from '../../../../../shared/ui';
-import { FilterContext } from '../../../../../store/filterContext';
 import styles from './FilterStatus.module.css';
 
 const STATUS_FILTERS = {
@@ -19,13 +17,11 @@ const STATUS_FILTERS = {
   declined: 'Отменен',
 };
 
-export function FilterStatus() {
-  const { status } = useContext(FilterContext);
-
+export function FilterStatus({ filter }) {
   const inputValue =
-    !status.value.length || status.value.length === 6
+    !filter.value.length || filter.value.length === 6
       ? 'Любой'
-      : status.value.map((e) => STATUS_FILTERS[e]).join(', ');
+      : filter.value.map((e) => STATUS_FILTERS[e]).join(', ');
 
   return (
     <div className={styles._}>
@@ -53,8 +49,8 @@ export function FilterStatus() {
                 control={
                   <Checkbox
                     name={key}
-                    checked={status.value.includes(key)}
-                    onChange={status.onChange}
+                    checked={filter.value.includes(key)}
+                    onChange={filter.onChange}
                   />
                 }
                 label={STATUS_FILTERS[key]}

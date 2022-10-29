@@ -1,10 +1,7 @@
-import { useContext } from 'react';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
-import { FilterContext } from '../../../../../store/filterContext';
 import styles from './FiltersHeader.module.css';
 
-export function FiltersHeader() {
-  const { search, filtersOpen, reset } = useContext(FilterContext);
+export function FiltersHeader({ filters: { search, filtersOpen, reset } }) {
   return (
     <div className={styles._}>
       <div className={styles.search}>

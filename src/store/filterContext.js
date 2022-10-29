@@ -27,10 +27,12 @@ export function FilterContextProvider({ children }) {
   const handleChangeDateFrom = (e) => {
     setDateFrom(e.target.value);
   };
+  const handleResetDateFrom = () => setDateFrom('');
 
   const handleChangeDateTo = (e) => {
     setDateTo(e.target.value);
   };
+  const handleResetDateTo = () => setDateTo('');
 
   // Status filter context
   const [selectedStatuses, setSelectedStatuses] = useState([]);
@@ -50,10 +52,12 @@ export function FilterContextProvider({ children }) {
   const handleChangePriceFrom = (e) => {
     setPriceFrom(e.target.value);
   };
+  const handleResetPriceFrom = () => setPriceFrom('');
 
   const handleChangePriceTo = (e) => {
     setPriceTo(e.target.value);
   };
+  const handleResetPriceTo = () => setPriceTo('');
 
   // Reset all filters
   const handleResetFilters = () => {
@@ -68,33 +72,39 @@ export function FilterContextProvider({ children }) {
   // Getting the context value
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const filterStore = {
-    filtersOpen: {
-      value: isFiltersOpen,
-      onClick: handleClickFiltersOpen,
-    },
-    search: {
-      value: searchValue,
-      onChange: handleChangeSearchValue,
-      onReset: handleResetSearchValue,
-    },
-    date: {
-      valueFrom: dateFrom,
-      valueTo: dateTo,
-      onChangeFrom: handleChangeDateFrom,
-      onChangeTo: handleChangeDateTo,
-    },
-    status: {
-      value: selectedStatuses,
-      onChange: handleChangeSelectedStatuses,
-    },
-    price: {
-      valueFrom: priceFrom,
-      valueTo: priceTo,
-      onChangeFrom: handleChangePriceFrom,
-      onChangeTo: handleChangePriceTo,
-    },
-    reset: { onClick: handleResetFilters },
     orders,
+    filters: {
+      filtersOpen: {
+        value: isFiltersOpen,
+        onClick: handleClickFiltersOpen,
+      },
+      search: {
+        value: searchValue,
+        onChange: handleChangeSearchValue,
+        onReset: handleResetSearchValue,
+      },
+      date: {
+        valueFrom: dateFrom,
+        valueTo: dateTo,
+        onChangeFrom: handleChangeDateFrom,
+        onChangeTo: handleChangeDateTo,
+        onResetFrom: handleResetDateFrom,
+        onResetTo: handleResetDateTo,
+      },
+      status: {
+        value: selectedStatuses,
+        onChange: handleChangeSelectedStatuses,
+      },
+      price: {
+        valueFrom: priceFrom,
+        valueTo: priceTo,
+        onChangeFrom: handleChangePriceFrom,
+        onChangeTo: handleChangePriceTo,
+        onResetFrom: handleResetPriceFrom,
+        onResetTo: handleResetPriceTo,
+      },
+      reset: { onClick: handleResetFilters },
+    },
   };
 
   return (

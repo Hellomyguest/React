@@ -1,32 +1,29 @@
-import { useContext } from 'react';
 import { InputWithLabel, Input } from '../../../../../shared/ui';
-import { FilterContext } from '../../../../../store/filterContext';
 import styles from './FilterPrice.module.css';
 
-export function FilterPrice() {
-  const { price } = useContext(FilterContext);
+export function FilterPrice({ filter }) {
   return (
     <div className={styles._}>
       <InputWithLabel
         input={
           <Input
             placeholder="₽"
-            value={price.valueFrom}
-            onChange={price.onChangeFrom}
+            value={filter.valueFrom}
+            onChange={filter.onChangeFrom}
             prefix="от"
             label="Сумма заказа"
-            withReset
+            onReset={filter.onResetFrom}
             pattern="\d*"
           />
         }
         label="Сумма заказ"
       />
       <Input
-        value={price.valueTo}
-        onChange={price.onChangeTo}
+        value={filter.valueTo}
+        onChange={filter.onChangeTo}
         placeholder="₽"
         prefix="до"
-        withReset
+        onReset={filter.onResetTo}
         pattern="\d*"
       />
     </div>
