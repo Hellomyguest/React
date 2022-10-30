@@ -19,15 +19,6 @@
         "react"
     ],
     "rules": {
-        "linebreak-style": "off",
-        "arrow-parens": "off",
-        "object-curly-newline": "off",
-        "no-mixed-operators": "off",
-        "function-paren-newline": "off",
-        "no-plusplus": "off",
-        "space-before-function-paren": 0,
-        "react/jsx-uses-react": "off",
-        "react/react-in-jsx-scope": "off",
         "react/prop-types": [0, { }],
         "import/prefer-default-export": "off",
         "react/jsx-props-no-spreading": "off",

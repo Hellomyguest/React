@@ -14,4 +14,6 @@
   --primary-night-theme-color: #2b2d33; /* --night-theme-color */
   --secondary-night-theme-color: #171b1f; /* --night-theme-colo-dark */
   --primary-filters-area-color: #ebf0f5; /* --label-color */
+  --primary-button-content-color: #ffffff;
+  --danger-button-content-color: #ffffff;
 }

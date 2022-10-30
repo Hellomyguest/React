@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { FilterContext } from '../../../../store/FilterContext';
 import { Table } from './Table';
 

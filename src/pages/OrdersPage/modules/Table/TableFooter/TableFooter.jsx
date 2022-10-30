@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button, Dropdown } from '../../../../../shared/ui';
 import styles from './TableFooter.module.css';
 

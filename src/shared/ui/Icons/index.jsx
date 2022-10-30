@@ -1,3 +1,4 @@
+import React from 'react';
 import { ReactComponent as IconAbort } from './abort.svg';
 import { ReactComponent as IconBin } from './bin.svg';
 import { ReactComponent as IconCheckmark } from './checkmark.svg';

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Input, InputWithLabel } from '../../../../../shared/ui';
 import styles from './FilterDate.module.css';
 

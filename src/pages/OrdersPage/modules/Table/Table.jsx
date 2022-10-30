@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Table.module.css';
 import { TableBody } from './TableBody/TableBody';
 import { TableFooter } from './TableFooter/TableFooter';

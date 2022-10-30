@@ -1,3 +1,4 @@
+import React from 'react';
 import { InputWithLabel, Input } from '../../../../../shared/ui';
 import styles from './FilterPrice.module.css';
 

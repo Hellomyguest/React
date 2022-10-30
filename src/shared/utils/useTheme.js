@@ -9,6 +9,10 @@ export const useTheme = () => {
     if (isLight === true) {
       document.body.style.setProperty('--primary-background-color', ' #2B2D33');
       document.body.style.setProperty(
+        '--primary-button-content-color',
+        ' #2B2D33'
+      );
+      document.body.style.setProperty(
         '--primary-filters-area-color',
         ' #171B1F'
       );
@@ -16,6 +20,10 @@ export const useTheme = () => {
       setLight(!isLight);
     } else {
       document.body.style.setProperty('--primary-background-color', ' #FFFFFF');
+      document.body.style.setProperty(
+        '--primary-button-content-color',
+        ' #FFFFFF'
+      );
       document.body.style.setProperty(
         '--primary-filters-area-color',
         ' #EBF0F5'

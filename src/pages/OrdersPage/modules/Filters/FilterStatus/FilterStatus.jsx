@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Dropdown,
   InputWithLabel,
@@ -18,9 +19,10 @@ const STATUS_FILTERS = {
 };
 
 export function FilterStatus({ filter: { value, onChange } }) {
+  const any = 'Любой';
   const inputValue =
     !value.length || value.length === 6
-      ? 'Любой'
+      ? any
       : value.map((e) => STATUS_FILTERS[e]).join(', ');
 
   return (

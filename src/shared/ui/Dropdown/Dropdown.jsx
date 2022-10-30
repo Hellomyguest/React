@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, cloneElement } from 'react';
+import React, { useState, useEffect, useRef, cloneElement } from 'react';
 import classNames from 'classnames';
 import styles from './Dropdown.module.css';
 

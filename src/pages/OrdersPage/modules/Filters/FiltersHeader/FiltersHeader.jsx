@@ -1,3 +1,4 @@
+import React from 'react';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
 
