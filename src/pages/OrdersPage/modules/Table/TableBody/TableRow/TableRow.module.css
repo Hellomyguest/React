@@ -1,7 +1,0 @@
-._ {
-  display: flex;
-  height: 2.5rem;
-  padding: 0 0.5rem;
-  border-bottom: 0.125rem solid var(--primary-filters-area-color);
-  background-color: var(--primary-background-color);
-}

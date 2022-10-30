@@ -9,11 +9,12 @@ import styles from './Filters.module.css';
 import { FilterContext } from '../../../../store/FilterContext';
 
 export function Filters() {
+  const { filters } = useContext(FilterContext);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const handleClickFiltersOpen = () => {
     setFiltersOpen(!isFiltersOpen);
   };
-  const { filters } = useContext(FilterContext);
+
   return (
     <div className={styles._}>
       <FiltersHeader

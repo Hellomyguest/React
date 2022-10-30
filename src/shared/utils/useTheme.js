@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 export const useTheme = () => {
   const [isLight, setLight] = useState(true);
-  // eslint-disable-next-line no-unused-vars
-  const style = getComputedStyle(document.body);
 
   function toggleTheme() {
     if (isLight === true) {

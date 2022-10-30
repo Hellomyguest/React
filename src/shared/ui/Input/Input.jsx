@@ -16,12 +16,6 @@ export function Input({
   onChange,
   readOnly,
 }) {
-  /*
- const [inputValue, setInputValue] = useState('');
-  const changeHandler = (e) => {
-    setInputValue(e.target.value);
-  };
-  */
   return (
     <div
       className={classNames(

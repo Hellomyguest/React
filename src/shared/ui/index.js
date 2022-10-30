@@ -7,8 +7,6 @@ import { InputWithLabel } from './InputWithLabel/InputWithLabel';
 import { Radio } from './Radio/Radio';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Icon } from './Icons';
-import { TableCell } from './TableCell/TableCell';
-import { TableSortingCell } from './TableSortingCell/TableSortingCell';
 
 export {
   Button,
@@ -20,6 +18,4 @@ export {
   Radio,
   Searchbar,
   Icon,
-  TableCell,
-  TableSortingCell,
 };

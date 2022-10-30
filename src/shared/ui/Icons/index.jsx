@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import { ReactComponent as IconAbort } from './abort.svg';
 import { ReactComponent as IconBin } from './bin.svg';
 import { ReactComponent as IconCheckmark } from './checkmark.svg';
@@ -14,37 +14,25 @@ import { ReactComponent as IconVarrow } from './v_arrow.svg';
 import { ReactComponent as IconXlarge } from './x-large.svg';
 import { ReactComponent as IconXmedium } from './x-medium.svg';
 
-export function Icon({ iconType, ...props }) {
-  switch (iconType) {
-    case 'Abort':
-      return <IconAbort {...props} />;
-    case 'Bin':
-      return <IconBin {...props} />;
-    case 'Checkmark':
-      return <IconCheckmark {...props} />;
-    case 'Dot':
-      return <IconDot {...props} />;
-    case 'Filter':
-      return <IconFilter {...props} />;
-    case 'Locked':
-      return <IconLocked {...props} />;
-    case 'Moon':
-      return <IconMoon {...props} />;
-    case 'Pencil':
-      return <IconPencil {...props} />;
-    case 'Refresh':
-      return <IconRefresh {...props} />;
-    case 'Search':
-      return <IconSearch {...props} />;
-    case 'Sun':
-      return <IconSun {...props} />;
-    case 'Varrow':
-      return <IconVarrow {...props} />;
-    case 'Xlarge':
-      return <IconXlarge {...props} />;
-    case 'Xmedium':
-      return <IconXmedium {...props} />;
-    default:
-      return false;
-  }
+const ICON_MAP = {
+  Abort: <IconAbort />,
+  Bin: <IconBin />,
+  Checkmark: <IconCheckmark />,
+  Dot: <IconDot />,
+  Filter: <IconFilter />,
+  Locked: <IconLocked />,
+  Moon: <IconMoon />,
+  Pencil: <IconPencil />,
+  Refresh: <IconRefresh />,
+  Search: <IconSearch />,
+  Sun: <IconSun />,
+  Varrow: <IconVarrow />,
+  Xlarge: <IconXlarge />,
+  Xmedium: <IconXmedium />,
+};
+
+export function Icon({ iconType, className }) {
+  const preIcon = ICON_MAP[iconType];
+  const newIcon = cloneElement(preIcon, { className });
+  return newIcon;
 }

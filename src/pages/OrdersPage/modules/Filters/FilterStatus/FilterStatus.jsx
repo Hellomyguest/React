@@ -18,11 +18,12 @@ const STATUS_FILTERS = {
   declined: 'Отменен',
 };
 
+const ANY = 'Любой';
+
 export function FilterStatus({ filter: { value, onChange } }) {
-  const any = 'Любой';
   const inputValue =
     !value.length || value.length === 6
-      ? any
+      ? ANY
       : value.map((e) => STATUS_FILTERS[e]).join(', ');
 
   return (
