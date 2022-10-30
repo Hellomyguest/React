@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
 import { FilterStatus } from './FilterStatus/FilterStatus';
@@ -9,11 +9,19 @@ import styles from './Filters.module.css';
 import { FilterContext } from '../../../../store/FilterContext';
 
 export function Filters() {
+  const [isFiltersOpen, setFiltersOpen] = useState(false);
+  const handleClickFiltersOpen = () => {
+    setFiltersOpen(!isFiltersOpen);
+  };
   const { filters } = useContext(FilterContext);
   return (
     <div className={styles._}>
-      <FiltersHeader filters={filters} />
-      {filters.filtersOpen.value && (
+      <FiltersHeader
+        filters={filters}
+        isFiltersOpen={isFiltersOpen}
+        onFiltersOpen={handleClickFiltersOpen}
+      />
+      {isFiltersOpen && (
         <div className={styles.area}>
           <FilterDate filter={filters.date} />
           <FilterStatus filter={filters.status} />

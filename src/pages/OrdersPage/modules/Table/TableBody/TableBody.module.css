@@ -6,6 +6,14 @@
   overflow: auto;
 }
 
+.row:hover {
+  background-color: var(--secondary-color);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
 .cell {
   display: flex;
   align-items: center;
@@ -28,37 +36,6 @@
 
 .text_completed {
   color: var(--completed-icon-color);
-}
-
-.icon {
-  width: 1rem;
-  height: 1rem;
-  fill: var(--primary-filters-area-color);
-}
-
-.icon_postponed {
-  fill: var(--postponed-icon-color);
-}
-
-.icon_calculation {
-  fill: var(--primary-color);
-}
-
-.icon_canceled {
-  fill: var(--primary-text-color);
-  stroke: var(--primary-text-color);
-}
-
-.icon_completed {
-  fill: var(--completed-icon-color);
-}
-
-._:hover {
-  background-color: var(--secondary-color);
-}
-
-._:last-child {
-  border-bottom: none;
 }
 
 .cell:nth-child(2) {

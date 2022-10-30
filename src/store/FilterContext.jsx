@@ -4,13 +4,6 @@ import { orders } from './order';
 export const FilterContext = React.createContext(null);
 
 export function FilterContextProvider({ children }) {
-  // isFilters open context
-  const [isFiltersOpen, setFiltersOpen] = useState('');
-
-  const handleClickFiltersOpen = () => {
-    setFiltersOpen(!isFiltersOpen);
-  };
-
   // Search context
   const [searchValue, setSearchValue] = useState('');
 
@@ -68,15 +61,15 @@ export function FilterContextProvider({ children }) {
     setPriceTo('');
   };
 
+  // Checking if filters are filled
+  const filtersFilled =
+    dateFrom || dateTo || priceFrom || priceTo || !!selectedStatuses.length;
+
   // Getting the context value
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const filterStore = {
     orders,
     filters: {
-      filtersOpen: {
-        value: isFiltersOpen,
-        onClick: handleClickFiltersOpen,
-      },
       search: {
         value: searchValue,
         onChange: handleChangeSearchValue,
@@ -102,6 +95,7 @@ export function FilterContextProvider({ children }) {
         onResetFrom: handleResetPriceFrom,
         onResetTo: handleResetPriceTo,
       },
+      filtersFilled,
       reset: { onClick: handleResetFilters },
     },
   };
