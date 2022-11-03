@@ -11,6 +11,6 @@
 
 ._:checked {
   border-color: var(--primary-color);
-  background-image: url('../Icons/checkmark.svg');
+  background-image: url('../Icons/lib/checkmark.svg');
   background-color: var(--primary-color);
 }

@@ -1,20 +1,35 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
+import { filtersActions } from '../../../../../store/filterSlice';
 
 export function FiltersHeader({
-  filters: { search, reset, filtersFilled },
+  filters: { reset, filtersFilled },
   isFiltersOpen,
   onFiltersOpen,
 }) {
+  const dispatch = useDispatch();
+  const searchValue = useSelector((state) => state.filter.searchValue);
+  const handleChange = (e) => {
+    dispatch(
+      filtersActions.changeSearchValue({
+        type: 'changeSearchValue',
+        value: e.target.value,
+      })
+    );
+  };
+  const handleReset = () => {
+    dispatch(filtersActions.resetSearchValue());
+  };
   return (
-    <div className={styles._}>
+    <div classNaЫme={styles._}>
       <div className={styles.search}>
         <Searchbar
           placeholder="Номер заказа или ФИО"
-          value={search.value}
-          onChange={search.onChange}
-          onReset={search.onReset}
+          value={searchValue}
+          onChange={handleChange}
+          onReset={handleReset}
         />
         <Button
           color={isFiltersOpen ? 'primary' : 'reversePrimary'}

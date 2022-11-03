@@ -1,5 +1,5 @@
 .radio:checked {
-  background-image: url('../Icons/dot.svg');
+  background-image: url('../Icons/lib/dot.svg');
   background-color: var(--primary-border-color);
   border-color: var(--primary-border-color);
 }

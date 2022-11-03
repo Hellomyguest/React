@@ -1,18 +1,18 @@
 import React, { cloneElement } from 'react';
-import { ReactComponent as IconAbort } from './abort.svg';
-import { ReactComponent as IconBin } from './bin.svg';
-import { ReactComponent as IconCheckmark } from './checkmark.svg';
-import { ReactComponent as IconDot } from './dot.svg';
-import { ReactComponent as IconFilter } from './filter.svg';
-import { ReactComponent as IconLocked } from './locked.svg';
-import { ReactComponent as IconMoon } from './moon.svg';
-import { ReactComponent as IconPencil } from './pencil.svg';
-import { ReactComponent as IconRefresh } from './refresh.svg';
-import { ReactComponent as IconSearch } from './search.svg';
-import { ReactComponent as IconSun } from './sun.svg';
-import { ReactComponent as IconVarrow } from './v_arrow.svg';
-import { ReactComponent as IconXlarge } from './x-large.svg';
-import { ReactComponent as IconXmedium } from './x-medium.svg';
+import { ReactComponent as IconAbort } from './lib/abort.svg';
+import { ReactComponent as IconBin } from './lib/bin.svg';
+import { ReactComponent as IconCheckmark } from './lib/checkmark.svg';
+import { ReactComponent as IconDot } from './lib/dot.svg';
+import { ReactComponent as IconFilter } from './lib/filter.svg';
+import { ReactComponent as IconLocked } from './lib/locked.svg';
+import { ReactComponent as IconMoon } from './lib/moon.svg';
+import { ReactComponent as IconPencil } from './lib/pencil.svg';
+import { ReactComponent as IconRefresh } from './lib/refresh.svg';
+import { ReactComponent as IconSearch } from './lib/search.svg';
+import { ReactComponent as IconSun } from './lib/sun.svg';
+import { ReactComponent as IconVarrow } from './lib/v_arrow.svg';
+import { ReactComponent as IconXlarge } from './lib/x-large.svg';
+import { ReactComponent as IconXmedium } from './lib/x-medium.svg';
 
 const ICON_MAP = {
   Abort: <IconAbort />,
