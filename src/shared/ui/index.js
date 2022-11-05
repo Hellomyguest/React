@@ -7,8 +7,13 @@ import { InputWithLabel } from './InputWithLabel/InputWithLabel';
 import { Radio } from './Radio/Radio';
 import { Searchbar } from './Searchbar/Searchbar';
 import { Icon } from './Icons';
-import { TableCell } from './TableCell/TableCell';
-import { TableSortingCell } from './TableSortingCell/TableSortingCell';
+import { TableCell } from './Table/TableCell/TableCell';
+import { TableSortingCell } from './Table/TableSortingCell/TableSortingCell';
+import { Table } from './Table/Table';
+import { TableHeader } from './Table/TableHeader/TableHeader';
+import { TableFooter } from './Table/TableFooter/TableFooter';
+import { TableBody } from './Table/TableBody/TableBody';
+import { TableRow } from './Table/TableBody/TableRow/TableRow';
 
 export {
   Button,
@@ -22,4 +27,9 @@ export {
   Icon,
   TableCell,
   TableSortingCell,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableFooter,
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Icon } from '../Icons';
+import { Icon } from '../../Icons';
 import { TableCell } from '../TableCell/TableCell';
 import styles from './TableSortingCell.module.css';
 

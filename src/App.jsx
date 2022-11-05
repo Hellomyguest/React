@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import { OrdersPage } from './pages/OrdersPage/OrdersPage';
 
