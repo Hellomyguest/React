@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
 import { FilterStatus } from './FilterStatus/FilterStatus';
@@ -6,10 +6,8 @@ import { FilterPrice } from './FilterPrice/FilterPrice';
 import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
-import { FilterContext } from '../../../../store/FilterContext';
 
 export function Filters() {
-  const { filters } = useContext(FilterContext);
   const [isFiltersOpen, setFiltersOpen] = useState(false);
   const handleClickFiltersOpen = () => {
     setFiltersOpen(!isFiltersOpen);
@@ -18,15 +16,14 @@ export function Filters() {
   return (
     <div className={styles._}>
       <FiltersHeader
-        filters={filters}
         isFiltersOpen={isFiltersOpen}
-        onFiltersOpen={handleClickFiltersOpen}
+        onClickFiltersOpen={handleClickFiltersOpen}
       />
       {isFiltersOpen && (
         <div className={styles.area}>
-          <FilterDate filter={filters.date} />
-          <FilterStatus filter={filters.status} />
-          <FilterPrice filter={filters.price} />
+          <FilterDate />
+          <FilterStatus />
+          <FilterPrice />
           <Button
             color="reversePrimary"
             size="medium"

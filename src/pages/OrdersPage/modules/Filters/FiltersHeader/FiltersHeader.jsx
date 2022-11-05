@@ -1,29 +1,27 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classnames from 'classnames';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
-import { filtersActions } from '../../../../../store/filterSlice';
+import {
+  filtersActions,
+  isFiltersFilled,
+} from '../../../../../store/filtersSlice';
 
-export function FiltersHeader({
-  filters: { reset, filtersFilled },
-  isFiltersOpen,
-  onFiltersOpen,
-}) {
+export function FiltersHeader({ isFiltersOpen, onClickFiltersOpen }) {
   const dispatch = useDispatch();
   const searchValue = useSelector((state) => state.filter.searchValue);
+  const isLoading = useSelector((state) => state.orders.isLoading);
+  const filtersFilled = useSelector(isFiltersFilled);
   const handleChange = (e) => {
-    dispatch(
-      filtersActions.changeSearchValue({
-        type: 'changeSearchValue',
-        value: e.target.value,
-      })
-    );
+    dispatch(filtersActions.changeSearchValue(e.target.value));
   };
   const handleReset = () => {
     dispatch(filtersActions.resetSearchValue());
   };
+  const handleResetFilters = () => dispatch(filtersActions.resetFilters());
   return (
-    <div classNaЫme={styles._}>
+    <div className={styles._}>
       <div className={styles.search}>
         <Searchbar
           placeholder="Номер заказа или ФИО"
@@ -35,18 +33,27 @@ export function FiltersHeader({
           color={isFiltersOpen ? 'primary' : 'reversePrimary'}
           size="medium"
           iconType="Filter"
-          onClick={onFiltersOpen}
+          onClick={onClickFiltersOpen}
         >
           Фильтры
         </Button>
-        {onFiltersOpen && filtersFilled && (
-          <Button color="reversePrimary" size="medium" onClick={reset.onClick}>
+        {filtersFilled && (
+          <Button
+            color="reversePrimary"
+            size="medium"
+            onClick={handleResetFilters}
+          >
             Сбросить фильтры
           </Button>
         )}
       </div>
       <div className={styles.load}>
-        <Icon iconType="Refresh" className={styles.loadIcon} />
+        <Icon
+          iconType="Refresh"
+          className={classnames(styles.loadIcon, {
+            [styles.loadIconLoading]: isLoading,
+          })}
+        />
         <span className={styles.loadText}>Загрузка</span>
       </div>
     </div>

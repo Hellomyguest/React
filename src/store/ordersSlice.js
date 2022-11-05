@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const orders = [
+const mocks = [
   {
     id: '07fb15bd-8bcb-4089-822d-2f9087d65238',
     customer: 'Кинг Леонид Ильнурович',
@@ -903,7 +903,26 @@ const orders = [
   },
 ];
 
+export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
+  const orders = await new Promise((resolve) => {
+    setTimeout(() => resolve(mocks), 2000);
+  });
+  return orders;
+});
+
 export const ordersSlice = createSlice({
   name: 'orders',
-  initialState: orders,
+  initialState: { orders: [], isLoading: false },
+  reducers: {},
+  extraReducers: {
+    [fetchOrders.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [fetchOrders.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.orders = action.payload;
+    },
+  },
 });
+
+export const ordersAction = ordersSlice.actions;
