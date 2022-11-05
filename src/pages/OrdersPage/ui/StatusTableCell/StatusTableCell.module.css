@@ -24,11 +24,15 @@
   fill: var(--primary-color);
 }
 
-.icon_canceled {
+.icon_canseled {
   fill: var(--primary-text-color);
   stroke: var(--primary-text-color);
 }
 
 .icon_completed {
   fill: var(--completed-icon-color);
+}
+
+.text_completed {
+  color: var(--completed-text-color);
 }

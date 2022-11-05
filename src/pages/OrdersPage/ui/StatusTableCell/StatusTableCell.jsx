@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Icon, TableCell } from '../../../../shared/ui';
 import styles from './StatusTableCell.module.css';
+import { STATUS_FILTERS } from '../../modules/Filters/FilterStatus/FilterStatus';
 
 const STATUS_MAP = {
   new: 'new',
@@ -24,16 +25,7 @@ const STATUS_ICON_STYLE = {
   confirmed: styles.icon_completed,
   postponed: styles.icon_postponed,
   completed: styles.icon_completed,
-  declined: styles.icon_canceled,
-};
-
-const STATUS_TRANSLATIONS = {
-  new: 'Новый',
-  calculation: 'Рассчет',
-  confirmed: 'Подтвержден',
-  postponed: 'Отложен',
-  completed: 'Выполнен',
-  declined: 'Отменен',
+  declined: styles.icon_canseled,
 };
 
 export function StatusTableCell({ status, className }) {
@@ -54,7 +46,7 @@ export function StatusTableCell({ status, className }) {
           [styles.text_completed]: status === STATUS_MAP.completed,
         })}
       >
-        {STATUS_TRANSLATIONS[status]}
+        {STATUS_FILTERS[status]}
       </span>
     </TableCell>
   );

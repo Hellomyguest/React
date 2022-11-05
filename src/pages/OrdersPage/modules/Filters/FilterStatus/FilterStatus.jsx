@@ -11,7 +11,7 @@ import {
 import { filtersActions } from '../../../../../store/filtersSlice';
 import styles from './FilterStatus.module.css';
 
-const STATUS_FILTERS = {
+export const STATUS_FILTERS = {
   new: 'Новый',
   calculation: 'Рассчет',
   confirmed: 'Подтвержден',
