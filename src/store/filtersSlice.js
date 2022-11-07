@@ -7,6 +7,7 @@ const initialState = {
   statusValue: [],
   priceFromValue: '',
   priceToValue: '',
+  filteredOrders: [],
 };
 export const filtersSlice = createSlice({
   name: 'filters',
@@ -49,6 +50,49 @@ export const filtersSlice = createSlice({
     },
     resetFilters() {
       return initialState;
+    },
+    filterOrders(state, { payload }) {
+      let arr = payload.slice(0);
+      if (state.dateFromValue !== '') {
+        arr = arr.filter((item) => {
+          const [d, m, y] = item.date.slice(0, 10).split('.');
+          const [df, mf, yf] = state.dateFromValue.split('.');
+          const date = Date.parse(`${y}-${m}-${d}`);
+          const dateFrom = Date.parse(`${yf}-${mf}-${df}`);
+          return dateFrom < date;
+        });
+      }
+      if (state.dateToValue !== '') {
+        arr = arr.filter((item) => {
+          const [d, m, y] = item.date.slice(0, 10).split('.');
+          const [dt, mt, yt] = state.dateToValue.split('.');
+          const date = Date.parse(`${y}-${m}-${d}`);
+          const dateTo = Date.parse(`${yt}-${mt}-${dt}`);
+          return dateTo > date;
+        });
+      }
+      if (state.statusValue.length !== 0) {
+        arr = arr.filter((item) => {
+          console.log(state.statusValue, item.status);
+          return state.statusValue.includes(item.status);
+        });
+      }
+      if (state.priceFromValue !== '') {
+        arr = arr.filter(
+          (item) =>
+            parseInt(String(item.sum).replace(/\s+/g, ''), 10) >
+            state.priceFromValue
+        );
+      }
+      if (state.priceToValue !== '') {
+        arr = arr.filter(
+          (item) =>
+            parseInt(String(item.sum).replace(/\s+/g, ''), 10) <
+            state.priceToValue
+        );
+      }
+
+      state.filteredOrders = arr;
     },
   },
 });
