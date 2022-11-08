@@ -1,5 +1,4 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import {
   Dropdown,
   InputWithLabel,
@@ -8,7 +7,6 @@ import {
   ControlWithLabel,
   Checkbox,
 } from '../../../../../shared/ui';
-import { filtersActions } from '../../../../../store/filtersSlice';
 import styles from './FilterStatus.module.css';
 
 export const STATUS_FILTERS = {
@@ -22,11 +20,7 @@ export const STATUS_FILTERS = {
 
 const ANY = 'Любой';
 
-export function FilterStatus() {
-  const dispatch = useDispatch();
-  const statusValue = useSelector((state) => state.filter.statusValue);
-  const handleChangeStatus = (e) =>
-    dispatch(filtersActions.changeStatusValue(e.target.name));
+export function FilterStatus({ statusValue, onChangeStatusValue }) {
   const inputValue =
     !statusValue.length || statusValue.length === 6
       ? ANY
@@ -59,7 +53,7 @@ export function FilterStatus() {
                   <Checkbox
                     name={key}
                     checked={statusValue.includes(key)}
-                    onChange={handleChangeStatus}
+                    onChange={onChangeStatusValue}
                   />
                 }
                 label={STATUS_FILTERS[key]}

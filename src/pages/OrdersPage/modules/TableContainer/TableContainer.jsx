@@ -17,14 +17,14 @@ import {
   TableSortingCell,
 } from '../../../../shared/ui';
 import { StatusTableCell } from '../../ui/StatusTableCell/StatusTableCell';
+import { filteredOrders } from '../../../../store/selectors/getFilteredOrders';
 
 export function TableContainer() {
+  const orders = useSelector(filteredOrders);
   const dispatch = useDispatch();
-  // setTimeout(() => dispatch(ordersAction.loading()), 5000);
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
-  const orders = useSelector((state) => state.orders.orders);
   return (
     <Table>
       <TableHeader>

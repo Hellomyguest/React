@@ -1,26 +1,15 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { InputWithLabel, Input } from '../../../../../shared/ui';
-import { filtersActions } from '../../../../../store/filtersSlice';
 import styles from './FilterPrice.module.css';
 
-export function FilterPrice() {
-  const dispatch = useDispatch();
-  const priceFromValue = useSelector((state) => state.filter.priceFromValue);
-  const priceToValue = useSelector((state) => state.filter.priceToValue);
-  const handleChangePriceFrom = (e) => {
-    dispatch(filtersActions.changePriceFromValue(e.target.value));
-  };
-  const handleResetPriceFrom = () => {
-    dispatch(filtersActions.resetPriceFromValue());
-  };
-  const handleChangePriceTo = (e) => {
-    dispatch(filtersActions.changePriceToValue(e.target.value));
-  };
-  const handleResetPriceTo = () => {
-    dispatch(filtersActions.resetPriceToValue());
-  };
-
+export function FilterPrice({
+  priceFromValue,
+  onChangePriceFromValue,
+  onResetPriceFromValue,
+  priceToValue,
+  onChangePriceToValue,
+  onResetPriceToValue,
+}) {
   return (
     <div className={styles._}>
       <InputWithLabel
@@ -28,10 +17,10 @@ export function FilterPrice() {
           <Input
             placeholder="₽"
             value={priceFromValue}
-            onChange={handleChangePriceFrom}
+            onChange={onChangePriceFromValue}
             prefix="от"
             label="Сумма заказа"
-            onReset={handleResetPriceFrom}
+            onReset={onResetPriceFromValue}
             pattern="\d*"
           />
         }
@@ -39,10 +28,10 @@ export function FilterPrice() {
       />
       <Input
         value={priceToValue}
-        onChange={handleChangePriceTo}
+        onChange={onChangePriceToValue}
         placeholder="₽"
         prefix="до"
-        onReset={handleResetPriceTo}
+        onReset={onResetPriceToValue}
         pattern="\d*"
       />
     </div>

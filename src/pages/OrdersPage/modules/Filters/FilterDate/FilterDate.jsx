@@ -1,26 +1,15 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Input, InputWithLabel } from '../../../../../shared/ui';
-import { filtersActions } from '../../../../../store/filtersSlice';
 import styles from './FilterDate.module.css';
 
-export function FilterDate() {
-  const dispatch = useDispatch();
-  const dateFromValue = useSelector((state) => state.filter.dateFromValue);
-  const dateToValue = useSelector((state) => state.filter.dateToValue);
-  const handleChangeDateFrom = (e) => {
-    dispatch(filtersActions.changeDateFromValue(e.target.value));
-  };
-  const handleResetDateFrom = () => {
-    dispatch(filtersActions.resetDateFromValue());
-  };
-  const handleChangeDateTo = (e) => {
-    dispatch(filtersActions.changeDateToValue(e.target.value));
-  };
-  const handleResetDateTo = () => {
-    dispatch(filtersActions.resetDateToValue());
-  };
-
+export function FilterDate({
+  dateFromValue,
+  onChangeDateFromValue,
+  onResetDateFromValue,
+  dateToValue,
+  onChangeDateToValue,
+  onResetDateToValue,
+}) {
   return (
     <div className={styles._}>
       <InputWithLabel
@@ -28,21 +17,21 @@ export function FilterDate() {
         input={
           <Input
             value={dateFromValue}
-            onChange={handleChangeDateFrom}
+            onChange={onChangeDateFromValue}
             placeholder="dd.mm.yyyy"
             prefix="с"
             pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-            onReset={handleResetDateFrom}
+            onReset={onResetDateFromValue}
           />
         }
       />
       <Input
         value={dateToValue}
-        onChange={handleChangeDateTo}
+        onChange={onChangeDateToValue}
         placeholder="dd.mm.yyyy"
         prefix="по"
         pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-        onReset={handleResetDateTo}
+        onReset={onResetDateToValue}
       />
     </div>
   );

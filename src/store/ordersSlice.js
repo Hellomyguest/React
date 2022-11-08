@@ -913,41 +913,7 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
 export const ordersSlice = createSlice({
   name: 'orders',
   initialState: { orders: [], isLoading: false },
-  reducers: {
-    filterOrders(state, action) {
-      if (action.payload.dateFromValue !== '') {
-        state.orders.filter((item) => {
-          const [d, m, y] = item.date.split('.');
-          const [df, mf, yf] = action.payload.dateFromValue.split('.');
-          const date = Date.parse(`${y}-${m}-${d}`);
-          const dateFrom = Date.parse(`${yf}-${mf}-${df}`);
-          return dateFrom < date;
-        });
-      }
-      if (action.payload.dateToValue !== '') {
-        state.orders.filter((item) => {
-          const [d, m, y] = item.date.split('.');
-          const [dt, mt, yt] = action.payload.dateToValue.split('.');
-          const date = Date.parse(`${y}-${m}-${d}`);
-          const dateTo = Date.parse(`${yt}-${mt}-${dt}`);
-          return dateTo > date;
-        });
-      }
-      if (action.payload.statusValue.length !== 0) {
-        state.orders.filter((item) =>
-          action.payload.statusValue.includes(item.status)
-        );
-      }
-      if (action.payload.priceFromValue !== '') {
-        state.orders.filter((item) => +item > +action.payload.priceFromValue);
-      }
-      if (action.payload.priceToValue !== '') {
-        state.orders.filter((item) => +item < +action.payload.priceToValue);
-      }
-      console.log(state.orders);
-      return { ...state, [state.orders]: state.orders };
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchOrders.pending]: (state) => {
       state.isLoading = true;
