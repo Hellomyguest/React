@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { fetchOrders } from '../../../../store/ordersSlice';
@@ -20,11 +20,70 @@ import { StatusTableCell } from '../../ui/StatusTableCell/StatusTableCell';
 import { filteredOrders } from '../../../../store/selectors/getFilteredOrders';
 
 export function TableContainer() {
+  // Смена активной сортировки и направления сортировки
+  const [sortingCellStatus, setSortingCellStatus] = useState({
+    active: 'Дата',
+    directionUp: [],
+  });
+  const handleClickSortingCell = ({ target: { textContent } }) => {
+    if (sortingCellStatus.active === textContent) {
+      setSortingCellStatus({
+        ...sortingCellStatus,
+        directionUp: sortingCellStatus.directionUp.includes(textContent)
+          ? sortingCellStatus.directionUp.filter((item) => item !== textContent)
+          : [sortingCellStatus.directionUp, textContent],
+      });
+    } else setSortingCellStatus({ ...sortingCellStatus, active: textContent });
+  };
+
   const orders = useSelector(filteredOrders);
+  // Сортировка данных
+  switch (sortingCellStatus.active) {
+    case 'Дата':
+      {
+        const dateSort = (a, b) => {
+          const [d, m, y] = a.date.slice(0, 10).split('.');
+          const [db, mb, yb] = b.date.slice(0, 10).split('.');
+          const date = Date.parse(`${y}-${m}-${d}`);
+          const dateb = Date.parse(`${yb}-${mb}-${db}`);
+          return date - dateb;
+        };
+        orders.sort(dateSort);
+        if (sortingCellStatus.directionUp.includes('Дата')) orders.reverse();
+      }
+      break;
+    case 'Статус':
+      orders.sort((a, b) => (a.status > b.status ? -1 : 1));
+      if (sortingCellStatus.directionUp.includes('Статус')) {
+        orders.reverse();
+      }
+
+      break;
+    case 'Позиций':
+      orders.sort((a, b) => +a.amount - +b.amount);
+      if (sortingCellStatus.directionUp.includes('Позиций')) {
+        orders.reverse();
+      }
+      break;
+    case 'Сумма':
+      orders.sort(
+        (a, b) =>
+          parseInt(String(a.sum).replace(/\s+/g, ''), 10) -
+          parseInt(String(b.sum).replace(/\s+/g, ''), 10)
+      );
+      if (sortingCellStatus.directionUp.includes('Сумма')) {
+        orders.reverse();
+      }
+      break;
+    default:
+  }
+
+  // Эмуляция загрузки
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
+
   return (
     <Table>
       <TableHeader>
@@ -39,21 +98,32 @@ export function TableContainer() {
             <span className={styles.text}>#</span>
           </TableCell>
           <TableSortingCell
-            isActive
+            isActive={sortingCellStatus.active === 'Дата'}
+            direction={sortingCellStatus.directionUp.includes('Дата')}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Дата"
+            onClick={handleClickSortingCell}
           />
           <TableSortingCell
+            isActive={sortingCellStatus.active === 'Статус'}
+            direction={sortingCellStatus.directionUp.includes('Статус')}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Статус"
+            onClick={handleClickSortingCell}
           />
           <TableSortingCell
+            isActive={sortingCellStatus.active === 'Позиций'}
+            direction={sortingCellStatus.directionUp.includes('Позиций')}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Позиций"
+            onClick={handleClickSortingCell}
           />
           <TableSortingCell
+            isActive={sortingCellStatus.active === 'Сумма'}
+            direction={sortingCellStatus.directionUp.includes('Сумма')}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Сумма"
+            onClick={handleClickSortingCell}
           />
           <TableCell className={styles.cell}>
             <span className={styles.text}>ФИО покупателя</span>

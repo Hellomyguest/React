@@ -232,7 +232,7 @@ const mocks = [
     date: '05.05.2022 13:16',
     status: 'new',
     sum: '766 800 ₽',
-    amount: '0',
+    amount: '1',
     orderNumber: '436385',
   },
   {
@@ -529,7 +529,7 @@ const mocks = [
     date: '10.03.2022 13:33',
     status: 'completed',
     sum: '768 538 ₽',
-    amount: '0',
+    amount: '1',
     orderNumber: '780988',
   },
   {
@@ -844,7 +844,7 @@ const mocks = [
     date: '24.07.2022 17:05',
     status: 'calculation',
     sum: '862 137 ₽',
-    amount: '0',
+    amount: '1',
     orderNumber: '919636',
   },
   {
@@ -862,7 +862,7 @@ const mocks = [
     date: '12.01.2021 09:13',
     status: 'calculation',
     sum: '790 208 ₽',
-    amount: '0',
+    amount: '1',
     orderNumber: '315213',
   },
   {

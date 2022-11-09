@@ -12,9 +12,6 @@
   padding: 0.75rem 0.5rem;
   border: none;
   background-color: transparent;
-}
-
-.text {
   color: var(--primary-filters-area-color);
 }
 
