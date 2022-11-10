@@ -7,6 +7,14 @@ const dateToValue = (state) => state.filter.dateToValue;
 const statusValue = (state) => state.filter.statusValue;
 const priceFromValue = (state) => state.filter.priceFromValue;
 const priceToValue = (state) => state.filter.priceToValue;
+const activeSortingCell = (state) => state.filter.activeSortingCell;
+const sortingCellsDirectionUp = (state) => state.filter.sortingCellsDirectionUp;
+
+const parseDate = (date) => {
+  const [d, m, y] = date.slice(0, 10).split('.');
+  return Date.parse(`${y}-${m}-${d}`);
+};
+const parseSum = (sum) => parseInt(String(sum).replace(/\s+/g, ''), 10);
 
 export const filteredOrders = createSelector(
   orders,
@@ -16,8 +24,22 @@ export const filteredOrders = createSelector(
   statusValue,
   priceFromValue,
   priceToValue,
-  (data, search, dateFrom, dateTo, status, priceFrom, priceTo) => {
+  activeSortingCell,
+  sortingCellsDirectionUp,
+  (
+    data,
+    search,
+    dateFrom,
+    dateTo,
+    status,
+    priceFrom,
+    priceTo,
+    sortingCell,
+    sortDirectionUp
+  ) => {
     let arr = data.slice(0);
+
+    // Фильтрация
     if (search !== '') {
       arr = arr.filter(
         (item) =>
@@ -25,36 +47,55 @@ export const filteredOrders = createSelector(
           item.customer.toLowerCase().indexOf(search.toLowerCase()) !== -1
       );
     }
-    if (dateFrom !== '') {
-      arr = arr.filter((item) => {
-        const [d, m, y] = item.date.slice(0, 10).split('.');
-        const [df, mf, yf] = dateFrom.split('.');
-        const date = Date.parse(`${y}-${m}-${d}`);
-        const datefrom = Date.parse(`${yf}-${mf}-${df}`);
-        return datefrom < date;
-      });
-    }
-    if (dateTo !== '') {
-      arr = arr.filter((item) => {
-        const [d, m, y] = item.date.slice(0, 10).split('.');
-        const [dt, mt, yt] = dateTo.split('.');
-        const date = Date.parse(`${y}-${m}-${d}`);
-        const dateto = Date.parse(`${yt}-${mt}-${dt}`);
-        return dateto > date;
-      });
-    }
-    if (status.length !== 0) {
-      arr = arr.filter((item) => status.includes(item.status));
-    }
-    if (priceFrom !== '') {
-      arr = arr.filter(
-        (item) => parseInt(String(item.sum).replace(/\s+/g, ''), 10) > priceFrom
-      );
-    }
-    if (priceTo !== '') {
-      arr = arr.filter(
-        (item) => parseInt(String(item.sum).replace(/\s+/g, ''), 10) < priceTo
-      );
+
+    // Фильтрация по дате
+    arr = arr.filter((item) =>
+      dateFrom ? parseDate(dateFrom) < parseDate(item.date) : true
+    );
+
+    arr = arr.filter((item) =>
+      dateTo ? parseDate(dateTo) > parseDate(item.date) : true
+    );
+
+    // Фильтрация по статусу
+    arr = arr.filter((item) =>
+      status.length ? status.includes(item.status) : true
+    );
+
+    // Фильтрация по сумме
+    arr = arr.filter((item) =>
+      priceFrom ? parseSum(item.sum) > priceFrom : true
+    );
+
+    arr = arr.filter((item) => (priceTo ? parseSum(item.sum) < priceTo : true));
+
+    // Сортировка
+    switch (sortingCell) {
+      case 'Дата':
+        arr.sort((a, b) => parseDate(a.date) - parseDate(b.date));
+        if (sortDirectionUp.includes('Дата')) arr.reverse();
+
+        break;
+      case 'Статус':
+        arr.sort((a, b) => (a.status > b.status ? -1 : 1));
+        if (sortDirectionUp.includes('Статус')) {
+          arr.reverse();
+        }
+
+        break;
+      case 'Позиций':
+        arr.sort((a, b) => +a.amount - +b.amount);
+        if (sortDirectionUp.includes('Позиций')) {
+          arr.reverse();
+        }
+        break;
+      case 'Сумма':
+        arr.sort((a, b) => parseSum(a.sum) - parseSum(b.sum));
+        if (sortDirectionUp.includes('Сумма')) {
+          arr.reverse();
+        }
+        break;
+      default:
     }
     return arr;
   }

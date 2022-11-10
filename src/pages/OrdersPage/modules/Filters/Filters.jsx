@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
 import { FilterStatus } from './FilterStatus/FilterStatus';
@@ -22,6 +22,13 @@ export function Filters() {
     priceFromValue: '',
     priceToValue: '',
   });
+
+  // Search
+  const handleChangeSearchValue = (e) => {
+    setFiltersValue({ ...filtersValue, searchValue: e.target.value });
+  };
+  const handleResetSearchValue = () =>
+    setFiltersValue({ ...filtersValue, searchValue: '' });
 
   // Date filter
   const handleChangeDateFromValue = (e) => {
@@ -62,6 +69,7 @@ export function Filters() {
   // Reset all filters
   const handleResetFilters = () => {
     setFiltersValue({
+      searchValue: '',
       dateFromValue: '',
       dateToValue: '',
       statusValue: [],
@@ -71,9 +79,8 @@ export function Filters() {
   };
 
   // Checking if filters are filled
-  const searchValue = useSelector((state) => state.filter.searchValue);
   const isFiltersFilled =
-    searchValue ||
+    filtersValue.searchValue ||
     filtersValue.dateFromValue ||
     filtersValue.dateToValue ||
     filtersValue.statusValue.length ||
@@ -91,6 +98,9 @@ export function Filters() {
         onClickFiltersOpen={handleClickFiltersOpen}
         onResetFilters={handleResetFilters}
         isFiltersFilled={isFiltersFilled}
+        searchValue={filtersValue.searchValue}
+        onChangeSearchValue={handleChangeSearchValue}
+        onResetSearchValue={handleResetSearchValue}
       />
       {isFiltersOpen && (
         <div className={styles.area}>

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
+import debounce from 'lodash.debounce';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
 import { filtersActions } from '../../../../../store/filtersSlice';
@@ -10,16 +11,34 @@ export function FiltersHeader({
   onClickFiltersOpen,
   isFiltersFilled,
   onResetFilters,
+  searchValue,
+  onChangeSearchValue,
+  onResetSearchValue,
 }) {
   const dispatch = useDispatch();
-  const searchValue = useSelector((state) => state.filter.searchValue);
   const isLoading = useSelector((state) => state.orders.isLoading);
+
+  // Обработка строки поиска
   const handleChange = (e) => {
     dispatch(filtersActions.changeSearchValue(e.target.value));
   };
+  const debouncedResults = useMemo(
+    () => debounce(handleChange, 500),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+  const handleChangeSearchValue = (e) => {
+    onChangeSearchValue(e);
+    debouncedResults(e);
+  };
+
+  // Сброс строки поиска
   const handleReset = () => {
+    onResetSearchValue();
     dispatch(filtersActions.resetSearchValue());
   };
+
+  // Сброс всех фильтров
   const handleResetFilters = () => {
     dispatch(filtersActions.resetFilters());
   };
@@ -34,7 +53,7 @@ export function FiltersHeader({
         <Searchbar
           placeholder="Номер заказа или ФИО"
           value={searchValue}
-          onChange={handleChange}
+          onChange={handleChangeSearchValue}
           onReset={handleReset}
         />
         <Button
