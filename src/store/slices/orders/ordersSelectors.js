@@ -1,14 +1,19 @@
 import { createSelector } from '@reduxjs/toolkit';
+import {
+  searchValue,
+  dateFromValue,
+  dateToValue,
+  statusValue,
+  priceFromValue,
+  priceToValue,
+  activeSortingCell,
+  sortingCellsDirectionUp,
+  currentPage,
+  pageSize,
+} from '../filters';
 
-const orders = (state) => state.orders.orders;
-const searchValue = (state) => state.filter.searchValue;
-const dateFromValue = (state) => state.filter.dateFromValue;
-const dateToValue = (state) => state.filter.dateToValue;
-const statusValue = (state) => state.filter.statusValue;
-const priceFromValue = (state) => state.filter.priceFromValue;
-const priceToValue = (state) => state.filter.priceToValue;
-const activeSortingCell = (state) => state.filter.activeSortingCell;
-const sortingCellsDirectionUp = (state) => state.filter.sortingCellsDirectionUp;
+export const orders = (state) => state.orders.orders;
+export const isLoading = (state) => state.orders.isLoading;
 
 const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');
@@ -26,6 +31,8 @@ export const filteredOrders = createSelector(
   priceToValue,
   activeSortingCell,
   sortingCellsDirectionUp,
+  currentPage,
+  pageSize,
   (
     data,
     search,
@@ -98,5 +105,17 @@ export const filteredOrders = createSelector(
       default:
     }
     return arr;
+  }
+);
+
+// Пагинация
+export const currentTableData = createSelector(
+  pageSize,
+  currentPage,
+  filteredOrders,
+  (pSize, curPage, data) => {
+    const firstPageIndex = (curPage - 1) * pSize;
+    const lastPageIndex = firstPageIndex + pSize;
+    return data.slice(firstPageIndex, lastPageIndex);
   }
 );

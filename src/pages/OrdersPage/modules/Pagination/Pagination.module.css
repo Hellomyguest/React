@@ -1,0 +1,28 @@
+._ {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.dots {
+  height: 1.5rem;
+  padding: 0.25rem 0.5rem;
+  color: var(--primary-color);
+  cursor: default;
+}
+
+.button_selected {
+  background-color: var(--primary-color);
+  color: var(--primary-button-content-color);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown_overlay {
+  position: absolute;
+  right: 0;
+  top: -5.75rem;
+  display: flex;
+  gap: 0;
+}

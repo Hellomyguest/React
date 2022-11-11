@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { fetchOrders } from '../../../../store/ordersSlice';
+import {
+  fetchOrders,
+  currentTableData,
+  filteredOrders,
+} from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
 import {
   Button,
@@ -17,31 +21,44 @@ import {
   TableSortingCell,
 } from '../../../../shared/ui';
 import { StatusTableCell } from '../../ui/StatusTableCell/StatusTableCell';
-import { filteredOrders } from '../../../../store/selectors/getFilteredOrders';
-import { filtersActions } from '../../../../store/filtersSlice';
+import {
+  activeSortingCell,
+  currentPage,
+  filtersActions,
+  pageSize,
+  sortingCellsDirectionUp,
+} from '../../../../store/slices/filters';
+import { Pagination } from '../Pagination/Pagination';
 
 export function TableContainer() {
-  // Смена активной сортировки и направления сортировки
-
-  const orders = useSelector(filteredOrders);
-  // Сортировка данных
+  const pSize = useSelector(pageSize);
+  const curPage = useSelector(currentPage);
 
   const dispatch = useDispatch();
+  // Смена страницы
+  const handleClickPage = (page) =>
+    dispatch(filtersActions.setCurrentPage(page));
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      dispatch(filtersActions.setCurrentPage(+e.target.value));
+    }
+  };
 
   // Смена сортировки
-  const selectedSortingCell = useSelector(
-    (state) => state.filter.activeSortingCell
-  );
-  const sortingDirection = useSelector(
-    (state) => state.filter.sortingCellsDirectionUp
-  );
+  const selectedSortingCell = useSelector(activeSortingCell);
+  const sortingDirection = useSelector(sortingCellsDirectionUp);
   const handleClickSortingCell = ({ target: { textContent } }) =>
-    dispatch(filtersActions.sort(textContent));
+    dispatch(filtersActions.sortOrders(textContent));
 
   // Эмуляция загрузки
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
+
+  // Данные заказов
+
+  const orders = useSelector(filteredOrders);
+  const tableData = useSelector(currentTableData);
 
   return (
     <Table>
@@ -90,7 +107,7 @@ export function TableContainer() {
         </div>
       </TableHeader>
       <TableBody>
-        {orders.map((order) => (
+        {tableData.map((order) => (
           <TableRow key={order.id} className={styles.row}>
             <TableCell
               className={classNames(styles.cell, styles.cell_filtering)}
@@ -149,26 +166,13 @@ export function TableContainer() {
           </div>
         </div>
         <div className={styles.pages}>
-          <div className={styles.footer__pagination}>
-            <Button size="small" color="primary">
-              1
-            </Button>
-            <Button size="small" color="reversePrimary">
-              2
-            </Button>
-            <Button size="small" color="reversePrimary">
-              3
-            </Button>
-            <Button size="small" color="reversePrimary">
-              ...
-            </Button>
-            <Button size="small" color="reversePrimary">
-              18
-            </Button>
-          </div>
-          <Button size="small" color="reversePrimary">
-            #
-          </Button>
+          <Pagination
+            currentPage={curPage}
+            totalCount={orders.length}
+            pageSize={pSize}
+            onPageChange={handleClickPage}
+            onKeyPress={handleKeyPress}
+          />
         </div>
       </TableFooter>
     </Table>

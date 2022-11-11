@@ -14,6 +14,7 @@ export function Input({
   onReset,
   className,
   onChange,
+  onKeyPress,
   readOnly,
 }) {
   return (
@@ -34,6 +35,7 @@ export function Input({
             (disabled || !!onReset) && postfix,
         })}
         onChange={onChange}
+        onKeyPress={onKeyPress}
         type={type}
         placeholder={placeholder}
         value={value}

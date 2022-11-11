@@ -7,7 +7,7 @@ import { FilterPrice } from './FilterPrice/FilterPrice';
 import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
-import { filtersActions } from '../../../../store/filtersSlice';
+import { filtersActions } from '../../../../store/slices/filters';
 
 export function Filters() {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -16,6 +16,7 @@ export function Filters() {
   };
 
   const [filtersValue, setFiltersValue] = useState({
+    searchValue: '',
     dateFromValue: '',
     dateToValue: '',
     statusValue: [],

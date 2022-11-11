@@ -44,7 +44,7 @@ export function Button({
   return (
     <button className={blockClass} type="button" onClick={onClick} {...props}>
       {iconType && <Icon iconType={iconType} className={styles.icon} />}
-      {children && <span className={styles.text}>{children}</span>}
+      {children}
     </button>
   );
 }

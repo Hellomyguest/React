@@ -102,9 +102,6 @@
 
 .overlayButton:hover {
   background-color: var(--primary-color);
-}
-
-.overlayButton:hover span {
   color: var(--primary-background-color);
 }
 

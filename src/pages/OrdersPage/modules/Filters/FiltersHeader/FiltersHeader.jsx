@@ -4,7 +4,8 @@ import classnames from 'classnames';
 import debounce from 'lodash.debounce';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
-import { filtersActions } from '../../../../../store/filtersSlice';
+import { filtersActions } from '../../../../../store/slices/filters';
+import { isLoading } from '../../../../../store/slices/orders';
 
 export function FiltersHeader({
   isFiltersOpen,
@@ -16,7 +17,7 @@ export function FiltersHeader({
   onResetSearchValue,
 }) {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.orders.isLoading);
+  const Loading = useSelector(isLoading);
 
   // Обработка строки поиска
   const handleChange = (e) => {
@@ -78,7 +79,7 @@ export function FiltersHeader({
         <Icon
           iconType="Refresh"
           className={classnames(styles.loadIcon, {
-            [styles.loadIconLoading]: isLoading,
+            [styles.loadIconLoading]: Loading,
           })}
         />
         <span className={styles.loadText}>Загрузка</span>

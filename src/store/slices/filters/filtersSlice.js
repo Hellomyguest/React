@@ -9,6 +9,8 @@ const initialState = {
   priceToValue: '',
   activeSortingCell: 'Дата',
   sortingCellsDirectionUp: [],
+  currentPage: 1,
+  pageSize: 20,
 };
 export const filtersSlice = createSlice({
   name: 'filters',
@@ -30,7 +32,7 @@ export const filtersSlice = createSlice({
       state.priceFromValue = payload.priceFromValue;
       state.priceToValue = payload.priceToValue;
     },
-    sort(state, action) {
+    sortOrders(state, action) {
       if (state.activeSortingCell === action.payload) {
         state.sortingCellsDirectionUp = state.sortingCellsDirectionUp.includes(
           action.payload
@@ -40,6 +42,9 @@ export const filtersSlice = createSlice({
             )
           : [state.sortingCellsDirectionUp, action.payload];
       } else state.activeSortingCell = action.payload;
+    },
+    setCurrentPage(state, action) {
+      state.currentPage = action.payload;
     },
   },
 });
