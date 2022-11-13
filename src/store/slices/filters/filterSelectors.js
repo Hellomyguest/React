@@ -6,7 +6,6 @@ export const statusValue = (state) => state.filter.statusValue;
 export const priceFromValue = (state) => state.filter.priceFromValue;
 export const priceToValue = (state) => state.filter.priceToValue;
 export const activeSortingCell = (state) => state.filter.activeSortingCell;
-export const sortingCellsDirectionUp = (state) =>
-  state.filter.sortingCellsDirectionUp;
+export const isSortingAscending = (state) => state.filter.isSortingAscending;
 export const currentPage = (state) => state.filter.currentPage;
 export const pageSize = (state) => state.filter.pageSize;

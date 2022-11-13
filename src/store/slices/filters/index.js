@@ -6,7 +6,7 @@ import {
   priceFromValue,
   priceToValue,
   activeSortingCell,
-  sortingCellsDirectionUp,
+  isSortingAscending,
   currentPage,
   pageSize,
 } from './filterSelectors';
@@ -20,7 +20,7 @@ export {
   priceFromValue,
   priceToValue,
   activeSortingCell,
-  sortingCellsDirectionUp,
+  isSortingAscending,
   currentPage,
   pageSize,
   filtersActions,

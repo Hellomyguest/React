@@ -16,6 +16,7 @@ input:invalid {
   top: 0.5rem;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 
 .textField {
@@ -87,6 +88,7 @@ input:invalid {
   padding: 0;
   color: inherit;
   font: inherit;
+  pointer-events: none;
 }
 
 .postfixWithButton {

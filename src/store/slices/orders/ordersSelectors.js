@@ -7,7 +7,7 @@ import {
   priceFromValue,
   priceToValue,
   activeSortingCell,
-  sortingCellsDirectionUp,
+  isSortingAscending,
   currentPage,
   pageSize,
 } from '../filters';
@@ -19,9 +19,46 @@ const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');
   return Date.parse(`${y}-${m}-${d}`);
 };
-const parseSum = (sum) => parseInt(String(sum).replace(/\s+/g, ''), 10);
 
-export const filteredOrders = createSelector(
+const filterBySearch = (search, order, customer) =>
+  search
+    ? order.startsWith(search) ||
+      customer.toLowerCase().includes(search.toLowerCase())
+    : true;
+
+const filterByDate = (dateFrom, dateTo, date) => {
+  if (!dateFrom && !dateTo) {
+    return true;
+  }
+  if (!dateFrom) {
+    return date <= dateTo;
+  }
+  if (!dateTo) {
+    return date >= dateFrom;
+  }
+  return date >= dateFrom && date <= dateTo;
+};
+
+const filterBySum = (min, max, value) => {
+  const minValue = min === '' ? Number.MIN_SAFE_INTEGER : +min;
+  const maxValue = max === '' ? Number.MAX_SAFE_INTEGER : +max;
+
+  return +value >= +minValue && +value <= +maxValue;
+};
+
+const filterByStatus = (status, value) =>
+  status.length ? status.includes(value) : true;
+
+const areAllFilled = (arr) => arr.every(Boolean);
+
+const sortByKey = (key, isAscending, array) => {
+  const direction = isAscending ? -1 : 1;
+  return key === 'sum'
+    ? array.sort((a, b) => (+a[key] > +b[key] ? direction : -direction))
+    : array.sort((a, b) => (a[key] > b[key] ? direction : -direction));
+};
+
+export const filteredAndSortedOrders = createSelector(
   orders,
   searchValue,
   dateFromValue,
@@ -30,92 +67,47 @@ export const filteredOrders = createSelector(
   priceFromValue,
   priceToValue,
   activeSortingCell,
-  sortingCellsDirectionUp,
-  currentPage,
+  isSortingAscending,
   pageSize,
+  currentPage,
   (
-    data,
+    ordersValue,
     search,
     dateFrom,
     dateTo,
-    status,
+    statuses,
     priceFrom,
     priceTo,
-    sortingCell,
-    sortDirectionUp
+    key,
+    isAscending
   ) => {
-    let arr = data.slice(0);
-
-    // Фильтрация
-    if (search !== '') {
-      arr = arr.filter(
-        (item) =>
-          item.orderNumber.indexOf(search) !== -1 ||
-          item.customer.toLowerCase().indexOf(search.toLowerCase()) !== -1
-      );
-    }
-
-    // Фильтрация по дате
-    arr = arr.filter((item) =>
-      dateFrom ? parseDate(dateFrom) < parseDate(item.date) : true
+    let array = ordersValue.filter(
+      ({ orderNumber, date, status, sum, customer }) =>
+        areAllFilled([
+          filterBySearch(search, orderNumber, customer),
+          filterByDate(
+            parseDate(dateFrom),
+            parseDate(dateTo),
+            Date.parse(date.slice(0, 10))
+          ),
+          filterByStatus(statuses, status),
+          filterBySum(priceFrom, priceTo, sum),
+        ])
     );
 
-    arr = arr.filter((item) =>
-      dateTo ? parseDate(dateTo) > parseDate(item.date) : true
-    );
+    array = sortByKey(key, isAscending, array);
 
-    // Фильтрация по статусу
-    arr = arr.filter((item) =>
-      status.length ? status.includes(item.status) : true
-    );
-
-    // Фильтрация по сумме
-    arr = arr.filter((item) =>
-      priceFrom ? parseSum(item.sum) > priceFrom : true
-    );
-
-    arr = arr.filter((item) => (priceTo ? parseSum(item.sum) < priceTo : true));
-
-    // Сортировка
-    switch (sortingCell) {
-      case 'Дата':
-        arr.sort((a, b) => parseDate(a.date) - parseDate(b.date));
-        if (sortDirectionUp.includes('Дата')) arr.reverse();
-
-        break;
-      case 'Статус':
-        arr.sort((a, b) => (a.status > b.status ? -1 : 1));
-        if (sortDirectionUp.includes('Статус')) {
-          arr.reverse();
-        }
-
-        break;
-      case 'Позиций':
-        arr.sort((a, b) => +a.amount - +b.amount);
-        if (sortDirectionUp.includes('Позиций')) {
-          arr.reverse();
-        }
-        break;
-      case 'Сумма':
-        arr.sort((a, b) => parseSum(a.sum) - parseSum(b.sum));
-        if (sortDirectionUp.includes('Сумма')) {
-          arr.reverse();
-        }
-        break;
-      default:
-    }
-    return arr;
+    return array;
   }
 );
 
-// Пагинация
-export const currentTableData = createSelector(
+export const paginatedOrders = createSelector(
   pageSize,
   currentPage,
-  filteredOrders,
-  (pSize, curPage, data) => {
+  filteredAndSortedOrders,
+  (pSize, curPage, ordersValue) => {
     const firstPageIndex = (curPage - 1) * pSize;
     const lastPageIndex = firstPageIndex + pSize;
-    return data.slice(firstPageIndex, lastPageIndex);
+    return ordersValue.slice(firstPageIndex, lastPageIndex);
   }
 );

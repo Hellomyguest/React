@@ -25,13 +25,17 @@ export function FilterDate({
           />
         }
       />
-      <Input
-        value={dateToValue}
-        onChange={onChangeDateToValue}
-        placeholder="dd.mm.yyyy"
-        prefix="по"
-        pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-        onReset={onResetDateToValue}
+      <InputWithLabel
+        input={
+          <Input
+            value={dateToValue}
+            onChange={onChangeDateToValue}
+            placeholder="dd.mm.yyyy"
+            prefix="по"
+            pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+            onReset={onResetDateToValue}
+          />
+        }
       />
     </div>
   );

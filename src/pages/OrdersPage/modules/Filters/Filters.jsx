@@ -48,9 +48,9 @@ export function Filters() {
   const handleChangeStatusValue = (e) => {
     setFiltersValue({
       ...filtersValue,
-      statusValue: filtersValue.statusValue.includes(e.target.name)
-        ? filtersValue.statusValue.filter((item) => item !== e.target.name)
-        : [...filtersValue.statusValue, e.target.name],
+      statusValue: filtersValue.statusValue.includes(e.target.value)
+        ? filtersValue.statusValue.filter((item) => item !== e.target.value)
+        : [...filtersValue.statusValue, e.target.value],
     });
   };
 
@@ -89,8 +89,8 @@ export function Filters() {
     filtersValue.priceToValue;
 
   const dispatch = useDispatch();
-  const handleClickGetFilters = () =>
-    dispatch(filtersActions.getFilters(filtersValue));
+  const handleClickSetFilters = () =>
+    dispatch(filtersActions.setFilters(filtersValue));
 
   return (
     <div className={styles._}>
@@ -129,7 +129,7 @@ export function Filters() {
             color="reversePrimary"
             size="medium"
             className={styles.button}
-            onClick={handleClickGetFilters}
+            onClick={handleClickSetFilters}
           >
             Применить
           </Button>

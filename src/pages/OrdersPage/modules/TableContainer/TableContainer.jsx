@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import {
-  fetchOrders,
-  currentTableData,
-  filteredOrders,
+  paginatedOrders,
+  filteredAndSortedOrders,
 } from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
 import {
@@ -26,17 +25,31 @@ import {
   currentPage,
   filtersActions,
   pageSize,
-  sortingCellsDirectionUp,
+  isSortingAscending,
 } from '../../../../store/slices/filters';
 import { Pagination } from '../Pagination/Pagination';
+
+const prettifySum = (sum) => {
+  const preSum = sum.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1 `);
+  return `${preSum} ₽`;
+};
+
+const prettifyDate = (date) => {
+  const dateObj = new Date(date);
+  return `${`0${dateObj.getDate()}`.slice(-2)}.${`0${
+    1 + +dateObj.getMonth()
+  }`.slice(-2)}.${dateObj.getFullYear()}, ${`0${dateObj.getHours()}`.slice(
+    -2
+  )}:${`0${dateObj.getMinutes()}`.slice(-2)}`;
+};
 
 export function TableContainer() {
   const pSize = useSelector(pageSize);
   const curPage = useSelector(currentPage);
 
   const dispatch = useDispatch();
-  // Смена страницы
-  const handleClickPage = (page) =>
+
+  const handleClickChangePage = (page) =>
     dispatch(filtersActions.setCurrentPage(page));
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -46,19 +59,16 @@ export function TableContainer() {
 
   // Смена сортировки
   const selectedSortingCell = useSelector(activeSortingCell);
-  const sortingDirection = useSelector(sortingCellsDirectionUp);
-  const handleClickSortingCell = ({ target: { textContent } }) =>
-    dispatch(filtersActions.sortOrders(textContent));
-
-  // Эмуляция загрузки
-  useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+  const sortAscending = useSelector(isSortingAscending);
+  const handleClickSetSortingCell = (key) => () => {
+    const sortingAsc = selectedSortingCell === key ? !sortAscending : false;
+    return dispatch(filtersActions.setSorting({ key, sortingAsc }));
+  };
 
   // Данные заказов
 
-  const orders = useSelector(filteredOrders);
-  const tableData = useSelector(currentTableData);
+  const orders = useSelector(filteredAndSortedOrders);
+  const pageOrders = useSelector(paginatedOrders);
 
   return (
     <Table>
@@ -74,32 +84,32 @@ export function TableContainer() {
             <span className={styles.text}>#</span>
           </TableCell>
           <TableSortingCell
-            isActive={selectedSortingCell === 'Дата'}
-            direction={sortingDirection.includes('Дата')}
+            isActive={selectedSortingCell === 'date'}
+            direction={selectedSortingCell === 'date' && sortAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Дата"
-            onClick={handleClickSortingCell}
+            onClick={handleClickSetSortingCell('date')}
           />
           <TableSortingCell
-            isActive={selectedSortingCell === 'Статус'}
-            direction={sortingDirection.includes('Статус')}
+            isActive={selectedSortingCell === 'status'}
+            direction={selectedSortingCell === 'status' && sortAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Статус"
-            onClick={handleClickSortingCell}
+            onClick={handleClickSetSortingCell('status')}
           />
           <TableSortingCell
-            isActive={selectedSortingCell === 'Позиций'}
-            direction={sortingDirection.includes('Позиций')}
+            isActive={selectedSortingCell === 'amount'}
+            direction={selectedSortingCell === 'amount' && sortAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Позиций"
-            onClick={handleClickSortingCell}
+            onClick={handleClickSetSortingCell('amount')}
           />
           <TableSortingCell
-            isActive={selectedSortingCell === 'Сумма'}
-            direction={sortingDirection.includes('Сумма')}
+            isActive={selectedSortingCell === 'sum'}
+            direction={selectedSortingCell === 'sum' && sortAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             label="Сумма"
-            onClick={handleClickSortingCell}
+            onClick={handleClickSetSortingCell('sum')}
           />
           <TableCell className={styles.cell}>
             <span className={styles.text}>ФИО покупателя</span>
@@ -107,7 +117,7 @@ export function TableContainer() {
         </div>
       </TableHeader>
       <TableBody>
-        {tableData.map((order) => (
+        {pageOrders.map((order) => (
           <TableRow key={order.id} className={styles.row}>
             <TableCell
               className={classNames(styles.cell, styles.cell_filtering)}
@@ -118,10 +128,14 @@ export function TableContainer() {
               />
             </TableCell>
             <TableCell className={styles.cell}>{order.orderNumber}</TableCell>
-            <TableCell className={styles.cell}>{order.date}</TableCell>
+            <TableCell className={styles.cell}>
+              {prettifyDate(order.date)}
+            </TableCell>
             <StatusTableCell status={order.status} className={styles.cell} />
             <TableCell className={styles.cell}>{order.amount}</TableCell>
-            <TableCell className={styles.cell}>{order.sum}</TableCell>
+            <TableCell className={styles.cell}>
+              {prettifySum(order.sum)}
+            </TableCell>
             <TableCell className={styles.cell}>{order.customer}</TableCell>
           </TableRow>
         ))}
@@ -170,7 +184,7 @@ export function TableContainer() {
             currentPage={curPage}
             totalCount={orders.length}
             pageSize={pSize}
-            onPageChange={handleClickPage}
+            onPageChange={handleClickChangePage}
             onKeyPress={handleKeyPress}
           />
         </div>

@@ -51,7 +51,7 @@ export function FilterStatus({ statusValue, onChangeStatusValue }) {
                 key={key}
                 control={
                   <Checkbox
-                    name={key}
+                    value={key}
                     checked={statusValue.includes(key)}
                     onChange={onChangeStatusValue}
                   />
