@@ -21,7 +21,7 @@ export function FiltersHeader({
 
   // Обработка строки поиска
   const handleChange = (e) => {
-    dispatch(filtersActions.changeSearchValue(e.target.value));
+    dispatch(filtersActions.changeSearch(e.target.value));
   };
   const debouncedResults = useMemo(
     () => debounce(handleChange, 500),
@@ -36,7 +36,7 @@ export function FiltersHeader({
   // Сброс строки поиска
   const handleReset = () => {
     onResetSearchValue();
-    dispatch(filtersActions.resetSearchValue());
+    dispatch(filtersActions.resetSearch());
   };
 
   // Сброс всех фильтров

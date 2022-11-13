@@ -1,11 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import {
-  searchValue,
-  dateFromValue,
-  dateToValue,
-  statusValue,
-  priceFromValue,
-  priceToValue,
+  search,
+  dateFrom,
+  dateTo,
+  statuses,
+  priceFrom,
+  priceTo,
   activeSortingCell,
   isSortingAscending,
   currentPage,
@@ -20,23 +20,23 @@ const parseDate = (date) => {
   return Date.parse(`${y}-${m}-${d}`);
 };
 
-const filterBySearch = (search, order, customer) =>
-  search
-    ? order.startsWith(search) ||
-      customer.toLowerCase().includes(search.toLowerCase())
+const filterBySearch = (searchValue, orderValue, customer) =>
+  searchValue
+    ? orderValue.startsWith(searchValue) ||
+      customer.toLowerCase().includes(searchValue.toLowerCase())
     : true;
 
-const filterByDate = (dateFrom, dateTo, date) => {
-  if (!dateFrom && !dateTo) {
+const filterByDate = (dateFromValue, dateToValue, date) => {
+  if (!dateFromValue && !dateToValue) {
     return true;
   }
-  if (!dateFrom) {
-    return date <= dateTo;
+  if (!dateFromValue) {
+    return date <= dateToValue;
   }
-  if (!dateTo) {
-    return date >= dateFrom;
+  if (!dateToValue) {
+    return date >= dateFromValue;
   }
-  return date >= dateFrom && date <= dateTo;
+  return date >= dateFromValue && date <= dateToValue;
 };
 
 const filterBySum = (min, max, value) => {
@@ -46,8 +46,8 @@ const filterBySum = (min, max, value) => {
   return +value >= +minValue && +value <= +maxValue;
 };
 
-const filterByStatus = (status, value) =>
-  status.length ? status.includes(value) : true;
+const filterByStatus = (statusValue, value) =>
+  statusValue.length ? statusValue.includes(value) : true;
 
 const areAllFilled = (arr) => arr.every(Boolean);
 
@@ -60,38 +60,36 @@ const sortByKey = (key, isAscending, array) => {
 
 export const filteredAndSortedOrders = createSelector(
   orders,
-  searchValue,
-  dateFromValue,
-  dateToValue,
-  statusValue,
-  priceFromValue,
-  priceToValue,
+  search,
+  dateFrom,
+  dateTo,
+  statuses,
+  priceFrom,
+  priceTo,
   activeSortingCell,
   isSortingAscending,
-  pageSize,
-  currentPage,
   (
     ordersValue,
-    search,
-    dateFrom,
-    dateTo,
-    statuses,
-    priceFrom,
-    priceTo,
+    searchValue,
+    dateFromValue,
+    dateToValue,
+    statusesValue,
+    priceFromValue,
+    priceToValue,
     key,
     isAscending
   ) => {
     let array = ordersValue.filter(
       ({ orderNumber, date, status, sum, customer }) =>
         areAllFilled([
-          filterBySearch(search, orderNumber, customer),
+          filterBySearch(searchValue, orderNumber, customer),
           filterByDate(
-            parseDate(dateFrom),
-            parseDate(dateTo),
+            parseDate(dateFromValue),
+            parseDate(dateToValue),
             Date.parse(date.slice(0, 10))
           ),
-          filterByStatus(statuses, status),
-          filterBySum(priceFrom, priceTo, sum),
+          filterByStatus(statusesValue, status),
+          filterBySum(priceFromValue, priceToValue, sum),
         ])
     );
 

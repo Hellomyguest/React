@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import {
@@ -24,8 +24,8 @@ import {
   activeSortingCell,
   currentPage,
   filtersActions,
-  pageSize,
   isSortingAscending,
+  pageSize,
 } from '../../../../store/slices/filters';
 import { Pagination } from '../Pagination/Pagination';
 
@@ -44,7 +44,6 @@ const prettifyDate = (date) => {
 };
 
 export function TableContainer() {
-  const pSize = useSelector(pageSize);
   const curPage = useSelector(currentPage);
 
   const dispatch = useDispatch();
@@ -57,7 +56,6 @@ export function TableContainer() {
     }
   };
 
-  // Смена сортировки
   const selectedSortingCell = useSelector(activeSortingCell);
   const sortAscending = useSelector(isSortingAscending);
   const handleClickSetSortingCell = (key) => () => {
@@ -65,10 +63,14 @@ export function TableContainer() {
     return dispatch(filtersActions.setSorting({ key, sortingAsc }));
   };
 
-  // Данные заказов
+  const filteredSortedOrders = useSelector(filteredAndSortedOrders);
+  const paginatdOrders = useSelector(paginatedOrders);
+  const pSize = useSelector(pageSize);
+  const lastPage = Math.ceil(filteredSortedOrders.length / pSize);
 
-  const orders = useSelector(filteredAndSortedOrders);
-  const pageOrders = useSelector(paginatedOrders);
+  useEffect(() => {
+    dispatch(filtersActions.setCurrentPage(1));
+  }, [lastPage, dispatch]);
 
   return (
     <Table>
@@ -117,7 +119,7 @@ export function TableContainer() {
         </div>
       </TableHeader>
       <TableBody>
-        {pageOrders.map((order) => (
+        {paginatdOrders.map((order) => (
           <TableRow key={order.id} className={styles.row}>
             <TableCell
               className={classNames(styles.cell, styles.cell_filtering)}
@@ -182,7 +184,7 @@ export function TableContainer() {
         <div className={styles.pages}>
           <Pagination
             currentPage={curPage}
-            totalCount={orders.length}
+            totalCount={filteredSortedOrders.length}
             pageSize={pSize}
             onPageChange={handleClickChangePage}
             onKeyPress={handleKeyPress}

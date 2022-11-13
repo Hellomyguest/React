@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  searchValue: '',
-  dateFromValue: '',
-  dateToValue: '',
-  statusValue: [],
-  priceFromValue: '',
-  priceToValue: '',
+  search: '',
+  dateFrom: '',
+  dateTo: '',
+  statuses: [],
+  priceFrom: '',
+  priceTo: '',
   activeSortingCell: 'date',
   isSortingAscending: false,
   currentPage: 1,
@@ -16,21 +16,21 @@ export const filtersSlice = createSlice({
   name: 'filters',
   initialState,
   reducers: {
-    changeSearchValue(state, action) {
-      state.searchValue = action.payload;
+    changeSearch(state, action) {
+      state.search = action.payload;
     },
-    resetSearchValue(state) {
-      state.searchValue = '';
+    resetSearch(state) {
+      state.search = '';
     },
     resetFilters() {
       return initialState;
     },
     setFilters(state, { payload }) {
-      state.dateFromValue = payload.dateFromValue;
-      state.dateToValue = payload.dateToValue;
-      state.statusValue = payload.statusValue.slice(0);
-      state.priceFromValue = payload.priceFromValue;
-      state.priceToValue = payload.priceToValue;
+      state.dateFrom = payload.dateFromValue;
+      state.dateTo = payload.dateToValue;
+      state.statuses = payload.statusValue;
+      state.priceFrom = payload.priceFromValue;
+      state.priceTo = payload.priceToValue;
     },
     setSorting(state, { payload }) {
       state.isSortingAscending = payload.sortingAsc;

@@ -1,10 +1,10 @@
 export const orders = (state) => state.orders.orders;
-export const searchValue = (state) => state.filter.searchValue;
-export const dateFromValue = (state) => state.filter.dateFromValue;
-export const dateToValue = (state) => state.filter.dateToValue;
-export const statusValue = (state) => state.filter.statusValue;
-export const priceFromValue = (state) => state.filter.priceFromValue;
-export const priceToValue = (state) => state.filter.priceToValue;
+export const search = (state) => state.filter.search;
+export const dateFrom = (state) => state.filter.dateFrom;
+export const dateTo = (state) => state.filter.dateTo;
+export const statuses = (state) => state.filter.statuses;
+export const priceFrom = (state) => state.filter.priceFrom;
+export const priceTo = (state) => state.filter.priceTo;
 export const activeSortingCell = (state) => state.filter.activeSortingCell;
 export const isSortingAscending = (state) => state.filter.isSortingAscending;
 export const currentPage = (state) => state.filter.currentPage;
