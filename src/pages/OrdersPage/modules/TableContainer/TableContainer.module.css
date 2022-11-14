@@ -109,6 +109,19 @@
   position: relative;
 }
 
+.dropdown_changeStatus {
+  position: absolute;
+  left: 0;
+  top: -13.25rem;
+  display: flex;
+  gap: 0;
+  padding: 0.5rem 0;
+}
+
+.radio {
+  display: none;
+}
+
 .dropdown_delete {
   position: absolute;
   left: 0;

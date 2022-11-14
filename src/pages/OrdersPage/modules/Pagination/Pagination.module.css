@@ -5,6 +5,7 @@
 
 .dots {
   height: 1.5rem;
+  box-sizing: border-box;
   padding: 0.25rem 0.5rem;
   color: var(--primary-color);
   cursor: default;

@@ -11,16 +11,29 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
 
 export const ordersSlice = createSlice({
   name: 'orders',
-  initialState: { orders: [], selectedOrders: [], isLoading: false },
+  initialState: {
+    orders: [],
+    selectedOrdersIds: [],
+    selectedStatus: '',
+    isLoading: false,
+  },
   reducers: {
     selectOrder(state, { payload }) {
-      state.selectedOrders = xor(state.selectedOrders, payload);
+      state.selectedOrdersIds = xor(state.selectedOrdersIds, payload);
     },
     clearSelectedOrders(state) {
-      state.selectedOrders = [];
+      state.selectedOrdersIds = [];
     },
     deleteOrders(state, { payload }) {
       state.orders = state.orders.filter(({ id }) => !payload.includes(id));
+    },
+    changeOrdersStatus(state, { payload: { status, selectedOrders } }) {
+      state.selectedStatus = status;
+      // eslint-disable-next-line no-param-reassign
+      state.orders.forEach((order) => {
+        if (selectedOrders.includes(order.id))
+          order.status = state.selectedStatus;
+      });
     },
   },
   extraReducers: {

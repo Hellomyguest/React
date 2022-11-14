@@ -14,7 +14,7 @@ import {
 
 export const orders = (state) => state.orders.orders;
 export const isLoading = (state) => state.orders.isLoading;
-export const selectedOrders = (state) => state.orders.selectedOrders;
+export const selectedOrdersIds = (state) => state.orders.selectedOrdersIds;
 
 const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');
@@ -44,7 +44,7 @@ const filterBySum = (min, max, value) => {
   const minValue = min === '' ? Number.MIN_SAFE_INTEGER : +min;
   const maxValue = max === '' ? Number.MAX_SAFE_INTEGER : +max;
 
-  return +value >= +minValue && +value <= +maxValue;
+  return value >= +minValue && value <= +maxValue;
 };
 
 const filterByStatus = (statusValue, value) =>
@@ -54,9 +54,7 @@ const areAllFilled = (arr) => arr.every(Boolean);
 
 const sortByKey = (key, isAscending, array) => {
   const direction = isAscending ? -1 : 1;
-  return key === 'sum'
-    ? array.sort((a, b) => (+a[key] > +b[key] ? direction : -direction))
-    : array.sort((a, b) => (a[key] > b[key] ? direction : -direction));
+  return array.sort((a, b) => (a[key] > b[key] ? direction : -direction));
 };
 
 export const filteredAndSortedOrders = createSelector(

@@ -1,7 +1,7 @@
 import {
   orders,
   isLoading,
-  selectedOrders,
+  selectedOrdersIds,
   filteredAndSortedOrders,
   paginatedOrders,
 } from './ordersSelectors';
@@ -10,7 +10,7 @@ import { ordersActions, fetchOrders, ordersSlice } from './ordersSlice';
 export {
   orders,
   isLoading,
-  selectedOrders,
+  selectedOrdersIds,
   filteredAndSortedOrders,
   paginatedOrders,
   ordersActions,

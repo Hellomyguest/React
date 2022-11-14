@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import {
   paginatedOrders,
   filteredAndSortedOrders,
-  selectedOrders,
+  selectedOrdersIds,
   ordersActions,
 } from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
@@ -14,6 +14,7 @@ import {
   Checkbox,
   ControlWithLabel,
   Dropdown,
+  Radio,
   Table,
   TableBody,
   TableCell,
@@ -29,11 +30,18 @@ import {
   filtersActions,
   isSortingAscending,
   pageSize,
+  dateFrom,
+  dateTo,
+  statuses,
+  search,
+  priceFrom,
+  priceTo,
 } from '../../../../store/slices/filters';
 import { Pagination } from '../Pagination/Pagination';
+import { STATUS_FILTERS } from '../Filters/FilterStatus/FilterStatus';
 
 const prettifySum = (sum) => {
-  const preSum = sum.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1 `);
+  const preSum = `${sum}`.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1 `);
   return `${preSum} ₽`;
 };
 
@@ -75,7 +83,7 @@ export function TableContainer() {
     dispatch(filtersActions.setCurrentPage(1));
   }, [lastPage, dispatch]);
 
-  const selectedOrder = useSelector(selectedOrders);
+  const selectedOrders = useSelector(selectedOrdersIds);
   const paginatedOrdersIds = paginatdOrders.reduce((arr, { id }) => {
     arr.push(id);
     return arr;
@@ -84,19 +92,50 @@ export function TableContainer() {
   const handleSelectOrder = (id) => () =>
     dispatch(ordersActions.selectOrder(id));
 
-  const hendleSelectAllPaginatedOrders = (arr) => () => {
-    const unselectedOrders = xor(selectedOrder, arr);
+  const handleSelectAllPaginatedOrders = (arr) => () => {
+    const unselectedOrders = xor(selectedOrders, arr);
     return unselectedOrders.length === 0
       ? dispatch(ordersActions.selectOrder(arr))
       : dispatch(ordersActions.selectOrder(unselectedOrders));
   };
 
+  const searchValue = useSelector(search);
+  const dateFromValue = useSelector(dateFrom);
+  const dateToValue = useSelector(dateTo);
+  const statusesValue = useSelector(statuses);
+  const priceFromValue = useSelector(priceFrom);
+  const priceToValue = useSelector(priceTo);
+
   useEffect(() => {
     dispatch(ordersActions.clearSelectedOrders());
-  }, [curPage, paginatdOrders, dispatch]);
+  }, [
+    curPage,
+    searchValue,
+    dateFromValue,
+    dateToValue,
+    statusesValue,
+    priceFromValue,
+    priceToValue,
+    selectedSortingCell,
+    sortAscending,
+    dispatch,
+  ]);
 
   const handleClickDeleteSelectedOrders = () =>
-    dispatch(ordersActions.deleteOrders(selectedOrder));
+    dispatch(ordersActions.deleteOrders(selectedOrders));
+
+  const handleClickChangeSelectedOrdersStatus = (status) => () =>
+    dispatch(ordersActions.changeOrdersStatus({ status, selectedOrders }));
+
+  const selectedOrdersStatus = paginatdOrders.reduce((acc, { id, status }) => {
+    if (selectedOrders.includes(id)) {
+      if (acc === status) {
+        return status;
+      }
+      return acc + status;
+    }
+    return acc;
+  }, '');
 
   return (
     <Table>
@@ -107,8 +146,8 @@ export function TableContainer() {
               control={
                 <Checkbox
                   readOnly
-                  checked={xor(paginatedOrdersIds, selectedOrder).length === 0}
-                  onChange={hendleSelectAllPaginatedOrders(paginatedOrdersIds)}
+                  checked={xor(paginatedOrdersIds, selectedOrders).length === 0}
+                  onChange={handleSelectAllPaginatedOrders(paginatedOrdersIds)}
                 />
               }
               className={styles.cellCheckbox}
@@ -161,7 +200,7 @@ export function TableContainer() {
                   <Checkbox
                     readOnly
                     value={order.id}
-                    checked={selectedOrder.includes(order.id)}
+                    checked={selectedOrders.includes(order.id)}
                     onChange={handleSelectOrder([order.id])}
                   />
                 }
@@ -184,11 +223,36 @@ export function TableContainer() {
       <TableFooter>
         <div className={styles.buttons}>
           <span className={styles.bunch}>
-            Выбрано записей: {selectedOrder.length}
+            Выбрано записей: {selectedOrders.length}
           </span>
-          <Button color="primary" size="small" iconType="Pencil">
-            Изменить статус
-          </Button>
+          <div className={styles.dropdown}>
+            <Dropdown
+              trigger={
+                <Button color="primary" size="small" iconType="Pencil">
+                  Изменить статус
+                </Button>
+              }
+              overlay={
+                <>
+                  {Object.keys(STATUS_FILTERS).map((key) => (
+                    <ControlWithLabel
+                      key={key}
+                      control={
+                        <Radio
+                          value={key}
+                          checked={selectedOrdersStatus === key}
+                          className={styles.radio}
+                          onChange={handleClickChangeSelectedOrdersStatus(key)}
+                        />
+                      }
+                      label={STATUS_FILTERS[key]}
+                    />
+                  ))}
+                </>
+              }
+              className={styles.dropdown_changeStatus}
+            />
+          </div>
 
           <div className={styles.dropdown}>
             <Dropdown
@@ -223,15 +287,13 @@ export function TableContainer() {
             />
           </div>
         </div>
-        <div className={styles.pages}>
-          <Pagination
-            currentPage={curPage}
-            totalCount={filteredSortedOrders.length}
-            pageSize={pSize}
-            onPageChange={handleClickChangePage}
-            onKeyPress={handleKeyPress}
-          />
-        </div>
+        <Pagination
+          currentPage={curPage}
+          totalCount={filteredSortedOrders.length}
+          pageSize={pSize}
+          onPageChange={handleClickChangePage}
+          onKeyPress={handleKeyPress}
+        />
       </TableFooter>
     </Table>
   );
