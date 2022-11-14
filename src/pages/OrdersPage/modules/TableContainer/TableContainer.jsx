@@ -80,6 +80,7 @@ export function TableContainer() {
     arr.push(id);
     return arr;
   }, []);
+
   const handleSelectOrder = (id) => () =>
     dispatch(ordersActions.selectOrder(id));
 
@@ -93,6 +94,9 @@ export function TableContainer() {
   useEffect(() => {
     dispatch(ordersActions.clearSelectedOrders());
   }, [curPage, paginatdOrders, dispatch]);
+
+  const handleClickDeleteSelectedOrders = () =>
+    dispatch(ordersActions.deleteOrders(selectedOrder));
 
   return (
     <Table>
@@ -201,6 +205,7 @@ export function TableContainer() {
                     size="small"
                     maxWidth
                     className={styles.overlayButton}
+                    onClick={handleClickDeleteSelectedOrders}
                   >
                     Удалить
                   </Button>

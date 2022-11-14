@@ -19,6 +19,9 @@ export const ordersSlice = createSlice({
     clearSelectedOrders(state) {
       state.selectedOrders = [];
     },
+    deleteOrders(state, { payload }) {
+      state.orders = state.orders.filter(({ id }) => !payload.includes(id));
+    },
   },
   extraReducers: {
     [fetchOrders.pending]: (state) => {
