@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import xor from 'lodash.xor';
 import { useDispatch } from 'react-redux';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
@@ -48,9 +49,7 @@ export function Filters() {
   const handleChangeStatusValue = (e) => {
     setFiltersValue({
       ...filtersValue,
-      statusValue: filtersValue.statusValue.includes(e.target.value)
-        ? filtersValue.statusValue.filter((item) => item !== e.target.value)
-        : [...filtersValue.statusValue, e.target.value],
+      statusValue: xor(filtersValue.statusValue, [e.target.value]),
     });
   };
 

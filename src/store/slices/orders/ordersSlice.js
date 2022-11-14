@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import xor from 'lodash.xor';
 import { mocks } from '../../mocks/orders';
 
 export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
@@ -13,9 +14,7 @@ export const ordersSlice = createSlice({
   initialState: { orders: [], selectedOrders: [], isLoading: false },
   reducers: {
     selectOrder(state, { payload }) {
-      state.selectedOrders = state.selectedOrders.includes(payload)
-        ? state.selectedOrders.filter((item) => item !== payload)
-        : [...state.selectedOrders, payload];
+      state.selectedOrders = xor(state.selectedOrders, payload);
     },
     clearSelectedOrders(state) {
       state.selectedOrders = [];

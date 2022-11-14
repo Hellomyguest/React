@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import xor from 'lodash.xor';
 import classNames from 'classnames';
 import {
   paginatedOrders,
@@ -75,8 +76,19 @@ export function TableContainer() {
   }, [lastPage, dispatch]);
 
   const selectedOrder = useSelector(selectedOrders);
-  const handleChangeSelectOrder = (id) => () =>
+  const paginatedOrdersIds = paginatdOrders.reduce((arr, { id }) => {
+    arr.push(id);
+    return arr;
+  }, []);
+  const handleSelectOrder = (id) => () =>
     dispatch(ordersActions.selectOrder(id));
+
+  const hendleSelectAllPaginatedOrders = (arr) => () => {
+    const unselectedOrders = xor(selectedOrder, arr);
+    return unselectedOrders.length === 0
+      ? dispatch(ordersActions.selectOrder(arr))
+      : dispatch(ordersActions.selectOrder(unselectedOrders));
+  };
 
   useEffect(() => {
     dispatch(ordersActions.clearSelectedOrders());
@@ -88,7 +100,13 @@ export function TableContainer() {
         <div className={styles.wrapper}>
           <TableCell className={classNames(styles.cell, styles.cell_filtering)}>
             <ControlWithLabel
-              control={<Checkbox />}
+              control={
+                <Checkbox
+                  readOnly
+                  checked={xor(paginatedOrdersIds, selectedOrder).length === 0}
+                  onChange={hendleSelectAllPaginatedOrders(paginatedOrdersIds)}
+                />
+              }
               className={styles.cellCheckbox}
             />
           </TableCell>
@@ -140,7 +158,7 @@ export function TableContainer() {
                     readOnly
                     value={order.id}
                     checked={selectedOrder.includes(order.id)}
-                    onChange={handleChangeSelectOrder(order.id)}
+                    onChange={handleSelectOrder([order.id])}
                   />
                 }
                 className={styles.cellCheckbox}
