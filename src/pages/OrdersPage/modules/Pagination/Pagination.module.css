@@ -20,6 +20,12 @@
   position: relative;
 }
 
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .dropdown_overlay {
   position: absolute;
   right: 0;

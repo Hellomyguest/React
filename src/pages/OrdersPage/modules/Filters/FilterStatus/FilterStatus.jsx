@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Dropdown,
-  InputWithLabel,
   Input,
   Icon,
   ControlWithLabel,
@@ -31,17 +30,15 @@ export function FilterStatus({ statusValue, onChangeStatusValue }) {
       <Dropdown
         trigger={
           <div>
-            <InputWithLabel
-              input={
-                <Input
-                  readOnly
-                  value={inputValue}
-                  label="Статус заказа"
-                  postfix={<Icon iconType="Varrow" className={styles.icon} />}
-                />
-              }
-              label="Статус заказа"
-            />
+            <label className={styles.label}>
+              Статус заказа
+              <Input
+                readOnly
+                value={inputValue}
+                label="Статус заказа"
+                postfix={<Icon iconType="Varrow" className={styles.icon} />}
+              />
+            </label>
           </div>
         }
         overlay={

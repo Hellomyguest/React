@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input, InputWithLabel } from '../../../../../shared/ui';
+import { Input } from '../../../../../shared/ui';
 import styles from './FilterDate.module.css';
 
 export function FilterDate({
@@ -12,30 +12,24 @@ export function FilterDate({
 }) {
   return (
     <div className={styles._}>
-      <InputWithLabel
-        label="Дата оформления"
-        input={
-          <Input
-            value={dateFromValue}
-            onChange={onChangeDateFromValue}
-            placeholder="dd.mm.yyyy"
-            prefix="с"
-            pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-            onReset={onResetDateFromValue}
-          />
-        }
-      />
-      <InputWithLabel
-        input={
-          <Input
-            value={dateToValue}
-            onChange={onChangeDateToValue}
-            placeholder="dd.mm.yyyy"
-            prefix="по"
-            pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-            onReset={onResetDateToValue}
-          />
-        }
+      <label className={styles.label}>
+        Дата оформления
+        <Input
+          value={dateFromValue}
+          onChange={onChangeDateFromValue}
+          placeholder="dd.mm.yyyy"
+          prefix="с"
+          pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+          onReset={onResetDateFromValue}
+        />
+      </label>
+      <Input
+        value={dateToValue}
+        onChange={onChangeDateToValue}
+        placeholder="dd.mm.yyyy"
+        prefix="по"
+        pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
+        onReset={onResetDateToValue}
       />
     </div>
   );

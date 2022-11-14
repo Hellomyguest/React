@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from '../../../../shared/utils/usePagination';
 import styles from './Pagination.module.css';
-import { Button, Dropdown, InputWithLabel, Input } from '../../../../shared/ui';
+import { Button, Dropdown, Input } from '../../../../shared/ui';
 
 export function Pagination({
   onPageChange,
@@ -65,17 +65,15 @@ export function Pagination({
           overlay={
             <>
               <div />
-              <InputWithLabel
-                label="Номер страницы"
-                input={
-                  <Input
-                    value={inputValue}
-                    onChange={handleChangeInputValue}
-                    onKeyPress={onKeyPress}
-                    placeholder="Введите номер"
-                  />
-                }
-              />
+              <label className={styles.label}>
+                Номер страницы
+                <Input
+                  value={inputValue}
+                  onChange={handleChangeInputValue}
+                  onKeyPress={onKeyPress}
+                  placeholder="Введите номер"
+                />
+              </label>
             </>
           }
         />

@@ -29,7 +29,6 @@ export const ordersSlice = createSlice({
     },
     changeOrdersStatus(state, { payload: { status, selectedOrders } }) {
       state.selectedStatus = status;
-      // eslint-disable-next-line no-param-reassign
       state.orders.forEach((order) => {
         if (selectedOrders.includes(order.id))
           order.status = state.selectedStatus;
