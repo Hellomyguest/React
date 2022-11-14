@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import {
   paginatedOrders,
   filteredAndSortedOrders,
+  selectedOrders,
+  ordersActions,
 } from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
 import {
@@ -72,6 +74,14 @@ export function TableContainer() {
     dispatch(filtersActions.setCurrentPage(1));
   }, [lastPage, dispatch]);
 
+  const selectedOrder = useSelector(selectedOrders);
+  const handleChangeSelectOrder = (id) => () =>
+    dispatch(ordersActions.selectOrder(id));
+
+  useEffect(() => {
+    dispatch(ordersActions.clearSelectedOrders());
+  }, [curPage, paginatdOrders, dispatch]);
+
   return (
     <Table>
       <TableHeader>
@@ -125,7 +135,14 @@ export function TableContainer() {
               className={classNames(styles.cell, styles.cell_filtering)}
             >
               <ControlWithLabel
-                control={<Checkbox />}
+                control={
+                  <Checkbox
+                    readOnly
+                    value={order.id}
+                    checked={selectedOrder.includes(order.id)}
+                    onChange={handleChangeSelectOrder(order.id)}
+                  />
+                }
                 className={styles.cellCheckbox}
               />
             </TableCell>
@@ -144,7 +161,9 @@ export function TableContainer() {
       </TableBody>
       <TableFooter>
         <div className={styles.buttons}>
-          <span className={styles.bunch}>Выбрано записей: 5</span>
+          <span className={styles.bunch}>
+            Выбрано записей: {selectedOrder.length}
+          </span>
           <Button color="primary" size="small" iconType="Pencil">
             Изменить статус
           </Button>

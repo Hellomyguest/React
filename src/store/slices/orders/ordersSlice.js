@@ -10,8 +10,17 @@ export const fetchOrders = createAsyncThunk('orders/fetchOrders', async () => {
 
 export const ordersSlice = createSlice({
   name: 'orders',
-  initialState: { orders: [], isLoading: false },
-  reducers: {},
+  initialState: { orders: [], selectedOrders: [], isLoading: false },
+  reducers: {
+    selectOrder(state, { payload }) {
+      state.selectedOrders = state.selectedOrders.includes(payload)
+        ? state.selectedOrders.filter((item) => item !== payload)
+        : [...state.selectedOrders, payload];
+    },
+    clearSelectedOrders(state) {
+      state.selectedOrders = [];
+    },
+  },
   extraReducers: {
     [fetchOrders.pending]: (state) => {
       state.isLoading = true;
