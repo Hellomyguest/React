@@ -2,7 +2,14 @@ import React from 'react';
 import classNames from 'classnames';
 import styles from './Checkbox.module.css';
 
-export function Checkbox({ name, className, onChange, checked, value }) {
+export function Checkbox({
+  name,
+  className,
+  onChange,
+  checked,
+  value,
+  onClick,
+}) {
   return (
     <input
       className={classNames(styles._, className)}
@@ -11,6 +18,7 @@ export function Checkbox({ name, className, onChange, checked, value }) {
       type="checkbox"
       checked={checked}
       onChange={onChange}
+      onClick={onClick}
     />
   );
 }

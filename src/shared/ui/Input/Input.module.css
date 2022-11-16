@@ -113,8 +113,6 @@ input:invalid {
   cursor: default;
 }
 
-/*
-.input_invalid .input__text-field {
+.invalid .textField {
   border-color: var(--danger-color);
 }
-*/

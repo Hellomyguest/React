@@ -16,12 +16,13 @@ export function Input({
   onChange,
   onKeyPress,
   readOnly,
+  invalid,
 }) {
   return (
     <div
       className={classNames(
         styles._,
-        { [styles.disabled]: disabled },
+        { [styles.disabled]: disabled, [styles.invalid]: invalid },
         className
       )}
     >

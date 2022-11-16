@@ -15,6 +15,7 @@ import {
 export const orders = (state) => state.orders.orders;
 export const isLoading = (state) => state.orders.isLoading;
 export const selectedOrdersIds = (state) => state.orders.selectedOrdersIds;
+export const correctiveOrderId = (state) => state.orders.correctiveOrderId;
 
 const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');

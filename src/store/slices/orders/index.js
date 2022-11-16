@@ -4,6 +4,7 @@ import {
   selectedOrdersIds,
   filteredAndSortedOrders,
   paginatedOrders,
+  correctiveOrderId,
 } from './ordersSelectors';
 import { ordersActions, fetchOrders, ordersSlice } from './ordersSlice';
 
@@ -16,4 +17,5 @@ export {
   ordersActions,
   fetchOrders,
   ordersSlice,
+  correctiveOrderId,
 };

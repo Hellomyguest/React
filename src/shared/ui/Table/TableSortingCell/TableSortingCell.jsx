@@ -8,7 +8,7 @@ export function TableSortingCell({
   isActive,
   direction,
   onClick,
-  label,
+  children,
   className,
 }) {
   return (
@@ -16,7 +16,7 @@ export function TableSortingCell({
       className={classNames(styles._, { [styles.active]: isActive }, className)}
     >
       <button type="button" className={styles.button} onClick={onClick}>
-        {label}
+        {children}
         <Icon
           iconType="Varrow"
           className={classNames(styles.icon, {

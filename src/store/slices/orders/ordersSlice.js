@@ -15,6 +15,7 @@ export const ordersSlice = createSlice({
     orders: [],
     selectedOrdersIds: [],
     selectedStatus: '',
+    correctiveOrderId: '',
     isLoading: false,
   },
   reducers: {
@@ -33,6 +34,17 @@ export const ordersSlice = createSlice({
         if (selectedOrders.includes(order.id))
           order.status = state.selectedStatus;
       });
+    },
+    setCorrectiveOrderId(state, { payload }) {
+      state.correctiveOrderId = payload;
+    },
+    correctOrder(state, { payload }) {
+      state.orders.forEach((order, i) => {
+        if (order.id === state.correctiveOrderId) {
+          state.orders[i] = payload;
+        }
+      });
+      state.correctiveOrderId = '';
     },
   },
   extraReducers: {
