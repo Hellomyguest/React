@@ -7,6 +7,7 @@ import {
   filteredAndSortedOrders,
   selectedOrdersIds,
   ordersActions,
+  correctiveOrderId,
 } from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
 import {
@@ -105,6 +106,7 @@ export function TableContainer() {
   const statusesValue = useSelector(statuses);
   const priceFromValue = useSelector(priceFrom);
   const priceToValue = useSelector(priceTo);
+  const correctedOrderId = useSelector(correctiveOrderId);
 
   useEffect(() => {
     dispatch(ordersActions.clearSelectedOrders());
@@ -118,6 +120,7 @@ export function TableContainer() {
     priceToValue,
     selectedSortingCell,
     sortAscending,
+    correctedOrderId,
     dispatch,
   ]);
 
@@ -219,8 +222,6 @@ export function TableContainer() {
               <ControlWithLabel
                 control={
                   <Checkbox
-                    readOnly
-                    value={order.id}
                     checked={selectedOrders.includes(order.id)}
                     onChange={handleSelectOrder([order.id])}
                     onClick={(e) => e.stopPropagation()}

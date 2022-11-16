@@ -27,6 +27,7 @@ export const ordersSlice = createSlice({
     },
     deleteOrders(state, { payload }) {
       state.orders = state.orders.filter(({ id }) => !payload.includes(id));
+      state.selectedOrdersIds = [];
     },
     changeOrdersStatus(state, { payload: { status, selectedOrders } }) {
       state.selectedStatus = status;
