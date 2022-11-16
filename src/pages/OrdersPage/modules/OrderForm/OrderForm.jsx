@@ -110,9 +110,8 @@ export function OrderForm({ className }) {
 
   const handleClickCorrectOrder = () => {
     checkIfInputsAreValid();
-    if (invalidInputs.includes('confirmationCode')) {
+    if (сonfirmationCode === '123' && orderInformation.customer !== '')
       dispatch(ordersActions.correctOrder(orderInformation));
-    }
   };
 
   return (
