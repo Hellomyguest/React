@@ -29,12 +29,12 @@ import {
 } from '../../../../store/slices/filters';
 import { Pagination } from '../Pagination/Pagination';
 
-const prettifySum = (sum) => {
-  const preSum = sum.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1 `);
+export const prettifySum = (sum) => {
+  const preSum = `${sum}`.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, `$1 `);
   return `${preSum} ₽`;
 };
 
-const prettifyDate = (date) => {
+export const prettifyDate = (date) => {
   const dateObj = new Date(date);
   return `${`0${dateObj.getDate()}`.slice(-2)}.${`0${
     1 + +dateObj.getMonth()
