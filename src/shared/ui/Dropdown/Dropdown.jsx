@@ -8,6 +8,8 @@ export function Dropdown({
   setClose,
   trigger,
   overlay,
+  underlay,
+  closeOnClick,
   className,
 }) {
   const [isOpened, setOpened] = useState(false);
@@ -41,7 +43,7 @@ export function Dropdown({
   if (setOpen) {
     return (
       <>
-        {isOpen && <div className={styles.wrapper} />}
+        {underlay && isOpen && <div className={styles.underlay} />}
         <div className={styles.className} ref={containerRef}>
           {controlledTrigger}
           {isOpen && (
@@ -56,11 +58,17 @@ export function Dropdown({
 
   return (
     <>
-      {isOpened && <div className={styles.wrapper} />}
+      {underlay && isOpened && <div className={styles.underlay} />}
       <div className={styles.className} ref={containerRef}>
         {uncontrolledTrigger}
         {isOpened && (
-          <div className={classNames(styles.overlay, className)}>
+          <div
+            className={classNames(styles.overlay, className)}
+            onClick={closeOnClick ? () => setOpened(false) : ''}
+            onKeyPress={() => {}}
+            role="button"
+            tabIndex={0}
+          >
             {newOverlay}
           </div>
         )}

@@ -118,6 +118,10 @@
   padding: 0.5rem 0;
 }
 
+.changeStatus_button {
+  justify-content: flex-start;
+}
+
 .radio {
   display: none;
 }
@@ -132,9 +136,4 @@
 .pages {
   display: flex;
   gap: 1.5rem;
-}
-
-.footer__pagination {
-  display: flex;
-  gap: 0.25rem;
 }

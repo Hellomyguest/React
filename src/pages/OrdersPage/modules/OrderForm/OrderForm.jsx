@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import isEqual from 'lodash.isequal';
 import {
   Button,
-  ControlWithLabel,
   Dropdown,
   Icon,
   Input,
-  Radio,
   Table,
   TableBody,
   TableCell,
@@ -44,6 +42,8 @@ export function OrderForm({ className }) {
 
   const handleClickOpenDropdown = () =>
     setCloseOrderFormDropdownOpen(!isCloseOrderFormDropdownOpen);
+  const openDropdown = () =>
+    setCloseOrderFormDropdownOpen(!isCloseOrderFormDropdownOpen);
   const handleClickCloseDropdown = () => setCloseOrderFormDropdownOpen(false);
   const handleClickAbortCorrecting = () => {
     dispatch(ordersActions.setCorrectiveOrderId(''));
@@ -70,22 +70,20 @@ export function OrderForm({ className }) {
     setOrderInformation({ ...orderInformation, customer: e.target.value });
   };
 
-  const handleChangeStatus = (e) => {
-    setOrderInformation({ ...orderInformation, status: e.target.value });
+  const handleChangeStatus = (status) => () => {
+    setOrderInformation({ ...orderInformation, status });
   };
 
   useEffect(() => {
-    const handleClick = isEqual(orderInformation, orderState)
-      ? (e) => {
-          if (!orderFormRef.current.contains(e.target)) {
-            dispatch(ordersActions.setCorrectiveOrderId(''));
-          }
+    const handleClick = (e) => {
+      if (!orderFormRef.current.contains(e.target)) {
+        if (isEqual(orderInformation, orderState)) {
+          dispatch(ordersActions.setCorrectiveOrderId(''));
+        } else {
+          openDropdown();
         }
-      : (e) => {
-          if (!orderFormRef.current.contains(e.target)) {
-            handleClickOpenDropdown();
-          }
-        };
+      }
+    };
     document.addEventListener('mousedown', handleClick);
 
     return () => {
@@ -98,19 +96,29 @@ export function OrderForm({ className }) {
   const handleChangeConfirmationCode = (e) =>
     setConfirmationCode(e.target.value);
 
+  const handleResetConfirmationCode = () => setConfirmationCode('');
+
   const [invalidInputs, setInvalidInputs] = useState([]);
 
   const checkIfInputsAreValid = () => {
-    const arr = [];
-    if (orderInformation.customer === '') arr.push('customer');
-    if (сonfirmationCode !== '123') arr.push('confirmationCode');
-    if (arr.length === 0) setInvalidInputs([]);
-    else setInvalidInputs(arr);
+    const errors = [];
+    if (orderInformation.customer === '') {
+      errors.push('customer');
+    }
+    if (сonfirmationCode !== '123') {
+      errors.push('confirmationCode');
+    }
+    if (errors.length === 0) {
+      setInvalidInputs([]);
+    } else {
+      setInvalidInputs(errors);
+    }
+    return errors;
   };
 
   const handleClickCorrectOrder = () => {
-    checkIfInputsAreValid();
-    if (сonfirmationCode === '123' && orderInformation.customer !== '')
+    const errors = checkIfInputsAreValid();
+    if (errors.length === 0)
       dispatch(ordersActions.correctOrder(orderInformation));
   };
 
@@ -202,8 +210,9 @@ export function OrderForm({ className }) {
           <label className={styles.label}>
             <Input disabled value={LOYALITY_MAP[orderInformation.loyality]} />
           </label>
-          <div className={styles.dropdown}>
+          <div className={styles.dropdown_status}>
             <Dropdown
+              closeOnClick
               trigger={
                 <label className={styles.label}>
                   Статус заказа
@@ -217,18 +226,18 @@ export function OrderForm({ className }) {
               overlay={
                 <>
                   {Object.keys(STATUS_FILTERS).map((key) => (
-                    <ControlWithLabel
+                    <Button
+                      size="medium"
                       key={key}
-                      control={
-                        <Radio
-                          value={key}
-                          checked={orderInformation.status === key}
-                          className={styles.radio}
-                          onChange={handleChangeStatus}
-                        />
+                      color={
+                        orderInformation.status === key ? 'reversePrimary' : ''
                       }
-                      label={STATUS_FILTERS[key]}
-                    />
+                      onClick={handleChangeStatus(key)}
+                      maxWidth
+                      className={styles.changeStatus_button}
+                    >
+                      {STATUS_FILTERS[key]}
+                    </Button>
                   ))}
                 </>
               }
@@ -241,12 +250,13 @@ export function OrderForm({ className }) {
               value={сonfirmationCode}
               onChange={handleChangeConfirmationCode}
               invalid={invalidInputs.includes('confirmationCode')}
+              onReset={handleResetConfirmationCode}
             />
           </label>
         </TableBody>
         <TableFooter className={styles.footer}>
           {invalidInputs.length !== 0 && (
-            <span className={styles.error}>Ошибка или индикатор загрузки</span>
+            <span className={styles.error}>Исправте ошибки</span>
           )}
           <Button
             size="medium"

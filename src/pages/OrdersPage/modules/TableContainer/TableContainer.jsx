@@ -15,7 +15,6 @@ import {
   Checkbox,
   ControlWithLabel,
   Dropdown,
-  Radio,
   Table,
   TableBody,
   TableCell,
@@ -133,11 +132,9 @@ export function TableContainer() {
     handleClickClose();
   };
 
-  const handleChangeSelectedOrdersStatus = (e) => {
-    const status = e.target.value;
-    return dispatch(
-      ordersActions.changeOrdersStatus({ status, selectedOrders })
-    );
+  const handleChangeSelectedOrdersStatus = (status) => () => {
+    dispatch(ordersActions.changeOrdersStatus({ status, selectedOrders }));
+    dispatch(ordersActions.clearSelectedOrders());
   };
 
   const handleClickSelectOrderToCorrect = (id) => () =>
@@ -220,6 +217,7 @@ export function TableContainer() {
               className={classNames(styles.cell, styles.cell_filtering)}
             >
               <ControlWithLabel
+                onClick={(e) => e.stopPropagation()}
                 control={
                   <Checkbox
                     checked={selectedOrders.includes(order.id)}
@@ -244,77 +242,87 @@ export function TableContainer() {
         ))}
       </TableBody>
       <TableFooter>
-        <div className={styles.buttons}>
-          <span className={styles.bunch}>
-            Выбрано записей: {selectedOrders.length}
-          </span>
-          <div className={styles.dropdown}>
-            <Dropdown
-              trigger={
-                <Button color="primary" size="small" iconType="Pencil">
-                  Изменить статус
-                </Button>
-              }
-              overlay={
-                <>
-                  {Object.keys(STATUS_FILTERS).map((key) => (
-                    <ControlWithLabel
-                      key={key}
-                      control={
-                        <Radio
-                          value={key}
-                          checked={selectedOrdersStatus === key}
-                          className={styles.radio}
-                          onChange={handleChangeSelectedOrdersStatus}
-                        />
-                      }
-                      label={STATUS_FILTERS[key]}
-                    />
-                  ))}
-                </>
-              }
-              className={styles.overlay_changeStatus}
-            />
-          </div>
+        <div>
+          {selectedOrders.length !== 0 && (
+            <div className={styles.buttons}>
+              <span className={styles.bunch}>
+                Выбрано записей: {selectedOrders.length}
+              </span>
+              <div className={styles.dropdown}>
+                <Dropdown
+                  underlay
+                  closeOnClick
+                  trigger={
+                    <Button color="primary" size="small" iconType="Pencil">
+                      Изменить статус
+                    </Button>
+                  }
+                  overlay={
+                    <>
+                      {Object.keys(STATUS_FILTERS).map((key) => (
+                        <Button
+                          size="medium"
+                          key={key}
+                          color={
+                            selectedOrdersStatus === key ? 'reversePrimary' : ''
+                          }
+                          onClick={handleChangeSelectedOrdersStatus(key)}
+                          maxWidth
+                          className={styles.changeStatus_button}
+                        >
+                          {STATUS_FILTERS[key]}
+                        </Button>
+                      ))}
+                    </>
+                  }
+                  className={styles.overlay_changeStatus}
+                />
+              </div>
 
-          <div className={styles.dropdown}>
-            <Dropdown
-              isOpen={isDeleteDropdownOpen}
-              setOpen={handleClickOpen}
-              setClose={handleClickClose}
-              trigger={
-                <Button color="danger" size="small" iconType="Bin">
-                  Удалить
-                </Button>
-              }
-              overlay={
-                <>
-                  <span className="dropdown__name">Удалить n записей?</span>
-                  <Button
-                    color="reversePrimary"
-                    size="small"
-                    maxWidth
-                    className={styles.overlayButton}
-                    onClick={handleClickDeleteSelectedOrders}
-                  >
-                    Удалить
-                  </Button>
-                  <Button
-                    color="reversePrimary"
-                    size="small"
-                    maxWidth
-                    onClick={handleClickClose}
-                    className={styles.overlayButton}
-                  >
-                    Отмена
-                  </Button>
-                </>
-              }
-              className={styles.overlay_delete}
-            />
-          </div>
+              <div className={styles.dropdown}>
+                <Dropdown
+                  underlay
+                  isOpen={isDeleteDropdownOpen}
+                  setOpen={handleClickOpen}
+                  setClose={handleClickClose}
+                  trigger={
+                    <Button color="danger" size="small" iconType="Bin">
+                      Удалить
+                    </Button>
+                  }
+                  overlay={
+                    <>
+                      <span className="dropdown__name">
+                        Удалить {selectedOrders.length} записей?
+                      </span>
+                      <Button
+                        color="reversePrimary"
+                        size="small"
+                        maxWidth
+                        className={styles.overlayButton}
+                        onClick={handleClickDeleteSelectedOrders}
+                      >
+                        Удалить
+                      </Button>
+                      <Button
+                        color="reversePrimary"
+                        size="small"
+                        maxWidth
+                        onClick={handleClickClose}
+                        className={styles.overlayButton}
+                      >
+                        Отмена
+                      </Button>
+                    </>
+                  }
+                  className={styles.overlay_delete}
+                />
+              </div>
+            </div>
+          )}
         </div>
         <Pagination
+          className={styles.pagination}
           currentPage={curPage}
           totalCount={filteredSortedOrders.length}
           pageSize={pSize}

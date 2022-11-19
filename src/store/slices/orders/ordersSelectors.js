@@ -42,8 +42,8 @@ const filterByDate = (dateFromValue, dateToValue, date) => {
 };
 
 const filterBySum = (min, max, value) => {
-  const minValue = min === '' ? Number.MIN_SAFE_INTEGER : +min;
-  const maxValue = max === '' ? Number.MAX_SAFE_INTEGER : +max;
+  const minValue = min === '' ? Number.MIN_SAFE_INTEGER : min;
+  const maxValue = max === '' ? Number.MAX_SAFE_INTEGER : max;
 
   return value >= +minValue && value <= +maxValue;
 };
@@ -55,7 +55,7 @@ const areAllFilled = (arr) => arr.every(Boolean);
 
 const sortByKey = (key, isAscending, array) => {
   const direction = isAscending ? -1 : 1;
-  return array.sort((a, b) => (a[key] > b[key] ? direction : -direction));
+  return array.sort((a, b) => (a[key] < b[key] ? direction : -direction));
 };
 
 export const filteredAndSortedOrders = createSelector(

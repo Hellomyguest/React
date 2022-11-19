@@ -73,6 +73,11 @@
   width: 23%;
 }
 
+.row {
+  height: auto;
+  min-height: 2.5rem;
+}
+
 .row:last-child {
   border-bottom: none;
 }
@@ -87,11 +92,21 @@
 .dropdown {
   position: relative;
 }
+
+.dropdown_status {
+  position: relative;
+  width: 100%;
+}
+
 .overlay_changeStatus {
   position: absolute;
   top: 3.75rem;
   gap: 0;
   padding: 0.5rem 0;
+}
+
+.changeStatus_button {
+  justify-content: flex-start;
 }
 
 .radio {
