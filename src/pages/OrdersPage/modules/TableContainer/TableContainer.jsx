@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import xor from 'lodash.xor';
 import classNames from 'classnames';
@@ -145,6 +145,18 @@ export function TableContainer() {
     return acc;
   }, '');
 
+  const getDeleteOrdersTitle = () => {
+    if (selectedOrdersIds.length === 1) {
+      return `Удалить ${selectedOrdersIds.length} запись?`;
+    }
+    if (selectedOrdersIds.length < 5) {
+      return `Удалить ${selectedOrdersIds.length} записи?`;
+    }
+    return `Удалить ${selectedOrdersIds.length} записей?`;
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const deleteOrdersTitle = useMemo(getDeleteOrdersTitle, [selectedOrdersIds]);
+
   return (
     <Table>
       <TableHeader>
@@ -290,7 +302,7 @@ export function TableContainer() {
                   overlay={
                     <>
                       <span className="dropdown__name">
-                        Удалить {selectedOrdersIds.length} записей?
+                        {deleteOrdersTitle}
                       </span>
                       <Button
                         color="reversePrimary"
