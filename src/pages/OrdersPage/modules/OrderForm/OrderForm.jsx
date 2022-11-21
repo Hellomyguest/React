@@ -198,7 +198,7 @@ export function OrderForm({ className }) {
               ))}
             </TableBody>
             <TableFooter className={styles.footer}>
-              Итоговая сумма: {prettifySum(orderInformation.sum)}
+              <span>Итоговая сумма:</span> {prettifySum(orderInformation.sum)}
             </TableFooter>
           </Table>
           <label className={styles.label}>

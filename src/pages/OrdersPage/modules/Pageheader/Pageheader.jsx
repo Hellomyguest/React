@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Pageheader.module.css';
 import { Dropdown, Button } from '../../../../shared/ui';
 import { useTheme } from '../../../../shared/utils/useTheme';
 
 export function Pageheader({ title }) {
-  const [isChangeThemeOpen, setIsChangeThemeOpen] = useState(false);
   const { isLight, toggleTheme } = useTheme();
 
-  const handleClickOpen = (bool) => setIsChangeThemeOpen(!bool);
+  const handleClickSetDarkTheme = () => {
+    toggleTheme('dark');
+  };
 
-  const handleClickChangeTheme = () => {
-    toggleTheme();
-    handleClickOpen();
+  const handleClickSetLigthTheme = () => {
+    toggleTheme('light');
   };
 
   return (
@@ -19,8 +19,7 @@ export function Pageheader({ title }) {
       <h1 className={styles.title}>{title}</h1>
       <div>
         <Dropdown
-          isOpen={isChangeThemeOpen}
-          setOpen={handleClickOpen}
+          shouldCloseOnClick
           trigger={
             <Button
               size="medium"
@@ -38,7 +37,7 @@ export function Pageheader({ title }) {
                 size="small"
                 maxWidth
                 iconType="Sun"
-                onClick={handleClickChangeTheme}
+                onClick={handleClickSetLigthTheme}
               >
                 Светлая
               </Button>
@@ -47,7 +46,7 @@ export function Pageheader({ title }) {
                 size="small"
                 maxWidth
                 iconType="Moon"
-                onClick={handleClickChangeTheme}
+                onClick={handleClickSetDarkTheme}
               >
                 Темная
               </Button>
