@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef, cloneElement } from 'react';
 import classNames from 'classnames';
 import styles from './Dropdown.module.css';
@@ -5,28 +6,24 @@ import styles from './Dropdown.module.css';
 export function Dropdown({
   isOpen,
   setOpen,
-  setClose,
   trigger,
   overlay,
-  underlay,
-  closeOnClick,
+  shouldCloseOnClick,
   className,
 }) {
   const [isOpened, setOpened] = useState(false);
   const containerRef = useRef();
 
   useEffect(() => {
-    const handleClick = setOpen
-      ? (e) => {
-          if (!containerRef.current.contains(e.target)) {
-            setClose();
-          }
+    const handleClick = (e) => {
+      if (!containerRef.current.contains(e.target)) {
+        if (setOpen) {
+          setOpen(true);
+        } else {
+          setOpened();
         }
-      : (e) => {
-          if (!containerRef.current.contains(e.target)) {
-            setOpened();
-          }
-        };
+      }
+    };
     document.addEventListener('mousedown', handleClick);
 
     return () => {
@@ -34,7 +31,21 @@ export function Dropdown({
     };
   });
 
-  const controlledTrigger = cloneElement(trigger, { onClick: () => setOpen() });
+  const handleClick = ({ target }) => {
+    if (!shouldCloseOnClick) {
+      return;
+    }
+
+    const tagName = target.tagName.toLowerCase();
+
+    if (tagName === 'button') {
+      setOpened(false);
+    }
+  };
+
+  const controlledTrigger = cloneElement(trigger, {
+    onClick: () => setOpen(isOpen),
+  });
   const uncontrolledTrigger = cloneElement(trigger, {
     onClick: () => setOpened(!isOpen),
   });
@@ -42,37 +53,31 @@ export function Dropdown({
 
   if (setOpen) {
     return (
-      <>
-        {underlay && isOpen && <div className={styles.underlay} />}
-        <div className={styles.className} ref={containerRef}>
-          {controlledTrigger}
-          {isOpen && (
-            <div className={classNames(styles.overlay, className)}>
-              {newOverlay}
-            </div>
-          )}
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      {underlay && isOpened && <div className={styles.underlay} />}
       <div className={styles.className} ref={containerRef}>
-        {uncontrolledTrigger}
-        {isOpened && (
-          <div
-            className={classNames(styles.overlay, className)}
-            onClick={closeOnClick ? () => setOpened(false) : ''}
-            onKeyPress={() => {}}
-            role="button"
-            tabIndex={0}
-          >
+        {controlledTrigger}
+        {isOpen && (
+          <div className={classNames(styles.overlay, className)}>
             {newOverlay}
           </div>
         )}
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div className={styles.className} ref={containerRef}>
+      {uncontrolledTrigger}
+      {isOpened && (
+        <div
+          className={classNames(styles.overlay, className)}
+          onClick={handleClick}
+          onKeyPress={() => {}}
+          role="button"
+          tabIndex={0}
+        >
+          {newOverlay}
+        </div>
+      )}
+    </div>
   );
 }

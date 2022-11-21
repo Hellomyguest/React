@@ -26,42 +26,42 @@ export function Filters() {
   });
 
   // Search
-  const handleChangeSearchValue = (e) => {
-    setFiltersValue({ ...filtersValue, searchValue: e.target.value });
+  const handleChangeSearchValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, searchValue: value });
   };
   const handleResetSearchValue = () =>
     setFiltersValue({ ...filtersValue, searchValue: '' });
 
   // Date filter
-  const handleChangeDateFromValue = (e) => {
-    setFiltersValue({ ...filtersValue, dateFromValue: e.target.value });
+  const handleChangeDateFromValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, dateFromValue: value });
   };
   const handleResetDateFromValue = () =>
     setFiltersValue({ ...filtersValue, dateFromValue: '' });
 
-  const handleChangeDateToValue = (e) => {
-    setFiltersValue({ ...filtersValue, dateToValue: e.target.value });
+  const handleChangeDateToValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, dateToValue: value });
   };
   const handleResetDateToValue = () =>
     setFiltersValue({ ...filtersValue, dateToValue: '' });
 
   // Status filter
-  const handleChangeStatusValue = (e) => {
+  const handleChangeStatusValue = ({ target: { value } }) => {
     setFiltersValue({
       ...filtersValue,
-      statusValue: xor(filtersValue.statusValue, [e.target.value]),
+      statusValue: xor(filtersValue.statusValue, [value]),
     });
   };
 
   // Price filter
-  const handleChangePriceFromValue = (e) => {
-    setFiltersValue({ ...filtersValue, priceFromValue: e.target.value });
+  const handleChangePriceFromValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, priceFromValue: value });
   };
   const handleResetPriceFromValue = () =>
     setFiltersValue({ ...filtersValue, priceFromValue: '' });
 
-  const handleChangePriceToValue = (e) => {
-    setFiltersValue({ ...filtersValue, priceToValue: e.target.value });
+  const handleChangePriceToValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, priceToValue: value });
   };
   const handleResetPriceToValue = () =>
     setFiltersValue({ ...filtersValue, priceToValue: '' });

@@ -7,8 +7,7 @@ export function Pageheader({ title }) {
   const [isChangeThemeOpen, setIsChangeThemeOpen] = useState(false);
   const { isLight, toggleTheme } = useTheme();
 
-  const handleClickOpen = () => setIsChangeThemeOpen(!isChangeThemeOpen);
-  const handleClickClose = () => setIsChangeThemeOpen(false);
+  const handleClickOpen = (bool) => setIsChangeThemeOpen(!bool);
 
   const handleClickChangeTheme = () => {
     toggleTheme();
@@ -22,10 +21,13 @@ export function Pageheader({ title }) {
         <Dropdown
           isOpen={isChangeThemeOpen}
           setOpen={handleClickOpen}
-          setClose={handleClickClose}
           trigger={
-            <Button size="medium" color="reversePrimary" iconType="Sun">
-              Светлая тема
+            <Button
+              size="medium"
+              color="reversePrimary"
+              iconType={isLight ? 'Sun' : 'Moon'}
+            >
+              {isLight ? 'Светлая тема' : 'Темная тема'}
             </Button>
           }
           overlay={

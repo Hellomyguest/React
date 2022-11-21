@@ -5,7 +5,10 @@ import { Pageheader } from './modules/Pageheader/Pageheader';
 import { TableContainer } from './modules/TableContainer/TableContainer';
 import { Filters } from './modules/Filters/Filters';
 
-import { correctiveOrderId, fetchOrders } from '../../store/slices/orders';
+import {
+  correctiveOrderIdSelector,
+  fetchOrders,
+} from '../../store/slices/orders';
 import { OrderForm } from './modules/OrderForm/OrderForm';
 
 export function OrdersPage() {
@@ -14,7 +17,7 @@ export function OrdersPage() {
     dispatch(fetchOrders());
   }, [dispatch]);
 
-  const orderIdToCorrect = useSelector(correctiveOrderId);
+  const orderIdToCorrect = useSelector(correctiveOrderIdSelector);
 
   return (
     <div className={styles._}>

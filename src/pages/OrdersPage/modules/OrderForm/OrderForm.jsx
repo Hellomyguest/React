@@ -15,8 +15,8 @@ import {
   TableRow,
 } from '../../../../shared/ui';
 import {
-  correctiveOrderId,
-  orders,
+  correctiveOrderIdSelector,
+  ordersSelector,
   ordersActions,
 } from '../../../../store/slices/orders';
 import { STATUS_FILTERS } from '../Filters/FilterStatus/FilterStatus';
@@ -32,16 +32,16 @@ const LOYALITY_MAP = {
 
 export function OrderForm({ className }) {
   const dispatch = useDispatch();
-  const orderIdToCorrect = useSelector(correctiveOrderId);
-  const order = useSelector(orders);
+  const orderIdToCorrect = useSelector(correctiveOrderIdSelector);
+  const orders = useSelector(ordersSelector);
 
   const orderFormRef = useRef();
 
   const [isCloseOrderFormDropdownOpen, setCloseOrderFormDropdownOpen] =
     useState(false);
 
-  const handleClickOpenDropdown = () =>
-    setCloseOrderFormDropdownOpen(!isCloseOrderFormDropdownOpen);
+  const handleClickOpenDropdown = (bool) =>
+    setCloseOrderFormDropdownOpen(!bool);
   const openDropdown = () =>
     setCloseOrderFormDropdownOpen(!isCloseOrderFormDropdownOpen);
   const handleClickCloseDropdown = () => setCloseOrderFormDropdownOpen(false);
@@ -50,24 +50,12 @@ export function OrderForm({ className }) {
     handleClickCloseDropdown();
   };
 
-  const getOrderToCorrect = () =>
-    order.filter(({ id }) => id === orderIdToCorrect)[0];
+  const orderToCorrect = orders.find(({ id }) => id === orderIdToCorrect);
 
-  const orderState = {
-    id: getOrderToCorrect().id,
-    customer: getOrderToCorrect().customer,
-    date: getOrderToCorrect().date,
-    status: getOrderToCorrect().status,
-    amount: getOrderToCorrect().amount,
-    orderNumber: getOrderToCorrect().orderNumber,
-    order: getOrderToCorrect().order,
-    sum: getOrderToCorrect().sum,
-    loyality: getOrderToCorrect().loyality,
-  };
-  const [orderInformation, setOrderInformation] = useState(orderState);
+  const [orderInformation, setOrderInformation] = useState(orderToCorrect);
 
-  const handleChangeCustomer = (e) => {
-    setOrderInformation({ ...orderInformation, customer: e.target.value });
+  const handleChangeCustomer = ({ target: { value } }) => {
+    setOrderInformation({ ...orderInformation, customer: value });
   };
 
   const handleChangeStatus = (status) => () => {
@@ -75,9 +63,9 @@ export function OrderForm({ className }) {
   };
 
   useEffect(() => {
-    const handleClick = (e) => {
-      if (!orderFormRef.current.contains(e.target)) {
-        if (isEqual(orderInformation, orderState)) {
+    const handleClick = ({ target }) => {
+      if (!orderFormRef.current.contains(target)) {
+        if (isEqual(orderInformation, orderToCorrect)) {
           dispatch(ordersActions.setCorrectiveOrderId(''));
         } else {
           openDropdown();
@@ -93,25 +81,31 @@ export function OrderForm({ className }) {
 
   const [сonfirmationCode, setConfirmationCode] = useState('');
 
-  const handleChangeConfirmationCode = (e) =>
-    setConfirmationCode(e.target.value);
+  const handleChangeConfirmationCode = ({ target: { value } }) =>
+    setConfirmationCode(value);
 
   const handleResetConfirmationCode = () => setConfirmationCode('');
 
-  const [invalidInputs, setInvalidInputs] = useState([]);
+  const [invalidInputs, setInvalidInputs] = useState({
+    errors: [],
+    errorText: '',
+  });
 
   const checkIfInputsAreValid = () => {
     const errors = [];
-    if (orderInformation.customer === '') {
-      errors.push('customer');
-    }
+    let errorText = '';
     if (сonfirmationCode !== '123') {
       errors.push('confirmationCode');
+      errorText = 'Введён не корректный код';
+    }
+    if (orderInformation.customer === '') {
+      errors.push('customer');
+      errorText = 'Проверьте корректность ФИО';
     }
     if (errors.length === 0) {
-      setInvalidInputs([]);
+      setInvalidInputs({ errors: [], errorText: '' });
     } else {
-      setInvalidInputs(errors);
+      setInvalidInputs({ errors, errorText });
     }
     return errors;
   };
@@ -119,7 +113,7 @@ export function OrderForm({ className }) {
   const handleClickCorrectOrder = () => {
     const errors = checkIfInputsAreValid();
     if (errors.length === 0)
-      dispatch(ordersActions.correctOrder(orderInformation));
+      dispatch(ordersActions.editOrder(orderInformation));
   };
 
   return (
@@ -173,7 +167,7 @@ export function OrderForm({ className }) {
             <Input
               value={orderInformation.customer}
               onChange={handleChangeCustomer}
-              invalid={invalidInputs.includes('customer')}
+              invalid={invalidInputs.errors.includes('customer')}
             />
           </label>
           <Table className={styles.orderTable}>
@@ -212,7 +206,7 @@ export function OrderForm({ className }) {
           </label>
           <div className={styles.dropdown_status}>
             <Dropdown
-              closeOnClick
+              shouldCloseOnClick
               trigger={
                 <label className={styles.label}>
                   Статус заказа
@@ -249,15 +243,13 @@ export function OrderForm({ className }) {
             <Input
               value={сonfirmationCode}
               onChange={handleChangeConfirmationCode}
-              invalid={invalidInputs.includes('confirmationCode')}
+              invalid={invalidInputs.errors.includes('confirmationCode')}
               onReset={handleResetConfirmationCode}
             />
           </label>
         </TableBody>
         <TableFooter className={styles.footer}>
-          {invalidInputs.length !== 0 && (
-            <span className={styles.error}>Исправте ошибки</span>
-          )}
+          <span className={styles.error}>{invalidInputs.errorText}</span>
           <Button
             size="medium"
             color="primary"

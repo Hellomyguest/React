@@ -15,7 +15,19 @@ export function Pagination({
 }) {
   // Контроль input'а выбора страницы
   const [inputValue, setInputValue] = useState('');
-  const handleChangeInputValue = (e) => setInputValue(e.target.value);
+  const handleChangeInputValue = ({ target: { value } }) =>
+    setInputValue(value);
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const handleClickOpenDropdown = (bool) => setDropdownOpen(!bool);
+
+  const handleKeyPress = (e) => {
+    onKeyPress(e);
+    if (e.key === 'Enter') {
+      setDropdownOpen(false);
+      setInputValue('');
+    }
+  };
 
   const paginationRange = usePagination({
     currentPage,
@@ -56,6 +68,8 @@ export function Pagination({
       })}
       <div className={styles.dropdown}>
         <Dropdown
+          isOpen={isDropdownOpen}
+          setOpen={handleClickOpenDropdown}
           className={styles.dropdown_overlay}
           trigger={
             <Button size="small" color="reversePrimary">
@@ -70,7 +84,7 @@ export function Pagination({
                 <Input
                   value={inputValue}
                   onChange={handleChangeInputValue}
-                  onKeyPress={onKeyPress}
+                  onKeyPress={handleKeyPress}
                   placeholder="Введите номер"
                 />
               </label>

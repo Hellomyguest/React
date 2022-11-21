@@ -1,21 +1,23 @@
 import { createSelector } from '@reduxjs/toolkit';
 import {
-  search,
-  dateFrom,
-  dateTo,
-  statuses,
-  priceFrom,
-  priceTo,
-  activeSortingCell,
-  isSortingAscending,
-  currentPage,
-  pageSize,
+  searchSelector,
+  dateFromSelector,
+  dateToSelector,
+  statusesSelector,
+  priceFromSelector,
+  priceToSelector,
+  activeSortingCellSelector,
+  isSortingAscendingSelector,
+  currentPageSelector,
+  pageSizeSelector,
 } from '../filters';
 
-export const orders = (state) => state.orders.orders;
-export const isLoading = (state) => state.orders.isLoading;
-export const selectedOrdersIds = (state) => state.orders.selectedOrdersIds;
-export const correctiveOrderId = (state) => state.orders.correctiveOrderId;
+export const ordersSelector = (state) => state.orders.orders;
+export const isLoadingSelector = (state) => state.orders.isLoading;
+export const selectedOrdersIdsSelector = (state) =>
+  state.orders.selectedOrdersIds;
+export const correctiveOrderIdSelector = (state) =>
+  state.orders.correctiveOrderId;
 
 const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');
@@ -58,39 +60,38 @@ const sortByKey = (key, isAscending, array) => {
   return array.sort((a, b) => (a[key] < b[key] ? direction : -direction));
 };
 
-export const filteredAndSortedOrders = createSelector(
-  orders,
-  search,
-  dateFrom,
-  dateTo,
-  statuses,
-  priceFrom,
-  priceTo,
-  activeSortingCell,
-  isSortingAscending,
+export const filteredAndSortedOrdersSelector = createSelector(
+  ordersSelector,
+  searchSelector,
+  dateFromSelector,
+  dateToSelector,
+  statusesSelector,
+  priceFromSelector,
+  priceToSelector,
+  activeSortingCellSelector,
+  isSortingAscendingSelector,
   (
-    ordersValue,
-    searchValue,
-    dateFromValue,
-    dateToValue,
-    statusesValue,
-    priceFromValue,
-    priceToValue,
+    orders,
+    search,
+    dateFrom,
+    dateTo,
+    statuses,
+    priceFrom,
+    priceTo,
     key,
     isAscending
   ) => {
-    let array = ordersValue.filter(
-      ({ orderNumber, date, status, sum, customer }) =>
-        areAllFilled([
-          filterBySearch(searchValue, orderNumber, customer),
-          filterByDate(
-            parseDate(dateFromValue),
-            parseDate(dateToValue),
-            Date.parse(date.slice(0, 10))
-          ),
-          filterByStatus(statusesValue, status),
-          filterBySum(priceFromValue, priceToValue, sum),
-        ])
+    let array = orders.filter(({ orderNumber, date, status, sum, customer }) =>
+      areAllFilled([
+        filterBySearch(search, orderNumber, customer),
+        filterByDate(
+          parseDate(dateFrom),
+          parseDate(dateTo),
+          Date.parse(date.slice(0, 10))
+        ),
+        filterByStatus(statuses, status),
+        filterBySum(priceFrom, priceTo, sum),
+      ])
     );
 
     array = sortByKey(key, isAscending, array);
@@ -99,13 +100,13 @@ export const filteredAndSortedOrders = createSelector(
   }
 );
 
-export const paginatedOrders = createSelector(
-  pageSize,
-  currentPage,
-  filteredAndSortedOrders,
-  (pSize, curPage, ordersValue) => {
-    const firstPageIndex = (curPage - 1) * pSize;
-    const lastPageIndex = firstPageIndex + pSize;
-    return ordersValue.slice(firstPageIndex, lastPageIndex);
+export const paginatedOrdersSelector = createSelector(
+  pageSizeSelector,
+  currentPageSelector,
+  filteredAndSortedOrdersSelector,
+  (pageSize, currentPage, orders) => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return orders.slice(firstPageIndex, lastPageIndex);
   }
 );

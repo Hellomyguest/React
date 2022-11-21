@@ -29,17 +29,18 @@ export const ordersSlice = createSlice({
       state.orders = state.orders.filter(({ id }) => !payload.includes(id));
       state.selectedOrdersIds = [];
     },
-    changeOrdersStatus(state, { payload: { status, selectedOrders } }) {
+    changeOrdersStatus(state, { payload: { status, selectedOrdersIds } }) {
       state.selectedStatus = status;
       state.orders.forEach((order) => {
-        if (selectedOrders.includes(order.id))
+        if (selectedOrdersIds.includes(order.id)) {
           order.status = state.selectedStatus;
+        }
       });
     },
     setCorrectiveOrderId(state, { payload }) {
       state.correctiveOrderId = payload;
     },
-    correctOrder(state, { payload }) {
+    editOrder(state, { payload }) {
       state.orders.forEach((order, i) => {
         if (order.id === state.correctiveOrderId) {
           state.orders[i] = payload;

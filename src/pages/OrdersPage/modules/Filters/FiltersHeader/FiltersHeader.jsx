@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import { Searchbar, Button, Icon } from '../../../../../shared/ui';
 import styles from './FiltersHeader.module.css';
 import { filtersActions } from '../../../../../store/slices/filters';
-import { isLoading } from '../../../../../store/slices/orders';
+import { isLoadingSelector } from '../../../../../store/slices/orders';
 
 export function FiltersHeader({
   isFiltersOpen,
@@ -17,17 +17,19 @@ export function FiltersHeader({
   onResetSearchValue,
 }) {
   const dispatch = useDispatch();
-  const Loading = useSelector(isLoading);
+  const isLoading = useSelector(isLoadingSelector);
 
   // Обработка строки поиска
-  const handleChange = (e) => {
-    dispatch(filtersActions.changeSearch(e.target.value));
+  const handleChange = ({ target: { value } }) => {
+    dispatch(filtersActions.changeSearch(value));
   };
+
   const debouncedResults = useMemo(
     () => debounce(handleChange, 500),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
   const handleChangeSearchValue = (e) => {
     onChangeSearchValue(e);
     debouncedResults(e);
@@ -75,15 +77,17 @@ export function FiltersHeader({
           </Button>
         )}
       </div>
-      <div className={styles.load}>
-        <Icon
-          iconType="Refresh"
-          className={classnames(styles.loadIcon, {
-            [styles.loadIconLoading]: Loading,
-          })}
-        />
-        <span className={styles.loadText}>Загрузка</span>
-      </div>
+      {isLoading && (
+        <div className={styles.load}>
+          <Icon
+            iconType="Refresh"
+            className={classnames(styles.loadIcon, {
+              [styles.loadIconLoading]: isLoading,
+            })}
+          />
+          <span className={styles.loadText}>Загрузка</span>
+        </div>
+      )}
     </div>
   );
 }

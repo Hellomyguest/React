@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import xor from 'lodash.xor';
 import classNames from 'classnames';
 import {
-  paginatedOrders,
-  filteredAndSortedOrders,
-  selectedOrdersIds,
+  paginatedOrdersSelector,
+  filteredAndSortedOrdersSelector,
+  selectedOrdersIdsSelector,
   ordersActions,
-  correctiveOrderId,
+  correctiveOrderIdSelector,
 } from '../../../../store/slices/orders';
 import styles from './TableContainer.module.css';
 import {
@@ -25,17 +25,17 @@ import {
 } from '../../../../shared/ui';
 import { StatusTableCell } from '../../ui/StatusTableCell/StatusTableCell';
 import {
-  activeSortingCell,
-  currentPage,
+  activeSortingCellSelector,
+  currentPageSelector,
   filtersActions,
-  isSortingAscending,
-  pageSize,
-  dateFrom,
-  dateTo,
-  statuses,
-  search,
-  priceFrom,
-  priceTo,
+  isSortingAscendingSelector,
+  pageSizeSelector,
+  dateFromSelector,
+  dateToSelector,
+  statusesSelector,
+  searchSelector,
+  priceFromSelector,
+  priceToSelector,
 } from '../../../../store/slices/filters';
 import { Pagination } from '../Pagination/Pagination';
 import { STATUS_FILTERS } from '../Filters/FilterStatus/FilterStatus';
@@ -55,7 +55,7 @@ export const prettifyDate = (date) => {
 };
 
 export function TableContainer() {
-  const curPage = useSelector(currentPage);
+  const currentPage = useSelector(currentPageSelector);
 
   const dispatch = useDispatch();
 
@@ -67,24 +67,24 @@ export function TableContainer() {
     }
   };
 
-  const selectedSortingCell = useSelector(activeSortingCell);
-  const sortAscending = useSelector(isSortingAscending);
+  const activeSortingCell = useSelector(activeSortingCellSelector);
+  const isSortingAscending = useSelector(isSortingAscendingSelector);
   const handleClickSetSortingCell = (key) => () => {
-    const sortingAsc = selectedSortingCell === key ? !sortAscending : false;
+    const sortingAsc = activeSortingCell === key ? !isSortingAscending : false;
     return dispatch(filtersActions.setSorting({ key, sortingAsc }));
   };
 
-  const filteredSortedOrders = useSelector(filteredAndSortedOrders);
-  const paginatdOrders = useSelector(paginatedOrders);
-  const pSize = useSelector(pageSize);
-  const lastPage = Math.ceil(filteredSortedOrders.length / pSize);
+  const filteredAndSortedOrders = useSelector(filteredAndSortedOrdersSelector);
+  const paginatedOrders = useSelector(paginatedOrdersSelector);
+  const pageSize = useSelector(pageSizeSelector);
+  const lastPage = Math.ceil(filteredAndSortedOrders.length / pageSize);
 
   useEffect(() => {
     dispatch(filtersActions.setCurrentPage(1));
   }, [lastPage, dispatch]);
 
-  const selectedOrders = useSelector(selectedOrdersIds);
-  const paginatedOrdersIds = paginatdOrders.reduce((arr, { id }) => {
+  const selectedOrdersIds = useSelector(selectedOrdersIdsSelector);
+  const paginatedOrdersIds = paginatedOrders.reduce((arr, { id }) => {
     arr.push(id);
     return arr;
   }, []);
@@ -93,55 +93,50 @@ export function TableContainer() {
     dispatch(ordersActions.selectOrder(id));
 
   const handleSelectAllPaginatedOrders = (arr) => () => {
-    const unselectedOrders = xor(selectedOrders, arr);
+    const unselectedOrders = xor(selectedOrdersIds, arr);
     return unselectedOrders.length === 0
       ? dispatch(ordersActions.selectOrder(arr))
       : dispatch(ordersActions.selectOrder(unselectedOrders));
   };
 
-  const searchValue = useSelector(search);
-  const dateFromValue = useSelector(dateFrom);
-  const dateToValue = useSelector(dateTo);
-  const statusesValue = useSelector(statuses);
-  const priceFromValue = useSelector(priceFrom);
-  const priceToValue = useSelector(priceTo);
-  const correctedOrderId = useSelector(correctiveOrderId);
+  const search = useSelector(searchSelector);
+  const dateFrom = useSelector(dateFromSelector);
+  const dateTo = useSelector(dateToSelector);
+  const statuses = useSelector(statusesSelector);
+  const priceFrom = useSelector(priceFromSelector);
+  const priceTo = useSelector(priceToSelector);
+  const correctiveOrderId = useSelector(correctiveOrderIdSelector);
 
   useEffect(() => {
     dispatch(ordersActions.clearSelectedOrders());
   }, [
-    curPage,
-    searchValue,
-    dateFromValue,
-    dateToValue,
-    statusesValue,
-    priceFromValue,
-    priceToValue,
-    selectedSortingCell,
-    sortAscending,
-    correctedOrderId,
+    currentPage,
+    search,
+    dateFrom,
+    dateTo,
+    statuses,
+    priceFrom,
+    priceTo,
+    activeSortingCell,
+    isSortingAscending,
+    correctiveOrderId,
     dispatch,
   ]);
 
-  const [isDeleteDropdownOpen, setDeleteDropdownOpen] = useState(false);
-  const handleClickOpen = () => setDeleteDropdownOpen(!isDeleteDropdownOpen);
-  const handleClickClose = () => setDeleteDropdownOpen(false);
-
   const handleClickDeleteSelectedOrders = () => {
-    dispatch(ordersActions.deleteOrders(selectedOrders));
-    handleClickClose();
+    dispatch(ordersActions.deleteOrders(selectedOrdersIds));
   };
 
   const handleChangeSelectedOrdersStatus = (status) => () => {
-    dispatch(ordersActions.changeOrdersStatus({ status, selectedOrders }));
+    dispatch(ordersActions.changeOrdersStatus({ status, selectedOrdersIds }));
     dispatch(ordersActions.clearSelectedOrders());
   };
 
   const handleClickSelectOrderToCorrect = (id) => () =>
     dispatch(ordersActions.setCorrectiveOrderId(id));
 
-  const selectedOrdersStatus = paginatdOrders.reduce((acc, { id, status }) => {
-    if (selectedOrders.includes(id)) {
+  const selectedOrdersStatus = paginatedOrders.reduce((acc, { id, status }) => {
+    if (selectedOrdersIds.includes(id)) {
       if (acc === status) {
         return status;
       }
@@ -159,7 +154,9 @@ export function TableContainer() {
               control={
                 <Checkbox
                   readOnly
-                  checked={xor(paginatedOrdersIds, selectedOrders).length === 0}
+                  checked={
+                    xor(paginatedOrdersIds, selectedOrdersIds).length === 0
+                  }
                   onChange={handleSelectAllPaginatedOrders(paginatedOrdersIds)}
                 />
               }
@@ -170,32 +167,32 @@ export function TableContainer() {
             <span className={styles.text}>#</span>
           </TableCell>
           <TableSortingCell
-            isActive={selectedSortingCell === 'date'}
-            direction={selectedSortingCell === 'date' && sortAscending}
+            isActive={activeSortingCell === 'date'}
+            direction={activeSortingCell === 'date' && isSortingAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             onClick={handleClickSetSortingCell('date')}
           >
             Дата
           </TableSortingCell>
           <TableSortingCell
-            isActive={selectedSortingCell === 'status'}
-            direction={selectedSortingCell === 'status' && sortAscending}
+            isActive={activeSortingCell === 'status'}
+            direction={activeSortingCell === 'status' && isSortingAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             onClick={handleClickSetSortingCell('status')}
           >
             Статус
           </TableSortingCell>
           <TableSortingCell
-            isActive={selectedSortingCell === 'amount'}
-            direction={selectedSortingCell === 'amount' && sortAscending}
+            isActive={activeSortingCell === 'amount'}
+            direction={activeSortingCell === 'amount' && isSortingAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             onClick={handleClickSetSortingCell('amount')}
           >
             Позиций
           </TableSortingCell>
           <TableSortingCell
-            isActive={selectedSortingCell === 'sum'}
-            direction={selectedSortingCell === 'sum' && sortAscending}
+            isActive={activeSortingCell === 'sum'}
+            direction={activeSortingCell === 'sum' && isSortingAscending}
             className={classNames(styles.cell, styles.cell_sorting)}
             onClick={handleClickSetSortingCell('sum')}
           >
@@ -207,11 +204,15 @@ export function TableContainer() {
         </div>
       </TableHeader>
       <TableBody>
-        {paginatdOrders.map((order) => (
+        {paginatedOrders.map((order) => (
           <TableRow
             key={order.id}
             className={styles.row}
-            onClick={handleClickSelectOrderToCorrect(order.id)}
+            onClick={
+              selectedOrdersIds.length === 0
+                ? handleClickSelectOrderToCorrect(order.id)
+                : () => {}
+            }
           >
             <TableCell
               className={classNames(styles.cell, styles.cell_filtering)}
@@ -220,7 +221,7 @@ export function TableContainer() {
                 onClick={(e) => e.stopPropagation()}
                 control={
                   <Checkbox
-                    checked={selectedOrders.includes(order.id)}
+                    checked={selectedOrdersIds.includes(order.id)}
                     onChange={handleSelectOrder([order.id])}
                     onClick={(e) => e.stopPropagation()}
                   />
@@ -243,15 +244,14 @@ export function TableContainer() {
       </TableBody>
       <TableFooter>
         <div>
-          {selectedOrders.length !== 0 && (
+          {selectedOrdersIds.length !== 0 && (
             <div className={styles.buttons}>
               <span className={styles.bunch}>
-                Выбрано записей: {selectedOrders.length}
+                Выбрано записей: {selectedOrdersIds.length}
               </span>
               <div className={styles.dropdown}>
                 <Dropdown
-                  underlay
-                  closeOnClick
+                  shouldCloseOnClick
                   trigger={
                     <Button color="primary" size="small" iconType="Pencil">
                       Изменить статус
@@ -281,10 +281,7 @@ export function TableContainer() {
 
               <div className={styles.dropdown}>
                 <Dropdown
-                  underlay
-                  isOpen={isDeleteDropdownOpen}
-                  setOpen={handleClickOpen}
-                  setClose={handleClickClose}
+                  shouldCloseOnClick
                   trigger={
                     <Button color="danger" size="small" iconType="Bin">
                       Удалить
@@ -293,7 +290,7 @@ export function TableContainer() {
                   overlay={
                     <>
                       <span className="dropdown__name">
-                        Удалить {selectedOrders.length} записей?
+                        Удалить {selectedOrdersIds.length} записей?
                       </span>
                       <Button
                         color="reversePrimary"
@@ -308,7 +305,6 @@ export function TableContainer() {
                         color="reversePrimary"
                         size="small"
                         maxWidth
-                        onClick={handleClickClose}
                         className={styles.overlayButton}
                       >
                         Отмена
@@ -323,9 +319,9 @@ export function TableContainer() {
         </div>
         <Pagination
           className={styles.pagination}
-          currentPage={curPage}
-          totalCount={filteredSortedOrders.length}
-          pageSize={pSize}
+          currentPage={currentPage}
+          totalCount={filteredAndSortedOrders.length}
+          pageSize={pageSize}
           onPageChange={handleClickChangePage}
           onKeyPress={handleKeyPress}
         />
