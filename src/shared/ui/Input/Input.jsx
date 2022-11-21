@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import styles from './Input.module.css';
 import { Icon } from '../Icons';
@@ -7,7 +7,6 @@ export function Input({
   type,
   value,
   placeholder,
-  pattern,
   prefix,
   postfix,
   disabled,
@@ -18,41 +17,36 @@ export function Input({
   readOnly,
   invalid,
 }) {
+  const [isFocused, setFocused] = useState(false);
+
   return (
     <div
       className={classNames(
         styles._,
-        { [styles.disabled]: disabled, [styles.invalid]: invalid },
+        {
+          [styles.disabled]: disabled,
+          [styles.invalid]: invalid,
+          [styles.focused]: isFocused,
+        },
         className
       )}
     >
-      {prefix && <span className={styles.prefix}>{prefix}</span>}
+      {prefix && <div>{prefix}</div>}
       <input
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         className={classNames(styles.textField, {
-          [styles.textFieldPrefix]: prefix,
           [styles.disabled]: disabled,
-          [styles.textFieldWithButton]: disabled || !!onReset || postfix,
-          [styles.textFieldWithPrefixAndButton]:
-            (disabled || !!onReset) && postfix,
         })}
         onChange={onChange}
         onKeyPress={onKeyPress}
         type={type}
         placeholder={placeholder}
         value={value}
-        pattern={pattern}
         disabled={disabled}
         readOnly={readOnly}
       />
-      {postfix && (
-        <div
-          className={classNames(styles.postfix, {
-            [styles.postfixWithButton]: disabled || !!onReset,
-          })}
-        >
-          {postfix}
-        </div>
-      )}
+      {postfix && <div>{postfix}</div>}
       {disabled ? (
         <Icon
           iconType="Locked"

@@ -202,6 +202,7 @@ export function OrderForm({ className }) {
             </TableFooter>
           </Table>
           <label className={styles.label}>
+            Уровень лояльности
             <Input disabled value={LOYALITY_MAP[orderInformation.loyality]} />
           </label>
           <div className={styles.dropdown_status}>

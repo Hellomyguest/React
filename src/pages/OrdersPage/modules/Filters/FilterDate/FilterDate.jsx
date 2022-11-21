@@ -19,7 +19,6 @@ export function FilterDate({
           onChange={onChangeDateFromValue}
           placeholder="dd.mm.yyyy"
           prefix="с"
-          pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
           onReset={onResetDateFromValue}
         />
       </label>
@@ -28,7 +27,6 @@ export function FilterDate({
         onChange={onChangeDateToValue}
         placeholder="dd.mm.yyyy"
         prefix="по"
-        pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
         onReset={onResetDateToValue}
       />
     </div>

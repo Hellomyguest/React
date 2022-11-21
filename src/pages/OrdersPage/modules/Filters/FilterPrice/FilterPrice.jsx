@@ -21,7 +21,6 @@ export function FilterPrice({
           prefix="от"
           label="Сумма заказа"
           onReset={onResetPriceFromValue}
-          pattern="\d*"
         />
       </label>
       <Input
@@ -30,7 +29,6 @@ export function FilterPrice({
         placeholder="₽"
         prefix="до"
         onReset={onResetPriceToValue}
-        pattern="\d*"
       />
     </div>
   );
