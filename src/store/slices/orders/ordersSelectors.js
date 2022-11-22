@@ -19,7 +19,7 @@ export const selectedOrdersIdsSelector = (state) =>
 export const correctiveOrderIdSelector = (state) =>
   state.orders.correctiveOrderId;
 
-const parseDate = (date) => {
+export const parseDate = (date) => {
   const [d, m, y] = date.slice(0, 10).split('.');
   return Date.parse(`${y}-${m}-${d}`);
 };

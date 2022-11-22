@@ -40,3 +40,8 @@ input::-webkit-inner-spin-button {
   appearance: none;
   margin: 0;
 }
+
+.invalid {
+  border-color: var(--danger-color);
+  outline-color: var(--danger-color);
+}

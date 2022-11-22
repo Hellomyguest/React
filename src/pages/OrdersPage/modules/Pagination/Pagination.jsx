@@ -21,11 +21,16 @@ export function Pagination({
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const handleClickOpenDropdown = (bool) => setDropdownOpen(!bool);
 
+  const lastPage = Math.ceil(totalCount / pageSize);
+  const isInputInPagesRange = +inputValue <= lastPage;
+
   const handleKeyPress = (e) => {
-    onKeyPress(e);
-    if (e.key === 'Enter') {
-      setDropdownOpen(false);
-      setInputValue('');
+    if (isInputInPagesRange) {
+      onKeyPress(e);
+      if (e.key === 'Enter') {
+        setDropdownOpen(false);
+        setInputValue('');
+      }
     }
   };
 
@@ -87,6 +92,9 @@ export function Pagination({
                   onChange={handleChangeInputValue}
                   onKeyPress={handleKeyPress}
                   placeholder="Введите номер"
+                  className={classnames({
+                    [styles.invalid]: !isInputInPagesRange,
+                  })}
                 />
               </label>
             </>
