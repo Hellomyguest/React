@@ -82,6 +82,7 @@ export function Pagination({
               <label className={styles.label}>
                 Номер страницы
                 <Input
+                  type="number"
                   value={inputValue}
                   onChange={handleChangeInputValue}
                   onKeyPress={handleKeyPress}
