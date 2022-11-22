@@ -99,8 +99,9 @@ export function Filters() {
     if (Object.keys(errors).length === 0) {
       setInputsErrors({});
       dispatch(filtersActions.setFilters(filtersValue));
+    } else {
+      setInputsErrors(errors);
     }
-    setInputsErrors(errors);
   };
 
   return (

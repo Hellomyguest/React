@@ -22,6 +22,7 @@ import {
 import { STATUS_FILTERS } from '../Filters/FilterStatus/FilterStatus';
 import { prettifyDate, prettifySum } from '../TableContainer/TableContainer';
 import styles from './OrderForm.module.css';
+import { validateOrdersForm } from '../../../../shared/utils/validator';
 
 const LOYALITY_MAP = {
   newbie: 'Новичок',
@@ -86,34 +87,29 @@ export function OrderForm({ className }) {
 
   const handleResetConfirmationCode = () => setConfirmationCode('');
 
-  const [invalidInputs, setInvalidInputs] = useState({
-    errors: [],
-    errorText: '',
-  });
-
-  const checkIfInputsAreValid = () => {
-    const errors = [];
-    let errorText = '';
-    if (сonfirmationCode !== '123') {
-      errors.push('confirmationCode');
-      errorText = 'Введён не корректный код';
-    }
-    if (orderInformation.customer === '') {
-      errors.push('customer');
-      errorText = 'Проверьте корректность ФИО';
-    }
-    if (errors.length === 0) {
-      setInvalidInputs({ errors: [], errorText: '' });
-    } else {
-      setInvalidInputs({ errors, errorText });
-    }
-    return errors;
-  };
+  const [invalidInputs, setInvalidInputs] = useState({});
 
   const handleClickCorrectOrder = () => {
-    const errors = checkIfInputsAreValid();
-    if (errors.length === 0)
+    const errors = validateOrdersForm({
+      fullName: orderInformation.customer,
+      сonfirmationCode,
+    });
+    if (Object.keys(errors).length === 0) {
+      setInvalidInputs({});
       dispatch(ordersActions.editOrder(orderInformation));
+    } else {
+      setInvalidInputs(errors);
+    }
+  };
+
+  const errorText = () => {
+    if (invalidInputs.fullName) {
+      return invalidInputs.fullName;
+    }
+    if (invalidInputs.сonfirmationCode) {
+      return invalidInputs.сonfirmationCode;
+    }
+    return '';
   };
 
   return (
@@ -167,7 +163,7 @@ export function OrderForm({ className }) {
             <Input
               value={orderInformation.customer}
               onChange={handleChangeCustomer}
-              invalid={invalidInputs.errors.includes('customer')}
+              invalid={invalidInputs.fullName}
             />
           </label>
           <Table className={styles.orderTable}>
@@ -244,13 +240,13 @@ export function OrderForm({ className }) {
             <Input
               value={сonfirmationCode}
               onChange={handleChangeConfirmationCode}
-              invalid={invalidInputs.errors.includes('confirmationCode')}
+              invalid={invalidInputs.сonfirmationCode}
               onReset={handleResetConfirmationCode}
             />
           </label>
         </TableBody>
         <TableFooter className={styles.footer}>
-          <span className={styles.error}>{invalidInputs.errorText}</span>
+          <span className={styles.error}>{errorText()}</span>
           <Button
             size="medium"
             color="primary"
