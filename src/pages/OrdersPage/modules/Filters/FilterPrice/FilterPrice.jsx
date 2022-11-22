@@ -15,6 +15,7 @@ export function FilterPrice({
       <label className={styles.label}>
         Сумма заказа
         <Input
+          type="number"
           placeholder="₽"
           value={priceFromValue}
           onChange={onChangePriceFromValue}
@@ -24,6 +25,7 @@ export function FilterPrice({
         />
       </label>
       <Input
+        type="number"
         value={priceToValue}
         onChange={onChangePriceToValue}
         placeholder="₽"

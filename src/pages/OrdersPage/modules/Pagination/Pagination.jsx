@@ -87,14 +87,12 @@ export function Pagination({
               <label className={styles.label}>
                 Номер страницы
                 <Input
+                  invalid={!isInputInPagesRange}
                   type="number"
                   value={inputValue}
                   onChange={handleChangeInputValue}
                   onKeyPress={handleKeyPress}
                   placeholder="Введите номер"
-                  className={classnames({
-                    [styles.invalid]: !isInputInPagesRange,
-                  })}
                 />
               </label>
             </>

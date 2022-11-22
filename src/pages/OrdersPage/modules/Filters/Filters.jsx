@@ -9,6 +9,7 @@ import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
 import { filtersActions } from '../../../../store/slices/filters';
+import { validateFilters } from '../../../../shared/utils/validator';
 
 export function Filters() {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -88,8 +89,19 @@ export function Filters() {
     filtersValue.priceToValue;
 
   const dispatch = useDispatch();
-  const handleClickSetFilters = () =>
-    dispatch(filtersActions.setFilters(filtersValue));
+
+  const [inputsErrors, setInputsErrors] = useState({});
+  const handleClickSetFilters = () => {
+    const errors = validateFilters({
+      dateFrom: filtersValue.dateFromValue,
+      dateTo: filtersValue.dateToValue,
+    });
+    if (Object.keys(errors).length === 0) {
+      setInputsErrors({});
+      dispatch(filtersActions.setFilters(filtersValue));
+    }
+    setInputsErrors(errors);
+  };
 
   return (
     <div className={styles._}>
@@ -108,9 +120,11 @@ export function Filters() {
             dateFromValue={filtersValue.dateFromValue}
             onChangeDateFromValue={handleChangeDateFromValue}
             onResetDateFromValue={handleResetDateFromValue}
+            isDateFromValid={!!inputsErrors.dateFrom}
             dateToValue={filtersValue.dateToValue}
             onChangeDateToValue={handleChangeDateToValue}
             onResetDateToValue={handleResetDateToValue}
+            isDateToValid={inputsErrors.dateTo}
           />
           <FilterStatus
             statusValue={filtersValue.statusValue}

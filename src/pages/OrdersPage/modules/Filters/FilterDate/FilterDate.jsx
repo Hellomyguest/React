@@ -6,15 +6,18 @@ export function FilterDate({
   dateFromValue,
   onChangeDateFromValue,
   onResetDateFromValue,
+  isDateFromValid,
   dateToValue,
   onChangeDateToValue,
   onResetDateToValue,
+  isDateToValid,
 }) {
   return (
     <div className={styles._}>
       <label className={styles.label}>
         Дата оформления
         <Input
+          invalid={isDateFromValid}
           value={dateFromValue}
           onChange={onChangeDateFromValue}
           placeholder="dd.mm.yyyy"
@@ -23,6 +26,7 @@ export function FilterDate({
         />
       </label>
       <Input
+        invalid={isDateToValid}
         value={dateToValue}
         onChange={onChangeDateToValue}
         placeholder="dd.mm.yyyy"
