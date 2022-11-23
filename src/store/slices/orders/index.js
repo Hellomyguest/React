@@ -5,6 +5,7 @@ import {
   filteredAndSortedOrdersSelector,
   paginatedOrdersSelector,
   correctiveOrderIdSelector,
+  correctiveOrderSelector,
 } from './ordersSelectors';
 import { ordersActions, fetchOrders, ordersSlice } from './ordersSlice';
 
@@ -18,4 +19,5 @@ export {
   fetchOrders,
   ordersSlice,
   correctiveOrderIdSelector,
+  correctiveOrderSelector,
 };

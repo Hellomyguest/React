@@ -32,6 +32,7 @@ export function FilterDate({
         placeholder="dd.mm.yyyy"
         prefix="по"
         onReset={onResetDateToValue}
+        className={styles.input}
       />
     </div>
   );

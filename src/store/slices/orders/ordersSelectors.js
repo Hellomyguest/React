@@ -110,3 +110,9 @@ export const paginatedOrdersSelector = createSelector(
     return orders.slice(firstPageIndex, lastPageIndex);
   }
 );
+
+export const correctiveOrderSelector = createSelector(
+  correctiveOrderIdSelector,
+  ordersSelector,
+  (orderId, orders) => orders.find(({ id }) => id === orderId)
+);

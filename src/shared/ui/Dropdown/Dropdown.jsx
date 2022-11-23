@@ -16,12 +16,13 @@ export function Dropdown({
 
   useEffect(() => {
     const handleClick = (e) => {
-      if (!containerRef.current.contains(e.target)) {
-        if (setOpen) {
-          setOpen(true);
-        } else {
-          setOpened();
-        }
+      if ((!isOpen && !isOpened) || containerRef.current.contains(e.target)) {
+        return;
+      }
+      if (setOpen) {
+        setOpen(true);
+      } else {
+        setOpened();
       }
     };
     document.addEventListener('mousedown', handleClick);
@@ -47,7 +48,7 @@ export function Dropdown({
     onClick: () => setOpen(isOpen),
   });
   const uncontrolledTrigger = cloneElement(trigger, {
-    onClick: () => setOpened(!isOpen),
+    onClick: () => setOpened(!isOpened),
   });
   const newOverlay = cloneElement(overlay, { className });
 

@@ -29,17 +29,15 @@ export function FilterStatus({ statusValue, onChangeStatusValue }) {
     <div className={styles._}>
       <Dropdown
         trigger={
-          <div>
-            <label className={styles.label}>
-              Статус заказа
-              <Input
-                readOnly
-                value={inputValue}
-                label="Статус заказа"
-                postfix={<Icon iconType="Varrow" className={styles.icon} />}
-              />
-            </label>
-          </div>
+          <label className={styles.label}>
+            Статус заказа
+            <Input
+              readOnly
+              value={inputValue}
+              label="Статус заказа"
+              postfix={<Icon iconType="Varrow" className={styles.icon} />}
+            />
+          </label>
         }
         overlay={
           <>

@@ -31,6 +31,7 @@ export function FilterPrice({
         placeholder="₽"
         prefix="до"
         onReset={onResetPriceToValue}
+        className={styles.input}
       />
     </div>
   );

@@ -14,6 +14,7 @@ input::-webkit-input-placeholder {
   border-radius: 0.25rem;
   box-sizing: border-box;
   background-color: var(--primary-background-color);
+  cursor: text;
 }
 
 .focused {
@@ -24,7 +25,7 @@ input::-webkit-input-placeholder {
 .prefix {
   display: flex;
   align-items: center;
-  pointer-events: none;
+  cursor: text;
 }
 
 .textField {
@@ -34,7 +35,7 @@ input::-webkit-input-placeholder {
   box-sizing: border-box;
   letter-spacing: 0px;
   text-align: left;
-  background-color: var(--primary-background-color);
+  background-color: transparent;
   outline: none;
   color: var(--primary-text-color);
   font-family: 'Ubuntu';
@@ -87,7 +88,7 @@ input::-webkit-input-placeholder {
   padding: 0;
   color: inherit;
   font: inherit;
-  pointer-events: none;
+  cursor: text;
 }
 
 .iconDisabled {

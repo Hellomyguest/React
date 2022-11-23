@@ -78,5 +78,5 @@ const confirmationCodeValidator = {
 
 export const validateOrdersForm = validate({
   fullName: [fullNameValidator],
-  сonfirmationCode: [confirmationCodeValidator],
+  confirmationCode: [confirmationCodeValidator],
 });

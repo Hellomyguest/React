@@ -167,6 +167,7 @@ export function TableContainer() {
                 <Checkbox
                   readOnly
                   checked={
+                    paginatedOrdersIds.length &&
                     xor(paginatedOrdersIds, selectedOrdersIds).length === 0
                   }
                   onChange={handleSelectAllPaginatedOrders(paginatedOrdersIds)}

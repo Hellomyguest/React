@@ -15,9 +15,8 @@ import {
   TableRow,
 } from '../../../../shared/ui';
 import {
-  correctiveOrderIdSelector,
-  ordersSelector,
   ordersActions,
+  correctiveOrderSelector,
 } from '../../../../store/slices/orders';
 import { STATUS_FILTERS } from '../Filters/FilterStatus/FilterStatus';
 import { prettifyDate, prettifySum } from '../TableContainer/TableContainer';
@@ -33,17 +32,13 @@ const LOYALITY_MAP = {
 
 export function OrderForm({ className }) {
   const dispatch = useDispatch();
-  const orderIdToCorrect = useSelector(correctiveOrderIdSelector);
-  const orders = useSelector(ordersSelector);
 
   const orderFormRef = useRef();
 
   const [isCloseOrderFormDropdownOpen, setCloseOrderFormDropdownOpen] =
     useState(false);
 
-  const handleClickOpenDropdown = (bool) =>
-    setCloseOrderFormDropdownOpen(!bool);
-  const openDropdown = () =>
+  const toggleDropdown = () =>
     setCloseOrderFormDropdownOpen(!isCloseOrderFormDropdownOpen);
   const handleClickCloseDropdown = () => setCloseOrderFormDropdownOpen(false);
   const handleClickAbortCorrecting = () => {
@@ -51,9 +46,17 @@ export function OrderForm({ className }) {
     handleClickCloseDropdown();
   };
 
-  const orderToCorrect = orders.find(({ id }) => id === orderIdToCorrect);
+  const orderToCorrect = useSelector(correctiveOrderSelector);
 
   const [orderInformation, setOrderInformation] = useState(orderToCorrect);
+
+  const handleClickToggleDropdown = (bool) => {
+    if (isEqual(orderInformation, orderToCorrect)) {
+      dispatch(ordersActions.setCorrectiveOrderId(''));
+    } else {
+      setCloseOrderFormDropdownOpen(!bool);
+    }
+  };
 
   const handleChangeCustomer = ({ target: { value } }) => {
     setOrderInformation({ ...orderInformation, customer: value });
@@ -65,12 +68,14 @@ export function OrderForm({ className }) {
 
   useEffect(() => {
     const handleClick = ({ target }) => {
-      if (!orderFormRef.current.contains(target)) {
-        if (isEqual(orderInformation, orderToCorrect)) {
-          dispatch(ordersActions.setCorrectiveOrderId(''));
-        } else {
-          openDropdown();
-        }
+      if (orderFormRef.current.contains(target)) {
+        return;
+      }
+
+      if (isEqual(orderInformation, orderToCorrect)) {
+        dispatch(ordersActions.setCorrectiveOrderId(''));
+      } else {
+        toggleDropdown();
       }
     };
     document.addEventListener('mousedown', handleClick);
@@ -80,36 +85,26 @@ export function OrderForm({ className }) {
     };
   });
 
-  const [сonfirmationCode, setConfirmationCode] = useState('');
+  const [confirmationCode, setConfirmationCode] = useState('');
 
   const handleChangeConfirmationCode = ({ target: { value } }) =>
     setConfirmationCode(value);
 
   const handleResetConfirmationCode = () => setConfirmationCode('');
 
-  const [invalidInputs, setInvalidInputs] = useState({});
+  const [errors, setErrors] = useState({});
 
-  const handleClickCorrectOrder = () => {
-    const errors = validateOrdersForm({
+  const handleClickSaveOrder = () => {
+    const invalidInputs = validateOrdersForm({
       fullName: orderInformation.customer,
-      сonfirmationCode,
+      confirmationCode,
     });
-    if (Object.keys(errors).length === 0) {
-      setInvalidInputs({});
+    if (Object.keys(invalidInputs).length === 0) {
+      setErrors({});
       dispatch(ordersActions.editOrder(orderInformation));
     } else {
-      setInvalidInputs(errors);
+      setErrors(invalidInputs);
     }
-  };
-
-  const errorText = () => {
-    if (invalidInputs.fullName) {
-      return invalidInputs.fullName;
-    }
-    if (invalidInputs.сonfirmationCode) {
-      return invalidInputs.сonfirmationCode;
-    }
-    return '';
   };
 
   return (
@@ -123,7 +118,7 @@ export function OrderForm({ className }) {
             <div className={styles.dropdown}>
               <Dropdown
                 isOpen={isCloseOrderFormDropdownOpen}
-                setOpen={handleClickOpenDropdown}
+                setOpen={handleClickToggleDropdown}
                 setClose={handleClickCloseDropdown}
                 trigger={<Button color="primary" iconType="Xlarge" />}
                 overlay={
@@ -163,7 +158,7 @@ export function OrderForm({ className }) {
             <Input
               value={orderInformation.customer}
               onChange={handleChangeCustomer}
-              invalid={invalidInputs.fullName}
+              invalid={errors.fullName}
             />
           </label>
           <Table className={styles.orderTable}>
@@ -238,20 +233,20 @@ export function OrderForm({ className }) {
           <label className={styles.label}>
             Код подтверждения
             <Input
-              value={сonfirmationCode}
+              value={confirmationCode}
               onChange={handleChangeConfirmationCode}
-              invalid={invalidInputs.сonfirmationCode}
+              invalid={errors.confirmationCode}
               onReset={handleResetConfirmationCode}
             />
           </label>
         </TableBody>
         <TableFooter className={styles.footer}>
-          <span className={styles.error}>{errorText()}</span>
+          <span className={styles.error}>{Object.values(errors)[0]}</span>
           <Button
             size="medium"
             color="primary"
             iconType="Checkmark"
-            onClick={handleClickCorrectOrder}
+            onClick={handleClickSaveOrder}
           >
             Сохранить
           </Button>

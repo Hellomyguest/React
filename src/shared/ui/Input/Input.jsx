@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import React, { useState, useRef } from 'react';
 import classNames from 'classnames';
 import styles from './Input.module.css';
 import { Icon } from '../Icons';
@@ -18,6 +20,12 @@ export function Input({
   invalid,
 }) {
   const [isFocused, setFocused] = useState(false);
+  const inputRef = useRef();
+  const handleClick = (e) => {
+    e.preventDefault();
+    inputRef.current.click();
+    inputRef.current.focus();
+  };
 
   return (
     <div
@@ -30,9 +38,11 @@ export function Input({
         },
         className
       )}
+      onClick={handleClick}
     >
-      {prefix && <div>{prefix}</div>}
+      {prefix && <div className={styles.prefix}>{prefix}</div>}
       <input
+        ref={inputRef}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         className={classNames(styles.textField, {
@@ -46,7 +56,7 @@ export function Input({
         disabled={disabled}
         readOnly={readOnly}
       />
-      {postfix && <div>{postfix}</div>}
+      {postfix && <div className={styles.postfix}>{postfix}</div>}
       {disabled ? (
         <Icon
           iconType="Locked"

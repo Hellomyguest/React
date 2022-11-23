@@ -35,22 +35,27 @@
 
 .cell:nth-child(2) {
   width: 7.2%;
+  min-width: 2.875rem;
 }
 
 .cell:nth-child(3) {
   width: 11.7%;
+  min-width: 4.375rem;
 }
 
 .cell:nth-child(4) {
   width: 11.7%;
+  min-width: 6.625rem;
 }
 
 .cell:nth-child(5) {
   width: 6.4%;
+  min-width: 4.625rem;
 }
 
 .cell:nth-child(6) {
   width: 8.5%;
+  min-width: 4.125rem;
 }
 
 .cell:nth-child(7) {

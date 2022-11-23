@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from '../../../../shared/utils/usePagination';
 import styles from './Pagination.module.css';
@@ -19,7 +19,13 @@ export function Pagination({
     setInputValue(value);
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const handleClickOpenDropdown = (bool) => setDropdownOpen(!bool);
+  const handleClickToggleDropdown = (bool) => setDropdownOpen(!bool);
+
+  useMemo(() => {
+    if (!isDropdownOpen) {
+      setInputValue('');
+    }
+  }, [isDropdownOpen]);
 
   const lastPage = Math.ceil(totalCount / pageSize);
   const isInputInPagesRange = +inputValue <= lastPage;
@@ -74,7 +80,7 @@ export function Pagination({
       <div className={styles.dropdown}>
         <Dropdown
           isOpen={isDropdownOpen}
-          setOpen={handleClickOpenDropdown}
+          setOpen={handleClickToggleDropdown}
           className={styles.dropdown_overlay}
           trigger={
             <Button size="small" color="reversePrimary">
