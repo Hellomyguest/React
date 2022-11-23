@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from '../../../../shared/utils/usePagination';
 import styles from './Pagination.module.css';
-import { Button, Dropdown, InputWithLabel, Input } from '../../../../shared/ui';
+import { Button, Dropdown, Input } from '../../../../shared/ui';
 
 export function Pagination({
   onPageChange,
@@ -15,7 +15,30 @@ export function Pagination({
 }) {
   // Контроль input'а выбора страницы
   const [inputValue, setInputValue] = useState('');
-  const handleChangeInputValue = (e) => setInputValue(e.target.value);
+  const handleChangeInputValue = ({ target: { value } }) =>
+    setInputValue(value);
+
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const handleClickToggleDropdown = (bool) => setDropdownOpen(!bool);
+
+  useMemo(() => {
+    if (!isDropdownOpen) {
+      setInputValue('');
+    }
+  }, [isDropdownOpen]);
+
+  const lastPage = Math.ceil(totalCount / pageSize);
+  const isInputInPagesRange = +inputValue <= lastPage;
+
+  const handleKeyPress = (e) => {
+    if (isInputInPagesRange) {
+      onKeyPress(e);
+      if (e.key === 'Enter') {
+        setDropdownOpen(false);
+        setInputValue('');
+      }
+    }
+  };
 
   const paginationRange = usePagination({
     currentPage,
@@ -56,6 +79,8 @@ export function Pagination({
       })}
       <div className={styles.dropdown}>
         <Dropdown
+          isOpen={isDropdownOpen}
+          setOpen={handleClickToggleDropdown}
           className={styles.dropdown_overlay}
           trigger={
             <Button size="small" color="reversePrimary">
@@ -65,17 +90,17 @@ export function Pagination({
           overlay={
             <>
               <div />
-              <InputWithLabel
-                label="Номер страницы"
-                input={
-                  <Input
-                    value={inputValue}
-                    onChange={handleChangeInputValue}
-                    onKeyPress={onKeyPress}
-                    placeholder="Введите номер"
-                  />
-                }
-              />
+              <label className={styles.label}>
+                Номер страницы
+                <Input
+                  invalid={!isInputInPagesRange}
+                  type="number"
+                  value={inputValue}
+                  onChange={handleChangeInputValue}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Введите номер"
+                />
+              </label>
             </>
           }
         />

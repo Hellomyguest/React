@@ -5,14 +5,28 @@ import { useTheme } from '../../../../shared/utils/useTheme';
 
 export function Pageheader({ title }) {
   const { isLight, toggleTheme } = useTheme();
+
+  const handleClickSetDarkTheme = () => {
+    toggleTheme('dark');
+  };
+
+  const handleClickSetLigthTheme = () => {
+    toggleTheme('light');
+  };
+
   return (
     <div className={styles._}>
       <h1 className={styles.title}>{title}</h1>
       <div>
         <Dropdown
+          shouldCloseOnClick
           trigger={
-            <Button size="medium" color="reversePrimary" iconType="Sun">
-              Светлая тема
+            <Button
+              size="medium"
+              color="reversePrimary"
+              iconType={isLight ? 'Sun' : 'Moon'}
+            >
+              {isLight ? 'Светлая тема' : 'Темная тема'}
             </Button>
           }
           overlay={
@@ -23,7 +37,7 @@ export function Pageheader({ title }) {
                 size="small"
                 maxWidth
                 iconType="Sun"
-                onClick={toggleTheme}
+                onClick={handleClickSetLigthTheme}
               >
                 Светлая
               </Button>
@@ -32,7 +46,7 @@ export function Pageheader({ title }) {
                 size="small"
                 maxWidth
                 iconType="Moon"
-                onClick={toggleTheme}
+                onClick={handleClickSetDarkTheme}
               >
                 Темная
               </Button>

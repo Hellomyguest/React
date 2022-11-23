@@ -1,17 +1,23 @@
 import {
-  orders,
-  isLoading,
-  filteredAndSortedOrders,
-  paginatedOrders,
+  ordersSelector,
+  isLoadingSelector,
+  selectedOrdersIdsSelector,
+  filteredAndSortedOrdersSelector,
+  paginatedOrdersSelector,
+  correctiveOrderIdSelector,
+  correctiveOrderSelector,
 } from './ordersSelectors';
 import { ordersActions, fetchOrders, ordersSlice } from './ordersSlice';
 
 export {
-  orders,
-  isLoading,
-  filteredAndSortedOrders,
-  paginatedOrders,
+  ordersSelector,
+  isLoadingSelector,
+  selectedOrdersIdsSelector,
+  filteredAndSortedOrdersSelector,
+  paginatedOrdersSelector,
   ordersActions,
   fetchOrders,
   ordersSlice,
+  correctiveOrderIdSelector,
+  correctiveOrderSelector,
 };

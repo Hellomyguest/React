@@ -3,4 +3,16 @@
   align-items: flex-end;
   gap: 0.25rem;
   width: 19%;
+  min-width: 18rem;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 50%;
+}
+
+.input {
+  width: 50%;
 }

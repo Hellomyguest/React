@@ -4,6 +4,8 @@
 }
 
 .dots {
+  height: 1.5rem;
+  box-sizing: border-box;
   padding: 0.25rem 0.5rem;
   color: var(--primary-color);
   cursor: default;
@@ -18,10 +20,23 @@
   position: relative;
 }
 
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .dropdown_overlay {
   position: absolute;
   right: 0;
   top: -5.75rem;
   display: flex;
   gap: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }

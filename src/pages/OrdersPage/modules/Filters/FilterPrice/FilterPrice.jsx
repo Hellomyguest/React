@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputWithLabel, Input } from '../../../../../shared/ui';
+import { Input } from '../../../../../shared/ui';
 import styles from './FilterPrice.module.css';
 
 export function FilterPrice({
@@ -12,27 +12,26 @@ export function FilterPrice({
 }) {
   return (
     <div className={styles._}>
-      <InputWithLabel
-        input={
-          <Input
-            placeholder="₽"
-            value={priceFromValue}
-            onChange={onChangePriceFromValue}
-            prefix="от"
-            label="Сумма заказа"
-            onReset={onResetPriceFromValue}
-            pattern="\d*"
-          />
-        }
-        label="Сумма заказ"
-      />
+      <label className={styles.label}>
+        Сумма заказа
+        <Input
+          type="number"
+          placeholder="₽"
+          value={priceFromValue}
+          onChange={onChangePriceFromValue}
+          prefix="от"
+          label="Сумма заказа"
+          onReset={onResetPriceFromValue}
+        />
+      </label>
       <Input
+        type="number"
         value={priceToValue}
         onChange={onChangePriceToValue}
         placeholder="₽"
         prefix="до"
         onReset={onResetPriceToValue}
-        pattern="\d*"
+        className={styles.input}
       />
     </div>
   );

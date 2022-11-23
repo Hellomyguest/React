@@ -1,6 +1,14 @@
 ._ {
   position: relative;
   width: 12.8%;
+  min-width: 12rem;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .icon {

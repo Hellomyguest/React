@@ -1,41 +1,38 @@
 import React from 'react';
-import { Input, InputWithLabel } from '../../../../../shared/ui';
+import { Input } from '../../../../../shared/ui';
 import styles from './FilterDate.module.css';
 
 export function FilterDate({
   dateFromValue,
   onChangeDateFromValue,
   onResetDateFromValue,
+  isDateFromValid,
   dateToValue,
   onChangeDateToValue,
   onResetDateToValue,
+  isDateToValid,
 }) {
   return (
     <div className={styles._}>
-      <InputWithLabel
-        label="Дата оформления"
-        input={
-          <Input
-            value={dateFromValue}
-            onChange={onChangeDateFromValue}
-            placeholder="dd.mm.yyyy"
-            prefix="с"
-            pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-            onReset={onResetDateFromValue}
-          />
-        }
-      />
-      <InputWithLabel
-        input={
-          <Input
-            value={dateToValue}
-            onChange={onChangeDateToValue}
-            placeholder="dd.mm.yyyy"
-            prefix="по"
-            pattern="[0-9]{2}.[0-9]{2}.[0-9]{4}"
-            onReset={onResetDateToValue}
-          />
-        }
+      <label className={styles.label}>
+        Дата оформления
+        <Input
+          invalid={isDateFromValid}
+          value={dateFromValue}
+          onChange={onChangeDateFromValue}
+          placeholder="dd.mm.yyyy"
+          prefix="с"
+          onReset={onResetDateFromValue}
+        />
+      </label>
+      <Input
+        invalid={isDateToValid}
+        value={dateToValue}
+        onChange={onChangeDateToValue}
+        placeholder="dd.mm.yyyy"
+        prefix="по"
+        onReset={onResetDateToValue}
+        className={styles.input}
       />
     </div>
   );

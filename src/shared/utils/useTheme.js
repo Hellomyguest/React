@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 export const useTheme = () => {
-  const [isLight, setLight] = useState(true);
+  const [isLight, setLigth] = useState(true);
 
-  function toggleTheme() {
-    if (isLight === true) {
+  function toggleTheme(themeColor) {
+    if (themeColor === 'dark') {
       document.body.style.setProperty('--primary-background-color', ' #2B2D33');
       document.body.style.setProperty(
         '--primary-button-content-color',
@@ -15,8 +15,8 @@ export const useTheme = () => {
         ' #171B1F'
       );
       document.body.style.setProperty('--primary-text-color', ' #BCC4CC');
-      setLight(!isLight);
-    } else {
+      setLigth(false);
+    } else if (themeColor === 'light') {
       document.body.style.setProperty('--primary-background-color', ' #FFFFFF');
       document.body.style.setProperty(
         '--primary-button-content-color',
@@ -27,7 +27,7 @@ export const useTheme = () => {
         ' #EBF0F5'
       );
       document.body.style.setProperty('--primary-text-color', ' #000000');
-      setLight(!isLight);
+      setLigth(true);
     }
   }
 

@@ -35,22 +35,27 @@
 
 .cell:nth-child(2) {
   width: 7.2%;
+  min-width: 2.875rem;
 }
 
 .cell:nth-child(3) {
   width: 11.7%;
+  min-width: 4.375rem;
 }
 
 .cell:nth-child(4) {
   width: 11.7%;
+  min-width: 6.625rem;
 }
 
 .cell:nth-child(5) {
   width: 6.4%;
+  min-width: 4.625rem;
 }
 
 .cell:nth-child(6) {
   width: 8.5%;
+  min-width: 4.125rem;
 }
 
 .cell:nth-child(7) {
@@ -58,7 +63,7 @@
 }
 
 .row:hover {
-  background-color: var(--secondary-color);
+  background-color: var(--primary-filters-area-color);
 }
 
 .row:last-child {
@@ -109,7 +114,24 @@
   position: relative;
 }
 
-.dropdown_delete {
+.overlay_changeStatus {
+  position: absolute;
+  left: 0;
+  top: -13.25rem;
+  display: flex;
+  gap: 0;
+  padding: 0.5rem 0;
+}
+
+.changeStatus_button {
+  justify-content: flex-start;
+}
+
+.radio {
+  display: none;
+}
+
+.overlay_delete {
   position: absolute;
   left: 0;
   top: -7.25rem;
@@ -119,9 +141,4 @@
 .pages {
   display: flex;
   gap: 1.5rem;
-}
-
-.footer__pagination {
-  display: flex;
-  gap: 0.25rem;
 }

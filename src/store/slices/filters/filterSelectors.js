@@ -1,11 +1,12 @@
-export const orders = (state) => state.orders.orders;
-export const search = (state) => state.filter.search;
-export const dateFrom = (state) => state.filter.dateFrom;
-export const dateTo = (state) => state.filter.dateTo;
-export const statuses = (state) => state.filter.statuses;
-export const priceFrom = (state) => state.filter.priceFrom;
-export const priceTo = (state) => state.filter.priceTo;
-export const activeSortingCell = (state) => state.filter.activeSortingCell;
-export const isSortingAscending = (state) => state.filter.isSortingAscending;
-export const currentPage = (state) => state.filter.currentPage;
-export const pageSize = (state) => state.filter.pageSize;
+export const searchSelector = (state) => state.filter.search;
+export const dateFromSelector = (state) => state.filter.dateFrom;
+export const dateToSelector = (state) => state.filter.dateTo;
+export const statusesSelector = (state) => state.filter.statuses;
+export const priceFromSelector = (state) => state.filter.priceFrom;
+export const priceToSelector = (state) => state.filter.priceTo;
+export const activeSortingCellSelector = (state) =>
+  state.filter.activeSortingCell;
+export const isSortingAscendingSelector = (state) =>
+  state.filter.isSortingAscending;
+export const currentPageSelector = (state) => state.filter.currentPage;
+export const pageSizeSelector = (state) => state.filter.pageSize;

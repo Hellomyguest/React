@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import xor from 'lodash.xor';
 import { useDispatch } from 'react-redux';
 import { Button } from '../../../../shared/ui';
 import { FilterDate } from './FilterDate/FilterDate';
@@ -8,6 +9,7 @@ import { FiltersHeader } from './FiltersHeader/FiltersHeader';
 
 import styles from './Filters.module.css';
 import { filtersActions } from '../../../../store/slices/filters';
+import { validateFilters } from '../../../../shared/utils/validator';
 
 export function Filters() {
   const [isFiltersOpen, setFiltersOpen] = useState(false);
@@ -25,44 +27,42 @@ export function Filters() {
   });
 
   // Search
-  const handleChangeSearchValue = (e) => {
-    setFiltersValue({ ...filtersValue, searchValue: e.target.value });
+  const handleChangeSearchValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, searchValue: value });
   };
   const handleResetSearchValue = () =>
     setFiltersValue({ ...filtersValue, searchValue: '' });
 
   // Date filter
-  const handleChangeDateFromValue = (e) => {
-    setFiltersValue({ ...filtersValue, dateFromValue: e.target.value });
+  const handleChangeDateFromValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, dateFromValue: value });
   };
   const handleResetDateFromValue = () =>
     setFiltersValue({ ...filtersValue, dateFromValue: '' });
 
-  const handleChangeDateToValue = (e) => {
-    setFiltersValue({ ...filtersValue, dateToValue: e.target.value });
+  const handleChangeDateToValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, dateToValue: value });
   };
   const handleResetDateToValue = () =>
     setFiltersValue({ ...filtersValue, dateToValue: '' });
 
   // Status filter
-  const handleChangeStatusValue = (e) => {
+  const handleChangeStatusValue = ({ target: { value } }) => {
     setFiltersValue({
       ...filtersValue,
-      statusValue: filtersValue.statusValue.includes(e.target.value)
-        ? filtersValue.statusValue.filter((item) => item !== e.target.value)
-        : [...filtersValue.statusValue, e.target.value],
+      statusValue: xor(filtersValue.statusValue, [value]),
     });
   };
 
   // Price filter
-  const handleChangePriceFromValue = (e) => {
-    setFiltersValue({ ...filtersValue, priceFromValue: e.target.value });
+  const handleChangePriceFromValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, priceFromValue: value });
   };
   const handleResetPriceFromValue = () =>
     setFiltersValue({ ...filtersValue, priceFromValue: '' });
 
-  const handleChangePriceToValue = (e) => {
-    setFiltersValue({ ...filtersValue, priceToValue: e.target.value });
+  const handleChangePriceToValue = ({ target: { value } }) => {
+    setFiltersValue({ ...filtersValue, priceToValue: value });
   };
   const handleResetPriceToValue = () =>
     setFiltersValue({ ...filtersValue, priceToValue: '' });
@@ -89,8 +89,20 @@ export function Filters() {
     filtersValue.priceToValue;
 
   const dispatch = useDispatch();
-  const handleClickSetFilters = () =>
-    dispatch(filtersActions.setFilters(filtersValue));
+
+  const [inputsErrors, setInputsErrors] = useState({});
+  const handleClickSetFilters = () => {
+    const errors = validateFilters({
+      dateFrom: filtersValue.dateFromValue,
+      dateTo: filtersValue.dateToValue,
+    });
+    if (Object.keys(errors).length === 0) {
+      setInputsErrors({});
+      dispatch(filtersActions.setFilters(filtersValue));
+    } else {
+      setInputsErrors(errors);
+    }
+  };
 
   return (
     <div className={styles._}>
@@ -109,9 +121,11 @@ export function Filters() {
             dateFromValue={filtersValue.dateFromValue}
             onChangeDateFromValue={handleChangeDateFromValue}
             onResetDateFromValue={handleResetDateFromValue}
+            isDateFromValid={!!inputsErrors.dateFrom}
             dateToValue={filtersValue.dateToValue}
             onChangeDateToValue={handleChangeDateToValue}
             onResetDateToValue={handleResetDateToValue}
+            isDateToValid={inputsErrors.dateTo}
           />
           <FilterStatus
             statusValue={filtersValue.statusValue}
