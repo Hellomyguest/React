@@ -14,7 +14,6 @@ export const ordersSlice = createSlice({
   initialState: {
     orders: [],
     selectedOrdersIds: [],
-    selectedStatus: '',
     correctiveOrderId: '',
     isLoading: false,
   },
@@ -30,10 +29,9 @@ export const ordersSlice = createSlice({
       state.selectedOrdersIds = [];
     },
     changeOrdersStatus(state, { payload: { status, selectedOrdersIds } }) {
-      state.selectedStatus = status;
       state.orders.forEach((order) => {
         if (selectedOrdersIds.includes(order.id)) {
-          order.status = state.selectedStatus;
+          order.status = status;
         }
       });
     },
