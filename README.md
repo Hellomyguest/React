@@ -21,7 +21,8 @@ npm start
 - #### State manager: <br><img src="https://raw.githubusercontent.com/reduxjs/redux/master/logo/logo.png" width="24"> **Redux Toolkit** (https://redux-toolkit.js.org/) 
 - #### Git hooks: <br>🐶 **Husky** (https://typicode.github.io/husky/#/) 
 - #### Code analyzer: <br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/ESLint_logo.svg/24px-ESLint_logo.svg.png?20211012234406"> **ESLint** (https://eslint.org/) 
-- #### Code formatter: <br><img src="https://prettier.io/icon.png" width="24"> **Prettier** (https://prettier.io/) 
+- #### Code formatter: <br><img src="https://prettier.io/icon.png" width="24"> **Prettier** (https://prettier.io/)
+- #### Utilities: <br><img src="https://seeklogo.com/images/L/lodash-logo-853F4D3130-seeklogo.com.png?v=637829616660000000" width="24"> **Lodash** (https://lodash.com/) <br> **classNames** (https://www.npmjs.com/package/classnames)
 
 ## Описание
 Заказы в панели администратора интернет-магазина представлены в виде таблицы с пагинацией.
