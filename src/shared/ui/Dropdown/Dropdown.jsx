@@ -17,6 +17,7 @@ export function Dropdown({
   useEffect(() => {
     const handleClick = (e) => {
       if ((!isOpen && !isOpened) || containerRef.current.contains(e.target)) {
+        console.log('aa', containerRef.current.contains(e.target));
         return;
       }
       if (setOpen) {
